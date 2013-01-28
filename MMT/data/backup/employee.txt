@@ -1,0 +1,6 @@
+id,firstName,lastName,email,phone,cellNumber,address,city,state,zipCode
+90001,ghg,ghg,gh@fgh.com,67,6767,fgf,sunn,ca,6767
+90112,Aditya,Mishra,adi@pokemin.com,408-720-1606,408-720-1606,791 W Homestead Rd,Sunnyvale,CA,94087
+90113,Aditya,Mishra,adtya@mshra.com,408-823-2311,123-321-3232,67 asd,Sunnyale,CA,98974
+90114,Rani,Mishra,asa@sd.om,243,213,dffs,Cupertino,CA,79879
+90115,Sanjeev,Mishra,sdas@.com,123-232-1232,121-121-1213,34 SD,San Diego,CA,79793

@@ -1,0 +1,233 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package labyrinth;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+/**
+ * @(#)Labyrinth.java
+ *
+ *
+ * @author 
+ * @version 1.00 2013/1/17
+ */
+
+public class Labyrinth {
+
+	
+	String[][] maze;
+	boolean hasCloak;
+	private int startI, startJ;
+	private int destI, destJ;
+	private int dimension;
+	
+	public Labyrinth() {
+    	hasCloak = false;
+    }
+	
+        public boolean isMoveable(int i, int j) {
+            if (maze[i][i].equals("Wall") ){
+                return false;
+            }
+            
+            if (hasCloak) {
+                return true;
+            }
+            
+            if (maze[i][i].equals("Cloak")){
+                hasCloak = true;
+                return true;
+            } else if (maze[i][i].equals("EmptySpace") ){
+                return true;
+            }
+            return false;
+        }
+	public int step(int i,int j,int numPrevSteps){
+		if (numPrevSteps>5){
+			return Integer.MAX_VALUE;
+		}
+
+                // Check if it is not wall/monster
+                if (isMoveable(i,j)) {
+                    numPrevSteps++;
+                } else {
+                    return Integer.MAX_VALUE;
+                }
+
+		// If (i.j) is valid, should not we increment numPrevSteps here : TEST
+		if ((i==destI)&&(j==destJ))
+			return numPrevSteps;
+
+		ArrayList<Integer> positions = getNeighbors(i,j);
+		
+		for (int a=0 ; a<positions.size()-1 ; a=a+2){
+			int x = positions.get(a);
+			int y = positions.get(a+1);
+			if (maze[x][y].equals("Cloak")){
+				hasCloak = true;
+			}
+			this.step(x,y,numPrevSteps++);
+		}
+		return Integer.MAX_VALUE;
+	}
+	
+	private boolean isNeighbor(String type){
+		return (type.equals("EmptySpace")||(type.equals("Monster")&&hasCloak));
+	}
+	
+	private ArrayList<Integer> getNeighbors(int i, int j){
+		ArrayList<Integer> listNeighbors = new ArrayList<Integer>();
+		if (j+1<dimension){
+			if (isNeighbor(maze[i][j+1])){
+				listNeighbors.add(i);
+				listNeighbors.add(j+1);
+			} 
+		}
+		
+		// Left Column
+		if (j-1>=0){
+			if (isNeighbor(maze[i][j-1])){
+				listNeighbors.add(i);
+				listNeighbors.add(j-1);
+			}
+		}
+		
+		if (i+1<dimension){
+			if (isNeighbor(maze[i+1][j])){
+				listNeighbors.add(i+1);
+				listNeighbors.add(j);
+			}
+		}
+		
+		// Left Column
+		if (i-1>=0){
+			if (isNeighbor(maze[i-1][j])){
+				listNeighbors.add(i-1);
+				listNeighbors.add(j);
+			}
+		}
+		
+		return listNeighbors;
+	}
+	
+	private ArrayList<Integer> findPathLengths(){
+		ArrayList<Integer>positions = getNeighbors(startI,startJ);
+		ArrayList<Integer>pathLengths = new ArrayList<Integer>();
+		int count = 0;
+		for (int a=0 ; a<positions.size()-1 ; a=a+2){
+			// Should we re-initialize count to 0 here ?? : TEST
+			int stepLength =this.step(positions.get(a),positions.get(a+1),count);
+			pathLengths.add(stepLength);
+		}
+		return pathLengths;
+	}
+
+	public int solveMaze(){
+		ArrayList<Integer>pathLengths = findPathLengths();
+		int min = Integer.MAX_VALUE;
+		boolean noSolution = true;
+		for(int i=0; i<pathLengths.size();i++){
+			final int stepLength = pathLengths.get(i);
+			if(stepLength == Integer.MAX_VALUE){
+				continue;
+			}
+			if(stepLength !=0 ){
+				noSolution = false;
+				if (stepLength<min){
+					min = stepLength;
+				}
+			}
+		}
+		if (noSolution){
+			return -1;
+		}
+		else{
+			return min;
+		}
+	}
+	
+    public String[][] readData (String filename) {
+		File dataFile = new File(filename);
+
+		if (dataFile.exists()) {
+			String[][] gameData;
+
+			int count = 0;
+
+			FileReader reader = null;
+			try {
+					
+					reader = new FileReader(dataFile);
+					Scanner in = new Scanner(reader);
+					String initLine = in.nextLine();
+					int dimension = Integer.parseInt(initLine);
+					gameData = new String[dimension][dimension];
+					this.dimension=dimension;
+					while (in.hasNext() && count < dimension) {
+						String line = in.nextLine();
+						for(int a = 0; a < line.length(); a++){
+							if (line.charAt(a)=='C'){
+								gameData[count][a] = "Theseus";
+								startI = count;
+								startJ = a;
+							}
+								
+							if (line.charAt(a)=='X'){
+								gameData[count][a]= "EndPoint";
+								destI = count;
+								destJ = a;
+							}
+							if (line.charAt(a)=='#'){
+								gameData[count][a]= "Wall";
+							}
+							if (line.charAt(a)=='A'){
+								gameData[count][a]= "Monster";
+							}
+							if (line.charAt(a)=='@'){
+								gameData[count][a]= "Cloak";
+							}
+							if (line.charAt(a)=='.'){
+								gameData[count][a]= "EmptySpace";
+							}
+						}
+						count++;
+					}
+
+			} catch (IOException ex) {
+				System.out.println("File cannot be read.");
+				return null;
+			} catch (NumberFormatException ex) {
+				System.out.println("File is in the wrong format.");
+				return null;
+			} finally {
+				try {
+					reader.close();
+				} catch (IOException ex) {
+					System.out.println("File cannot be closed.");
+					return null;
+				}
+			}
+			return gameData;
+		} else {
+			throw new IllegalArgumentException("Data file " + filename + " does not exist.");
+		}
+    }
+    
+    public void setMaze(String[][] maze){
+    	this.maze=maze;
+    }
+    
+    public static void main(String[] args){
+    	Labyrinth labyrinth = new Labyrinth();
+    	labyrinth.setMaze(labyrinth.readData("test2.txt"));
+    	System.out.println(labyrinth.solveMaze());
+    }
+
+}

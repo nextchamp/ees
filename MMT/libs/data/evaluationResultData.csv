@@ -1,0 +1,3 @@
+id,employeeId,employerId,evaluationDate,nextEvaluationDate,qualityScore,qualityComments,habitScore,habitComment,knowledgeScore,knowledgeComments,behaviorScore,behaviorComment,overallScore,overallComment,recommendation
+100,90000,1,10/3/2012,3/8/2013,1,qs1,2,hs1,3,semper,1,dolor,2,posuere,0
+101,90001,2,19/5/2012,4/5/2013,2,id1,2,a2t,1,sedasd,2,e dui,1,dfs sd3,1
