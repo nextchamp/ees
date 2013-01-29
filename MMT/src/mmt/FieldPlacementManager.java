@@ -46,6 +46,19 @@ public class FieldPlacementManager {
 	}
         return status;
     }
+    public boolean placeEmployee(String employerId, ArrayList<String> employeeIds) {
+        boolean status = true;
+        if (employerId == null || employerId.isEmpty() ||
+                employeeIds == null || employeeIds.size() == 0) {
+            return false;
+        }
+        
+        // add all employees to this employer
+        for (int i = 0; i < employeeIds.size(); i++) {
+            String prevEmployerId = employeeToEmployerMap.put(employeeIds.get(i), employerId);
+	}
+        return status;
+    }
     /*
      * Method returns true if employee with employerId is employed.
      */

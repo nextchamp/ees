@@ -168,13 +168,18 @@ public class ImageLoader implements Runnable, FileVisitor<Path> {
     synchronized Image getPrevImage() {
         if (complete && !accumulator.isEmpty()) {            
             if (currentIndex <0) {
-                System.out.println
-                    (String.format("resetting currentIndex as currentIndex<%d>==size<%d> ",accumulator.size(), currentIndex));
+                //System.out.println
+                //    (String.format("resetting currentIndex as currentIndex<%d>==size<%d> ",accumulator.size(), currentIndex));
 
                 currentIndex = accumulator.size()-1;
             }
-            System.out.println("currentIndex: " + currentIndex);
-            return accumulator.get(currentIndex--);
+            //System.out.println("currentIndex: " + currentIndex);
+            try {
+                return accumulator.get(currentIndex--);
+            }
+            catch (Throwable t) {
+                return accumulator.get(currentIndex--);
+            }
         }
         return null;
     }
@@ -183,14 +188,18 @@ public class ImageLoader implements Runnable, FileVisitor<Path> {
         if (complete) {            
             if (!accumulator.isEmpty()) {
                 if (currentIndex==accumulator.size()) {
-                    System.out.println
-                        (String.format("resetting currentIndex as currentIndex<%d>==size<%d> ",accumulator.size(), currentIndex));
+                    //System.out.println
+                    //    (String.format("resetting currentIndex as currentIndex<%d>==size<%d> ",accumulator.size(), currentIndex));
                     currentIndex =0;
                 }
                 
-                System.out.println("currentIndex: " + currentIndex);
-                if (currentIndex<0)currentIndex=0;
-                return accumulator.get(currentIndex++);
+                //System.out.println("currentIndex: " + currentIndex);
+                try {
+                    return accumulator.get(currentIndex++);
+                }
+                catch (Throwable t) {
+                    return accumulator.get(currentIndex++);
+                }
             }
             return null;
         }

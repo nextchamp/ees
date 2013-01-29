@@ -23,7 +23,7 @@
       </image>
     </ImageView>
     <Label fx:id="copyrightText" alignment="CENTER" contentDisplay="CENTER" layoutX="348.0" layoutY="702.0" prefWidth="369.0" text="(C) 2012-2013 MMT Inc, 1234 MMT Drive, NoCity, Wonderland, CA" />
-    <AnchorPane id="AnchorPane" fx:id="mainAnchor" layoutX="357.0" layoutY="17.0" prefHeight="59.0" prefWidth="709.0">
+    <AnchorPane id="AnchorPane" fx:id="mainAnchor" layoutX="357.0" layoutY="17.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="59.0" prefWidth="700.0">
       <children>
         <AnchorPane id="AnchorPane" prefWidth="360.0">
           <children>
@@ -33,12 +33,12 @@
                 <Image url="@Resources/Search.png" preserveRatio="false" smooth="false" />
               </image>
             </ImageView>
-          </children>
-        </AnchorPane>
-        <AnchorPane prefWidth="60.0">
-          <children>
-            <Button fx:id="restoreButton" contentDisplay="GRAPHIC_ONLY" layoutX="529.0" layoutY="1.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="Button" />
-            <Button fx:id="backupButton" contentDisplay="GRAPHIC_ONLY" layoutX="559.0" layoutY="1.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="Button" />
+            <AnchorPane fx:id="pataNahin" layoutX="600.0" layoutY="3.0" minWidth="100.0" prefWidth="100.0">
+              <children>
+                <Button fx:id="restoreButton" contentDisplay="GRAPHIC_ONLY" layoutY="1.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="Button" />
+                <Button fx:id="backupButton" contentDisplay="GRAPHIC_ONLY" layoutX="36.0" layoutY="1.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="Button" />
+              </children>
+            </AnchorPane>
           </children>
         </AnchorPane>
         <Hyperlink fx:id="employeeHyperlink" layoutX="12.0" layoutY="27.0" onAction="#onClickEmployeeButton" styleClass="options-text" text="Employee">
@@ -76,7 +76,7 @@
         <AnchorPane id="imagePane" fx:id="helpImagePane" layoutX="33.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onImageClicked" prefHeight="595.0" prefWidth="982.0" />
       </children>
     </AnchorPane>
-    <Pane fx:id="firstPage" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
+    <Pane fx:id="firstPage" prefHeight="619.0" prefWidth="1047.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
       <children>
         <Pane fx:id="tablePane" prefHeight="298.0" prefWidth="1047.0">
           <children>
@@ -104,13 +104,30 @@
                       </stylesheets>
                     </ChoiceBox>
                     -->
-                    <AnchorPane id="AnchorPane" fx:id="reportPagesAnchor" layoutX="756.0" layoutY="-1.0" prefHeight="31.0" prefWidth="263.0">
+                    <AnchorPane id="AnchorPane" fx:id="reportPagesAnchor" layoutX="756.0" layoutY="-1.0" prefHeight="31.0" prefWidth="263.0" visible="false">
                       <children>
                         <Label id="paginationText" fx:id="paginationLabel" layoutX="-13.0" layoutY="5.0" text="X of Y Reports" />
                         <Button fx:id="firstPageButton" layoutX="91.0" layoutY="4.0" mnemonicParsing="false" text="&lt;&lt;" />
                         <Button fx:id="prevPageButton" layoutX="137.0" layoutY="4.0" mnemonicParsing="false" text="&lt;" />
                         <Button fx:id="nextPageButton" layoutX="181.0" layoutY="4.0" mnemonicParsing="false" text="&gt;" />
                         <Button id="lastPageBtn" fx:id="lastPageButton" layoutX="221.0" layoutY="4.0" mnemonicParsing="false" text="&gt;&gt;" />
+                      </children>
+                    </AnchorPane>
+                    <AnchorPane id="AnchorPane" fx:id="placeEmployeePane" layoutX="756.0" layoutY="-1.0" prefHeight="31.0" prefWidth="180.0">
+                      <children>
+                        <ChoiceBox id="filterChoiceBox" fx:id="employerChoiceBox" layoutX="28.0" layoutY="1.0" prefWidth="187.0">
+                          <items>
+                            <FXCollections fx:factory="observableArrayList">
+                              <String fx:value="Select Employer" />
+                              <String fx:value="Item 2" />
+                              <String fx:value="Item 3" />
+                            </FXCollections>
+                          </items>
+                          <stylesheets>
+                            <URL value="@Resources/MainApp.css" />
+                          </stylesheets>
+                        </ChoiceBox>
+                        <Button fx:id="placeButton" contentDisplay="GRAPHIC_ONLY" layoutX="221.0" layoutY="4.0" mnemonicParsing="false" />
                       </children>
                     </AnchorPane>
                     <!-- ImageView is replaced with button
@@ -392,6 +409,15 @@
         <Button fx:id="reportControlPane_printButton" contentDisplay="GRAPHIC_ONLY" layoutX="272.0" layoutY="11.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onAction="#printButtonHanlder" prefHeight="24.0" prefWidth="24.0" text="Button" />
         <Button fx:id="reportControlPane_backButton" contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="11.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="24.0" prefWidth="24.0" text="Button" />
       </children>
+      <AnchorPane fx:id="reportPagesAnchor2" layoutX="506.0" layoutY="6.0" prefHeight="31.0" prefWidth="263.0">
+        <children>
+      	  <Label  fx:id="paginationLabel2" layoutX="2.0" layoutY="5.0" text="X of Y Reports" />
+      	  <Button fx:id="firstPageButton2" layoutX="91.0" layoutY="4.0" onAction="#firstPageButtonHanlder" mnemonicParsing="false" text="&lt;&lt;" />
+      	  <Button fx:id="prevPageButton2" layoutX="137.0" layoutY="4.0" onAction="#prevPageButtonHanlder" mnemonicParsing="false" text="&lt;" />
+      	  <Button fx:id="nextPageButton2" layoutX="181.0" layoutY="4.0" onAction="#nextPageButtonHanlder" mnemonicParsing="false" text="&gt;" />
+      	  <Button fx:id="lastPageButton2" layoutX="221.0" layoutY="4.0" onAction="#lastPageButtonHanlder" mnemonicParsing="false" text="&gt;&gt;" />
+        </children>
+      </AnchorPane>
     </AnchorPane>
   </children>
   <stylesheets>
