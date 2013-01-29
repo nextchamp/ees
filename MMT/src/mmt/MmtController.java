@@ -64,39 +64,33 @@ public class MmtController implements Initializable {
     /*
      * TextFiled to get search string
      */
-    @FXML 
+    @FXML
     private TextField searchField;
-    
     @FXML
     private Button backupButton, restoreButton;
-    
     /*
      * Hyperlinks for menu-items
      */
-    @FXML 
+    @FXML
     private Hyperlink employeeHyperlink;
-    @FXML 
+    @FXML
     private Hyperlink employerHyperlink;
-    @FXML 
+    @FXML
     private Hyperlink reportHyperlink;
-    @FXML 
+    @FXML
     private Hyperlink helpHyperlink;
-    @FXML 
+    @FXML
     private Hyperlink helpAboutHyperlink;
-    
     /*
      * Shows data in TableView for the selected category
      */
     @FXML
     private TableView datatableview;
-    
     /*
      * Shows data in filter choice-box : FILTERNM
      */
     //@FXML
     //private ChoiceBox filterChoiceBox;
-    
-    
     /*
      * Definitions of all control buttons in the controller
      */
@@ -116,15 +110,15 @@ public class MmtController implements Initializable {
     private Button commitButton;
     @FXML
     private AnchorPane reportPagesAnchor;
-    @FXML 
+    @FXML
     private Label paginationLabel;
-    @FXML 
+    @FXML
     private Button firstPageButton;
-    @FXML 
+    @FXML
     private Button prevPageButton;
-    @FXML 
+    @FXML
     private Button nextPageButton;
-    @FXML 
+    @FXML
     private Button lastPageButton;
     /*
      * Employee placement related controls
@@ -142,10 +136,8 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane evalResultPane;
-    
-    @FXML 
+    @FXML
     private TabPane empScoreTabs;
-    
     @FXML
     private TextField evalNumber;
     @FXML
@@ -159,18 +151,17 @@ public class MmtController implements Initializable {
     @FXML
     private TextField averageScore;
     @FXML
-    private CheckBox  evalRecommendation;
-    
+    private CheckBox evalRecommendation;
     @FXML
-    private RadioButton  wqs1, wqs2, wqs3, wqs4, wqs5;
+    private RadioButton wqs1, wqs2, wqs3, wqs4, wqs5;
     @FXML
-    private RadioButton  hqs1, hqs2, hqs3, hqs4, hqs5;
+    private RadioButton hqs1, hqs2, hqs3, hqs4, hqs5;
     @FXML
-    private RadioButton  kqs1, kqs2, kqs3, kqs4, kqs5;
+    private RadioButton kqs1, kqs2, kqs3, kqs4, kqs5;
     @FXML
-    private RadioButton  bqs1, bqs2, bqs3, bqs4, bqs5;
+    private RadioButton bqs1, bqs2, bqs3, bqs4, bqs5;
     @FXML
-    private RadioButton  pqs1, pqs2, pqs3, pqs4, pqs5;
+    private RadioButton pqs1, pqs2, pqs3, pqs4, pqs5;
     @FXML
     private TextArea qualityCommentTextArea;
     @FXML
@@ -181,46 +172,40 @@ public class MmtController implements Initializable {
     private TextArea knowledgeCommentTextArea;
     @FXML
     private TextArea habitsCommentTextArea;
-            
     // Holds the pages of evaluation reports
     private ReportPageManager reportPageManager = null;
-    
-    
     /*
      * Controls for employee details panel
      *
      */
     @FXML
     private AnchorPane employeeDetailsPane;
-
     @FXML
-        private TextField employeeDetails_empNumber;
+    private TextField employeeDetails_empNumber;
     @FXML
-        private TextField employeeDetails_firstName;
+    private TextField employeeDetails_firstName;
     @FXML
-        private TextField employeeDetails_lastName;
+    private TextField employeeDetails_lastName;
     @FXML
-        private TextField employeeDetails_emailAddressss;
+    private TextField employeeDetails_emailAddressss;
     @FXML
-        private TextField employeeDetails_phoneNumber;
+    private TextField employeeDetails_phoneNumber;
     @FXML
-        private TextField employeeDetails_cellNumber;
+    private TextField employeeDetails_cellNumber;
     @FXML
-        private TextField employeeDetails_streetAddress;
+    private TextField employeeDetails_streetAddress;
     @FXML
-        private TextField employeeDetails_city;
+    private TextField employeeDetails_city;
     @FXML
-        private TextField employeeDetails_state;
+    private TextField employeeDetails_state;
     @FXML
-        private TextField employeeDetails_zipCode;
- 
+    private TextField employeeDetails_zipCode;
     /*
      * Controls for employer details panel
      *
      */
     @FXML
     private AnchorPane employerDetailsPane;
-    
     @FXML
     private TextField employerDetails_empNumber;
     @FXML
@@ -246,7 +231,6 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane reportDetailsPane;
-    
     @FXML
     private TextField report_evalNumber;
     @FXML
@@ -260,15 +244,13 @@ public class MmtController implements Initializable {
     @FXML
     private TextField report_averageScore;
     @FXML
-    private CheckBox  report_recommended;
+    private CheckBox report_recommended;
     @FXML
     private TableView reportDetails_scoreTable;
-    
-    
     /* 
      * Separate page controls : report
      */
-    @FXML 
+    @FXML
     private Pane empFullReportPane;
     @FXML
     private AnchorPane sepPageReportControlPane;
@@ -280,29 +262,24 @@ public class MmtController implements Initializable {
     private Button prevPageButton2, nextPageButton2;
     @FXML
     private Label paginationLabel2;
-    @FXML 
+    @FXML
     private Label printReportForLabel;
-    
     /* 
      * Separate page controls : First page main page
      */
-    @FXML 
+    @FXML
     private AnchorPane mainAnchor;
-    @FXML 
+    @FXML
     private Pane firstPage;
-    
     /* 
      * Help page related anchor-pane and controls
      */
-    @FXML 
+    @FXML
     private AnchorPane helpPageAnchor;
-    
-    
     /*
      * Print related stuff
      */
     Callback<SnapshotResult, Void> printCallback = new PrintCallback();
-    
     /*
      * mode of the view
      */
@@ -321,42 +298,43 @@ public class MmtController implements Initializable {
     private final boolean empEvalInSeparateRecord = true; // holds true if evaluaiton result is stored in separate record/file
     private FieldPlacementManager fieldPlacementManager = new FieldPlacementManager(); // keeps the employeeId-employerId map for placed employees
     private ObservableList<EmployerIdName> employerIdNameList = FXCollections.observableArrayList();
-    
+
     /*
      * Class to represent score table for concise report
      */
     public static class Score {
- 
+
         private final SimpleStringProperty Category;
         private final SimpleStringProperty ScoreVal;
- 
+
         private Score(String cat, String sc) {
             this.Category = new SimpleStringProperty(cat);
             this.ScoreVal = new SimpleStringProperty(sc);
         }
- 
+
         public String getCategory() {
             return Category.get();
         }
- 
+
         public void setCategory(String cat) {
             Category.set(cat);
         }
- 
+
         public String getSCore() {
             return this.ScoreVal.get();
         }
- 
+
         public void setScore(String sc) {
             this.ScoreVal.set(sc);
         }
     }
-    
+
     /*
      * Class to represent employer name and id for selection purpose
      * during placement of the employee.
      */
     public static class EmployerIdName {
+
         private String name;
         private String id;
 
@@ -364,7 +342,7 @@ public class MmtController implements Initializable {
         public String toString() {
             //return name + " (id:" + id + ")";
             String str = name;
-            if ( !id.isEmpty() ) {
+            if (!id.isEmpty()) {
                 str = str + " (id:" + id + ")";
             }
             return str;
@@ -400,31 +378,31 @@ public class MmtController implements Initializable {
     @FXML
     private void onClickEmployeeButton(ActionEvent event) {
         System.out.println("You clicked Employee Button!");
-        
+
         // If it is first time then initialize the filter data from master data
         if (employeeDataManager.filteredData == null) {
             //initEmployeeFilteredData();
-        initFilteredData();
+            initFilteredData();
         }
-        
+
         // Do the clean up of view/resource/hide etc
         // before showing selcted menu-items's views
         beforeSwitchingToNewSelectedPage(ViewMode.EMPLOYEE);
-        
+
         // Set the view mode to employee
         appMode = ViewMode.EMPLOYEE;
         enableDetailPanel(true);
         try {
-            System.out.println("The size of data is " + employeeDataManager.filteredData.size());            
+            System.out.println("The size of data is " + employeeDataManager.filteredData.size());
             datatableview.setItems(employeeDataManager.filteredData);
-            datatableview.getColumns().setAll(employeeDataManager.columnsData); 
+            datatableview.getColumns().setAll(employeeDataManager.columnsData);
             System.out.println("Employee data loaded");
 
             // Select the first element by default, if any
             datatableview.getSelectionModel().clearSelection();
             //datatableview.getSelectionModel().select(0);
             datatableview.getSelectionModel().selectFirst();//selectIndices(1, new int[]{0});
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -437,36 +415,36 @@ public class MmtController implements Initializable {
     @FXML
     private void onClickEmployerButton(ActionEvent event) {
         System.out.println("You clicked Employer Button!");
-        
+
         // If it is first time then initialize the filter data from master data
         if (employerDataManager.filteredData == null) {
             //initEmployerFilteredData();
             initFilteredData();
         }
-        
+
         // Do the clean up of view/resource/hide etc
         // before showing selcted menu-items's views
         beforeSwitchingToNewSelectedPage(ViewMode.EMPLOYER);
-        
+
         // Set the view mode to employee
         appMode = ViewMode.EMPLOYER;
         enableDetailPanel(true);
         try {
-            System.out.println("The size of data is " + employerDataManager.filteredData.size());            
+            System.out.println("The size of data is " + employerDataManager.filteredData.size());
             datatableview.setItems(employerDataManager.filteredData);
-            datatableview.getColumns().setAll(employerDataManager.columnsData); 
+            datatableview.getColumns().setAll(employerDataManager.columnsData);
             System.out.println("Employer data loaded");
 
             // Select the first element by default, if any
             datatableview.getSelectionModel().clearSelection();
             //datatableview.getSelectionModel().select(0);
             datatableview.getSelectionModel().selectFirst();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /*
      * Handler for Report Button-Click
      * @params event: the action event
@@ -474,36 +452,36 @@ public class MmtController implements Initializable {
     @FXML
     private void onClickMainReportButton(ActionEvent event) {
         System.out.println("You clicked Report Button!");
-        
+
         // If it is first time then initialize the filter data from master data
         if (reportDataManager.filteredData == null) {
             //initEvalResultsFilteredData();
             initFilteredData();
         }
-        
+
         // Do the clean up of view/resource/hide etc
         // before showing selcted menu-items's views
         beforeSwitchingToNewSelectedPage(ViewMode.REPORT_CONCISE);
-        
+
         // Set the view mode to employee
         appMode = ViewMode.REPORT_CONCISE;
         enableDetailPanel(true);
         try {
-            System.out.println("The size of data is " + reportDataManager.filteredData.size());            
+            System.out.println("The size of data is " + reportDataManager.filteredData.size());
             datatableview.setItems(reportDataManager.filteredData);
-            datatableview.getColumns().setAll(reportDataManager.columnsData); 
+            datatableview.getColumns().setAll(reportDataManager.columnsData);
             System.out.println("Evaluation Results Report data loaded");
 
             // Select the first element by default, if any
             datatableview.getSelectionModel().clearSelection();
             //datatableview.getSelectionModel().select(0);
             datatableview.getSelectionModel().selectFirst();
-            
+
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /*
      * Handler for Help Button-Click
      * @params event: the action event
@@ -511,18 +489,18 @@ public class MmtController implements Initializable {
     @FXML
     private void onClickHelpButton(ActionEvent event) {
         System.out.println("You clicked Help Button!");
-        
+
         // Do the clean up of view/resource/hide etc
         // before showing selcted menu-items's views
         beforeSwitchingToNewSelectedPage(ViewMode.HELP);
-        
+
         // Set the view mode to employee
         appMode = ViewMode.HELP;
-        
+
         // Show help page
         helpPageAnchor.setVisible(true);
     }
-    
+
     /*
      * Handler for Help Button-Click
      * @params event: the action event
@@ -530,18 +508,18 @@ public class MmtController implements Initializable {
     @FXML
     private void onClickHelpAboutButton(ActionEvent event) {
         System.out.println("You clicked Help About Button!");
-        
+
         // Do the clean up of view/resource/hide etc
         // before showing selcted menu-items's views
         //beforeSwitchingToNewSelectedPage(ViewMode.HELP_ABOUT); 
-        
+
         // Display message box with credits
         String str = HelpAboutString.getString();
         MessageBox mb = new MessageBox(str, MessageBoxType.OK_ONLY);
         mb.setHeight(500);
         mb.showAndWait();
     }
-    
+
     /*
      * Handler for Add Button-Click
      * @params event: the action event
@@ -550,7 +528,7 @@ public class MmtController implements Initializable {
     private void onClickAddButton(ActionEvent event) {
         System.out.println("You clicked Add Button!");
     }
-    
+
     /*
      * Handler for Remove Button-Click
      * @params event: the action event
@@ -559,7 +537,7 @@ public class MmtController implements Initializable {
     private void onClickRemoveButton(ActionEvent event) {
         System.out.println("You clicked Remove Button!");
     }
-    
+
     /*
      * Handler for Save Button-Click
      * @params event: the action event
@@ -568,7 +546,7 @@ public class MmtController implements Initializable {
     private void onClickSaveButton(ActionEvent event) {
         System.out.println("You clicked Save Button!");
     }
-    
+
     /*
      * Method to show details filter choice-box
      * @params : flag to show or hide it 
@@ -577,7 +555,7 @@ public class MmtController implements Initializable {
     private void showFilterChoiceBox(boolean enable) {
         //filterChoiceBox.setVisible(enable); : FILTERNM
     }
-    
+
     /*
      * Method to init details filter choice-box
      * @params : choices as string for selection
@@ -585,25 +563,24 @@ public class MmtController implements Initializable {
      */
     /* FILTERNM
      * @FXML
-    private void initFilterChoiceBox(String[] choices, int curSelIndex) {
-        if (choices == null) {
+     private void initFilterChoiceBox(String[] choices, int curSelIndex) {
+     if (choices == null) {
             
-            filterChoiceBox.setItems(FXCollections.observableArrayList(
-                "All", "Employer", "Employee") );
+     filterChoiceBox.setItems(FXCollections.observableArrayList(
+     "All", "Employer", "Employee") );
             
-        } else {
-            filterChoiceBox.setItems(FXCollections.observableArrayList(choices));
-        }
+     } else {
+     filterChoiceBox.setItems(FXCollections.observableArrayList(choices));
+     }
         
-        // Add tooltip
-        filterChoiceBox.setTooltip(new Tooltip("Filter result by"));
+     // Add tooltip
+     filterChoiceBox.setTooltip(new Tooltip("Filter result by"));
         
-        // Select default choice
-        filterChoiceBox.getSelectionModel().select(curSelIndex);
+     // Select default choice
+     filterChoiceBox.getSelectionModel().select(curSelIndex);
 
-    }
-    */
-    
+     }
+     */
     /*
      * Helper Method to init button
      * @params : handle to image
@@ -614,15 +591,15 @@ public class MmtController implements Initializable {
     private void initButton(Button button, String toolTipText, boolean enable, EventHandler eventHandler) {
         if (button != null) {
             // Set the tooltip, if provided
-            if (toolTipText !=null) {
+            if (toolTipText != null) {
                 button.setTooltip(new Tooltip(toolTipText));
             }
 
             // set event handler, if provided
-            if (eventHandler !=null) {
+            if (eventHandler != null) {
                 button.setOnAction(eventHandler);
             }
-            
+
             // set visibility
             button.setVisible(enable);
         }
@@ -634,99 +611,119 @@ public class MmtController implements Initializable {
      */
     @FXML
     private void initContolButtons() {
-        
-        initButton(backupButton, "Click to backup data", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    backupButtonHanlder(e);
-                                }
+
+        initButton(backupButton, "Click to backup data", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        backupButtonHanlder(e);
+                    }
                 });
-        initButton(restoreButton, "Click to restore backed up data", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    restoreButtonHanlder(e);
-                                }
+        initButton(restoreButton, "Click to restore backed up data", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        restoreButtonHanlder(e);
+                    }
                 });
-        initButton(addButton, "Click to add new record", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    addButtonHanlder(e);
-                                }
+        initButton(addButton, "Click to add new record", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        addButtonHanlder(e);
+                    }
                 });
-        initButton(removeButton, "Click to delete selected record", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    removeButtonHanlder(e);
-                                }
+        initButton(removeButton, "Click to delete selected record", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        removeButtonHanlder(e);
+                    }
                 });
         /* Not using it any more
-        initButton(saveButton, "Click to update changes", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    saveButtonHanlder(e);
-                                }
+         initButton(saveButton, "Click to update changes", true, 
+         new EventHandler<ActionEvent>() {
+         @Override public void handle(ActionEvent e) {
+         saveButtonHanlder(e);
+         }
+         });
+         initButton(printButton, "Click to print report", true, 
+         new EventHandler<ActionEvent>() {
+         @Override public void handle(ActionEvent e) {
+         printButtonHanlder(e);
+         }
+         });
+         */
+        initButton(evaluateButton, "Click to evaluate an employee", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        evaluateButtonHanlder(e);
+                    }
                 });
-        initButton(printButton, "Click to print report", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    printButtonHanlder(e);
-                                }
+        initButton(reportButton, "Click to see record", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        reportButtonHanlder(e);
+                    }
                 });
-        */
-        initButton(evaluateButton, "Click to evaluate an employee", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    evaluateButtonHanlder(e);
-                                }
+        initButton(commitButton, "Click to save changes to disk", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        commitButtonHanlder(e);
+                    }
                 });
-        initButton(reportButton, "Click to see record", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    reportButtonHanlder(e);
-                                }
-                });
-        initButton(commitButton, "Click to save changes to disk", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    commitButtonHanlder(e);
-                                }
-                });
-        initButton(placeButton, "Click to place selected employee(s) to this employer", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    placeButtonHanlder(e);
-                                }
+        initButton(placeButton, "Click to place selected employee(s) to this employer", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        placeButtonHanlder(e);
+                    }
                 });
     }
     /*
      * Method to find employer id-name list from the
      * employer data
      */
+
     private List getEmployerIdNameList() {
         List idNameList = new ArrayList<EmployerIdName>();
         // Get the employer id and name from the employer-data
         // Build the employer id-name observableList which will be used to update 
-        HashMap<String,EmployerIdName>  hashMap = new HashMap<String,EmployerIdName>();
+        HashMap<String, EmployerIdName> hashMap = new HashMap<String, EmployerIdName>();
         if (employerDataManager.masterData != null && !employerDataManager.masterData.isEmpty()) {
             // Iterare thru list and get the
-            hashMap.put("Google",new EmployerIdName("Google", "17"));
-            hashMap.put("Yahoo",new EmployerIdName("Yahoo", "73"));
-            hashMap.put("Microsoft",new EmployerIdName("Microsoft", "87"));
+            /* Dummy test data
+            hashMap.put("Google", new EmployerIdName("Google", "17"));
+            hashMap.put("Yahoo", new EmployerIdName("Yahoo", "73"));
+            hashMap.put("Microsoft", new EmployerIdName("Microsoft", "87"));
+
+            hashMap.put("Google", new EmployerIdName("Google", "17"));
+            hashMap.put("Yahoo", new EmployerIdName("Yahoo", "73"));
+            hashMap.put("Microsoft", new EmployerIdName("Microsoft", "87"));
+            */
             
-            hashMap.put("Google",new EmployerIdName("Google", "17"));
-            hashMap.put("Yahoo",new EmployerIdName("Yahoo", "73"));
-            hashMap.put("Microsoft",new EmployerIdName("Microsoft", "87"));
+            Iterator<String[]> iter = employerDataManager.masterData.iterator();
+            while (iter.hasNext()) {
+                String[] rowStings = iter.next();
+                String id = rowStings[0];       // id
+                String name = rowStings[1];     // name
+                hashMap.put(name,new EmployerIdName(name, id));
+            } // while there is more employer data
         }
-        
+
         // Get the unique id and name from the hashmap to build list
         Iterator<EmployerIdName> iter = hashMap.values().iterator();
-        while ( iter.hasNext() ) {
+        while (iter.hasNext()) {
             EmployerIdName object = (EmployerIdName) iter.next();
             idNameList.add(object);
         }
-        
+
         return idNameList;
     }
+
     @FXML
     private void initEmployeePlacementControl(boolean enable) {
         // choice box
@@ -740,35 +737,36 @@ public class MmtController implements Initializable {
         employerChoiceBox.setItems(employerIdNameList);
         employerChoiceBox.getSelectionModel().selectFirst(); // Select first as default
         employerChoiceBox.setTooltip(new Tooltip("Select employer & click place button"));
-        
+
         // show the choice-box, if enable
         placeEmployeePane.setVisible(enable);
     }
+
     @FXML
     private void placeButtonHanlder(ActionEvent e) {
         //Get the user's choice
         EmployerIdName selIdName = (EmployerIdName) employerChoiceBox.getSelectionModel().getSelectedItem();
         final String newEmployerId = selIdName.getId();
-        if ( !selIdName.getId().isEmpty()) {
+        if (!selIdName.getId().isEmpty()) {
             // DEBUG
             //String msg = newEmployerId + " : is selected: " + selIdName.getName();
             //MessageBox mb = new MessageBox(msg, MessageBoxType.OK_ONLY);
             //mb.showAndWait();
             // DEBUG
-            
+
             // Get all selected employee from employee-data and its employer id
             ArrayList<String> employeeIdsForUpdate = new ArrayList<String>();
             ArrayList<String> newEmployerIds = new ArrayList<String>();
             ObservableList<String[]> selEmployeeList = datatableview.getSelectionModel().getSelectedItems();
             int count = selEmployeeList.size();
-            for (int i = 0; i <count; i++) {
+            for (int i = 0; i < count; i++) {
                 String[] employeeDataStrings = selEmployeeList.get(i);
                 // Get the employee id
                 String employeeId = employeeDataStrings[0];
                 employeeIdsForUpdate.add(employeeId);
                 newEmployerIds.add(newEmployerId); // the list will have same values for all entry
             } // check each selected item
-            
+
             // Update the field-placement-data
             fieldPlacementManager.placeEmployee(newEmployerId, employeeIdsForUpdate);
             // Update the employee's report data with new employer id
@@ -786,13 +784,14 @@ public class MmtController implements Initializable {
             mb.showAndWait();
         }
     }
+
     @FXML
     private void backupButtonHanlder(ActionEvent e) {
         // Prompt user to get backup-location/directory
         String title = Prompts.getBackupDirPrompt();
         String initialDir = AppSettings.DataRootPath;
         File dirPath = getDirectoryFromUser(title, initialDir);
-        
+
         //MessageBox mb = new MessageBox(filePath, MessageBoxType.OK_ONLY);
         //mb.showAndWait();
         // User has provided folder
@@ -815,9 +814,10 @@ public class MmtController implements Initializable {
             mb.showAndWait();
         }
     }
+
     @FXML
     private void restoreButtonHanlder(ActionEvent e) {
-        
+
         // Prompt user to get backup-location/directory
         String title = Prompts.getRestoreDirPrompt();
         String initialDir = AppSettings.DataRootPath;
@@ -831,7 +831,7 @@ public class MmtController implements Initializable {
             if (!filePath.endsWith(System.getProperty("file.separator"))) {
                 filePath = filePath + System.getProperty("file.separator");
             }
-            
+
             boolean status = restoreData(filePath);
 // This code is moved inside restoreData to give enough time to get data-tables populated
 // So that data can be saved to app-data-location for future use.
@@ -844,52 +844,55 @@ public class MmtController implements Initializable {
 //            // Show error message box
 //            MessageBox mb = new MessageBox(statusMsg, MessageBoxType.OK_ONLY);
 //            mb.showAndWait();
-        
+
         }
     }
+
     @FXML
     private void addButtonHanlder(ActionEvent e) {
-        
+
         /*
-        MessageBox mb = new MessageBox("Add new?", MessageBoxType.OK_CANCEL);
-        mb.showAndWait();
-        if (mb.getMessageBoxResult() == MessageBoxResult.OK){
-                System.out.println("OK");
-        }else{
-                System.out.println("Cancel");
-        }
-        */
+         MessageBox mb = new MessageBox("Add new?", MessageBoxType.OK_CANCEL);
+         mb.showAndWait();
+         if (mb.getMessageBoxResult() == MessageBoxResult.OK){
+         System.out.println("OK");
+         }else{
+         System.out.println("Cancel");
+         }
+         */
         clearDetailPanel(appMode);
     }
+
     @FXML
     private void removeButtonHanlder(ActionEvent e) {
         MessageBox mb = new MessageBox("Do you want to delete?", MessageBoxType.YES_NO);
         mb.showAndWait();
-        if (mb.getMessageBoxResult() == MessageBoxResult.YES){
-                System.out.println("YES");                
-                ObservableList obj = datatableview.getSelectionModel().getSelectedItems();
-                boolean changed = datatableview.getItems().removeAll(obj.toArray());
-                // If collection has changed then mark the state dirty
-                if (changed) {
-                    dataStateManager.setDirty(appMode);
-                }
-        }else{
-                System.out.println("NO");
+        if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
+            System.out.println("YES");
+            ObservableList obj = datatableview.getSelectionModel().getSelectedItems();
+            boolean changed = datatableview.getItems().removeAll(obj.toArray());
+            // If collection has changed then mark the state dirty
+            if (changed) {
+                dataStateManager.setDirty(appMode);
+            }
+        } else {
+            System.out.println("NO");
         }
     }
+
     @FXML
     private void saveButtonHanlder(ActionEvent e) {
-        
     }
     /*
      * Method to saves master data to disk based on selected mode
      * @params : flag to enable or disable the details panel for current mode 
      */
+
     @FXML
     private void commitMasterData(ViewMode mode, CommitMode commitMode) {
         // Check which table is active
         boolean success = false;
-        switch(mode){
+        switch (mode) {
             case EMPLOYEE:
                 // if full report is visible then it means user wants to save
                 // employee's evaluation report data. Otherwise employee
@@ -907,7 +910,7 @@ public class MmtController implements Initializable {
                 success = commitMasterDataForFullReport(commitMode);
                 break;
         } //switch
-        
+
         // If commit has been done succefully then save the next-gen ids
         if (success) {
             idGenerator.save();
@@ -916,6 +919,7 @@ public class MmtController implements Initializable {
     /*
      * Method to saves employee master data to disk based on selected mode
      */
+
     @FXML
     private boolean commitMasterDataForEmployee(CommitMode commitMode) {
         // Get the data from details panel to validate
@@ -937,7 +941,7 @@ public class MmtController implements Initializable {
         employeeDataStrings[7] = employeeDetails_city.getText();
         employeeDataStrings[8] = employeeDetails_state.getText();
         employeeDataStrings[9] = employeeDetails_zipCode.getText();
- 
+
         boolean bValidData1 = DataValidator.isEmailValid(employeeDataStrings[3]);
         boolean bValidData2 = DataValidator.isPhoneNumberValid(employeeDataStrings[4]);
         boolean bValidData3 = DataValidator.isPhoneNumberValid(employeeDataStrings[5]);
@@ -945,17 +949,17 @@ public class MmtController implements Initializable {
         if (!bValidData1 || !bValidData2 || !bValidData3 || !bValidData4) {
             MessageBox mb = new MessageBox("Error in data. Do you want to discard changes : changes will be lost?", MessageBoxType.YES_NO);
             mb.showAndWait();
-            if (mb.getMessageBoxResult() == MessageBoxResult.YES){
+            if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
                 // Discard the changes and chane the state clean
                 addIsInProgress = false;
-                dataStateManager.setClean(ViewMode.EMPLOYEE);                
+                dataStateManager.setClean(ViewMode.EMPLOYEE);
                 return false;
-            }else{
+            } else {
                 // Let user fix the table and click save again.
                 return false;
             }
         }
-        
+
         //You are here that means data is valid
         // Update master data (it should triger to update filtered data automatically).
         if (addIsInProgress) {
@@ -967,7 +971,7 @@ public class MmtController implements Initializable {
             int i = datatableview.getSelectionModel().getSelectedIndex();
             employeeDataManager.masterData.set(i, employeeDataStrings);
         }
-        
+
         // Write it to disk
         boolean status = false;
         if (commitMode == CommitMode.UPDATE_DISK) {
@@ -977,13 +981,14 @@ public class MmtController implements Initializable {
         }
 
         // Update the state
-        addIsInProgress = false;    
-        
+        addIsInProgress = false;
+
         return status;
     }
     /*
      * Method to saves employer master data to disk based on selected mode
      */
+
     @FXML
     private boolean commitMasterDataForEmployer(CommitMode commitMode) {
         // Get the data from details panel to validate
@@ -993,8 +998,8 @@ public class MmtController implements Initializable {
         //    reportDataStrings[0] = idGenerator.getNextId(ViewMode.EMPLOYEE);
         //} else 
         //{
-            // edit mode
-            //employerDataStrings[0] = employerDetails_empNumber.getText();
+        // edit mode
+        //employerDataStrings[0] = employerDetails_empNumber.getText();
         //}
         employerDataStrings[0] = employerDetails_empNumber.getText();
         employerDataStrings[1] = employerDetails_companyName.getText();
@@ -1005,24 +1010,24 @@ public class MmtController implements Initializable {
         employerDataStrings[6] = employerDetails_phoneNumber.getText();
         employerDataStrings[7] = employerDetails_emailAddressss.getText();
         employerDataStrings[8] = employerDetails_contactPersonName.getText();
- 
+
         boolean bValidData1 = DataValidator.isEmailValid(employerDataStrings[7]);
         boolean bValidData2 = DataValidator.isPhoneNumberValid(employerDataStrings[6]);
         boolean bValidData3 = DataValidator.isZipCodeValid(employerDataStrings[5]);
         if (!bValidData1 || !bValidData2 || !bValidData3) {
             MessageBox mb = new MessageBox("Error in data. Do you want to discard changes : changes will be lost?", MessageBoxType.YES_NO);
             mb.showAndWait();
-            if (mb.getMessageBoxResult() == MessageBoxResult.YES){
+            if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
                 // Discard the changes and chane the state clean
                 addIsInProgress = false;
-                dataStateManager.setClean(ViewMode.EMPLOYER);                
+                dataStateManager.setClean(ViewMode.EMPLOYER);
                 return false;
-            }else{
+            } else {
                 // Let user fix the table and click save again.
                 return false;
             }
         }
-        
+
         //You are here that means data is valid
         // Update master data (it should triger to update filtered data automatically).
         if (addIsInProgress) {
@@ -1034,7 +1039,7 @@ public class MmtController implements Initializable {
             int i = datatableview.getSelectionModel().getSelectedIndex();
             employerDataManager.masterData.set(i, employerDataStrings);
         }
-        
+
         // Write it to disk
         boolean status = false;
         if (commitMode == CommitMode.UPDATE_DISK) {
@@ -1045,12 +1050,13 @@ public class MmtController implements Initializable {
 
         // Update the state
         addIsInProgress = false;
-        
+
         return status;
     }
     /*
      * Method to saves report master data to disk based on selected mode
      */
+
     @FXML
     private boolean commitMasterDataForFullReport(CommitMode commitMode) {
         // Get the data from details panel to validate
@@ -1060,8 +1066,8 @@ public class MmtController implements Initializable {
         //    reportDataStrings[0] = idGenerator.getNextId(ViewMode.EMPLOYEE);
         //} else 
         //{
-            // edit mode
-            //employerDataStrings[0] = employerDetails_empNumber.getText();
+        // edit mode
+        //employerDataStrings[0] = employerDetails_empNumber.getText();
         //}
         reportDataStrings[0] = evalNumber.getText();
         reportDataStrings[1] = employeeNumber.getText();
@@ -1072,33 +1078,35 @@ public class MmtController implements Initializable {
         // Update quality-tab
         int sumScore = 0;
         int score = 1;
-        if ( wqs1.isSelected() ) {
+        if (wqs1.isSelected()) {
             score = 1;
-        } else if ( wqs2.isSelected() ) {
+        } else if (wqs2.isSelected()) {
             score = 2;
-        } if ( wqs3.isSelected() ) {
+        }
+        if (wqs3.isSelected()) {
             score = 3;
-        } else if ( wqs4.isSelected() ) {
+        } else if (wqs4.isSelected()) {
             score = 4;
-        } else if ( wqs5.isSelected() ) {
+        } else if (wqs5.isSelected()) {
             score = 5;
         }
         sumScore += score;
-        
+
         reportDataStrings[5] = score + "";
         reportDataStrings[6] = qualityCommentTextArea.getText();
 
         // Update habits-tab
         score = 1;
-        if ( hqs1.isSelected() ) {
+        if (hqs1.isSelected()) {
             score = 1;
-        } else if ( hqs2.isSelected() ) {
+        } else if (hqs2.isSelected()) {
             score = 2;
-        } if ( hqs3.isSelected() ) {
+        }
+        if (hqs3.isSelected()) {
             score = 3;
-        } else if ( hqs4.isSelected() ) {
+        } else if (hqs4.isSelected()) {
             score = 4;
-        } else if ( hqs5.isSelected() ) {
+        } else if (hqs5.isSelected()) {
             score = 5;
         }
         sumScore += score;
@@ -1108,15 +1116,16 @@ public class MmtController implements Initializable {
 
         // Update knowledge-tab
         score = 1;
-        if ( kqs1.isSelected() ) {
+        if (kqs1.isSelected()) {
             score = 1;
-        } else if ( kqs2.isSelected() ) {
+        } else if (kqs2.isSelected()) {
             score = 2;
-        } if ( kqs3.isSelected() ) {
+        }
+        if (kqs3.isSelected()) {
             score = 3;
-        } else if ( kqs4.isSelected() ) {
+        } else if (kqs4.isSelected()) {
             score = 4;
-        } else if ( kqs5.isSelected() ) {
+        } else if (kqs5.isSelected()) {
             score = 5;
         }
         sumScore += score;
@@ -1125,37 +1134,39 @@ public class MmtController implements Initializable {
 
         // Update behavior-tab
         score = 1;
-        if ( bqs1.isSelected() ) {
+        if (bqs1.isSelected()) {
             score = 1;
-        } else if ( bqs2.isSelected() ) {
+        } else if (bqs2.isSelected()) {
             score = 2;
-        } if ( bqs3.isSelected() ) {
+        }
+        if (bqs3.isSelected()) {
             score = 3;
-        } else if ( bqs4.isSelected() ) {
+        } else if (bqs4.isSelected()) {
             score = 4;
-        } else if ( bqs5.isSelected() ) {
+        } else if (bqs5.isSelected()) {
             score = 5;
         }
         sumScore += score;
         reportDataStrings[11] = score + "";
         reportDataStrings[12] = behaviorCommentTextArea.getText();
-        
+
         // Get the average score
-        double avgScore = sumScore/5.0;
+        double avgScore = sumScore / 5.0;
         String tempStr = String.format("%.2f", avgScore);
         reportDataStrings[13] = tempStr;
 
         // Update overall-progress-tab
         score = 1;
-        if ( pqs1.isSelected() ) {
+        if (pqs1.isSelected()) {
             score = 1;
-        } else if ( pqs2.isSelected() ) {
+        } else if (pqs2.isSelected()) {
             score = 2;
-        } if (pqs3.isSelected() ) {
+        }
+        if (pqs3.isSelected()) {
             score = 3;
-        } else if ( pqs4.isSelected() ) {
+        } else if (pqs4.isSelected()) {
             score = 4;
-        } else if ( pqs5.isSelected() ) {
+        } else if (pqs5.isSelected()) {
             score = 5;
         }
         sumScore += score;
@@ -1168,36 +1179,36 @@ public class MmtController implements Initializable {
         } else {
             reportDataStrings[16] = "0";
         }
- 
+
         /*
-        boolean bValidData1 = DataValidator.isEmailValid(reportDataStrings[7]);
-        boolean bValidData2 = DataValidator.isPhoneNumberValid(reportDataStrings[6]);
-        boolean bValidData3 = DataValidator.isZipCodeValid(reportDataStrings[5]);
-        if (!bValidData1 || !bValidData2 || !bValidData3) {
-            MessageBox mb = new MessageBox("Error in data. Do you want to discard changes : changes will be lost?", MessageBoxType.YES_NO);
-            mb.showAndWait();
-            if (mb.getMessageBoxResult() == MessageBoxResult.YES){
-                // Discard the changes and chane the state clean
-                addIsInProgress = false;
-                dataStateManager.setClean(ViewMode.REPORT_FULL);                
-                return false;
-            }else{
-                // Let user fix the table and click save again.
-                return false;
-            }
-        }
-        */
-        
+         boolean bValidData1 = DataValidator.isEmailValid(reportDataStrings[7]);
+         boolean bValidData2 = DataValidator.isPhoneNumberValid(reportDataStrings[6]);
+         boolean bValidData3 = DataValidator.isZipCodeValid(reportDataStrings[5]);
+         if (!bValidData1 || !bValidData2 || !bValidData3) {
+         MessageBox mb = new MessageBox("Error in data. Do you want to discard changes : changes will be lost?", MessageBoxType.YES_NO);
+         mb.showAndWait();
+         if (mb.getMessageBoxResult() == MessageBoxResult.YES){
+         // Discard the changes and chane the state clean
+         addIsInProgress = false;
+         dataStateManager.setClean(ViewMode.REPORT_FULL);                
+         return false;
+         }else{
+         // Let user fix the table and click save again.
+         return false;
+         }
+         }
+         */
+
         //You are here that means data is valid
         // Update master data (it should triger to update filtered data automatically).
         boolean bRecordFound = false;
         int dataLength = reportDataManager.masterData.size();
         for (int i = 0; i < dataLength; i++) {
             String[] rowStings = reportDataManager.masterData.get(i);
-                if (matchesFilter(rowStings, reportDataStrings[0], 0)) {
-                    reportDataManager.masterData.set(i, reportDataStrings);
-                    bRecordFound = true;
-                }
+            if (matchesFilter(rowStings, reportDataStrings[0], 0)) {
+                reportDataManager.masterData.set(i, reportDataStrings);
+                bRecordFound = true;
+            }
         }
         // If record is not found in data that means it is new record
         // add it to master table
@@ -1205,14 +1216,14 @@ public class MmtController implements Initializable {
             // add mode
             reportDataManager.masterData.add(reportDataStrings);
         }
-        
+
         // Write it to disk
         boolean status = false;
         if (empEvalInSeparateRecord) {
-             Evaluation empEval = new Evaluation(reportDataStrings);
-             //empEval.exportDataWithHeader(os, AppUtils.dataHeaderFullEvalReport);
-             //os.close();
-             if (commitMode == CommitMode.UPDATE_DISK) {
+            Evaluation empEval = new Evaluation(reportDataStrings);
+            //empEval.exportDataWithHeader(os, AppUtils.dataHeaderFullEvalReport);
+            //os.close();
+            if (commitMode == CommitMode.UPDATE_DISK) {
                 status = AppUtils.backupSingleEvalData(empEval, null);
                 // Mark the data dirty
                 dataStateManager.setClean(ViewMode.REPORT_FULL);
@@ -1231,35 +1242,37 @@ public class MmtController implements Initializable {
 
         // Update the state
         addIsInProgress = false;
-        
+
         return status;
     }
+
     @FXML
     private void setMaxCharsInCommentTextArea() {
         //qualityCommentTextArea.;
         /*
-        final int maxChars = 10;
-        final String restictTo = “[a-zA-z0-9\\s]*”;
-        final TextField tf = new TextField() {
-        @Override
-        public void replaceText(int start, int end, String text) {
-        if (matchTest(text)) {
-        super.replaceText(start, end, text);
-        }
-        }
-        @Override
-        public void replaceSelection(String text) {
-        if (matchTest(text)) {
-        super.replaceSelection(text);
-        }
-        }
-        private boolean matchTest(String text) {
-        return text.isEmpty() || (text.matches(restictTo) && getText().length() < maxChars);
-        }
-        };
-        */
+         final int maxChars = 10;
+         final String restictTo = “[a-zA-z0-9\\s]*”;
+         final TextField tf = new TextField() {
+         @Override
+         public void replaceText(int start, int end, String text) {
+         if (matchTest(text)) {
+         super.replaceText(start, end, text);
+         }
+         }
+         @Override
+         public void replaceSelection(String text) {
+         if (matchTest(text)) {
+         super.replaceSelection(text);
+         }
+         }
+         private boolean matchTest(String text) {
+         return text.isEmpty() || (text.matches(restictTo) && getText().length() < maxChars);
+         }
+         };
+         */
     }
-    @FXML 
+
+    @FXML
     private void printButtonHanlder(ActionEvent e) {
         // Check the report type
         boolean bFullReport = isFullReportMode();
@@ -1269,16 +1282,19 @@ public class MmtController implements Initializable {
             printPane(empFullReportPane);
         }
     }
-    @FXML 
+
+    @FXML
     private void evaluateButtonHanlder(ActionEvent e) {
         boolean bOnSeparatePage = false;
         reportButtonHanlder(bOnSeparatePage);
     }
+
     @FXML
     private void reportButtonHanlder(ActionEvent e) {
         boolean bOnSeparatePage = true;
         reportButtonHanlder(bOnSeparatePage);
     }
+
     @FXML
     private void reportButtonHanlder(boolean bOnSeparatePage) {
         // Hide the current details panel
@@ -1290,7 +1306,7 @@ public class MmtController implements Initializable {
         // if mdoe is EMPLOYER then we need to get evaluation reort for each employee
         // of currently selected employer
         List empEvalList = null;
-        switch(appMode) {
+        switch (appMode) {
             case EMPLOYEE:
                 // Get currently selected employee
                 empEvalList = getSelectedEmployeeReportData();
@@ -1302,10 +1318,10 @@ public class MmtController implements Initializable {
                 // Get the employee's evaluation report
                 empEvalList = getSelectedEmployerEmployeeReportData();
                 reportPageManager = new ReportPageManager(empEvalList);
-                
+
                 break;
         }
-        
+
         AnchorPane tempAnchorPane = reportPagesAnchor;
         if (bOnSeparatePage == false) {
             // Bring up the report details panel
@@ -1315,17 +1331,17 @@ public class MmtController implements Initializable {
             enableEmployeeReportOnSeparatePage(true);
             tempAnchorPane = reportPagesAnchor2;
         }
-        
+
         // Disable the pagination control buttons, if there is not more than 1 employee
         // in the selected list.
         if (empEvalList.size() > 1) {
-             tempAnchorPane.setVisible(true);
+            tempAnchorPane.setVisible(true);
         } else {
             tempAnchorPane.setVisible(false);
         }
 
         // Show the details report fot the first record
-        if ( !reportPageManager.isEmpty() ) {
+        if (!reportPageManager.isEmpty()) {
             //Evaluation firstEmpEval = (Evaluation) reportPageManager.getCurPage();
             firstPageButtonHanlder(null);
         } else {
@@ -1334,19 +1350,20 @@ public class MmtController implements Initializable {
             //printPane(evalResultPane); Test printing
         }
     }
+
     @FXML
     private void commitButtonHanlder(ActionEvent e) {
         /*
-        MessageBox mb = new MessageBox("Do you want to save changes?", MessageBoxType.YES_NO);
-        mb.showAndWait();
-        if (mb.getMessageBoxResult() == MessageBoxResult.YES){
-                System.out.println("YES");
-                // Save the recordd from the table to the persistent storage.
-                // and mark the data not-dirty
-        }else{
-                System.out.println("NO");
-        }
-        */
+         MessageBox mb = new MessageBox("Do you want to save changes?", MessageBoxType.YES_NO);
+         mb.showAndWait();
+         if (mb.getMessageBoxResult() == MessageBoxResult.YES){
+         System.out.println("YES");
+         // Save the recordd from the table to the persistent storage.
+         // and mark the data not-dirty
+         }else{
+         System.out.println("NO");
+         }
+         */
         commitMasterData(appMode, CommitMode.UPDATE_DISK);
     }
 
@@ -1356,124 +1373,133 @@ public class MmtController implements Initializable {
      */
     @FXML
     private void initPageContolButtons() {
-        
+
         // Keep the anchor-pane for report-page-buttons invisible all time
         // It will be made visible whenever report button is pressed and
         // there is more than 1 page to show/display.
         reportPagesAnchor.setVisible(false);
-        
-        initButton(firstPageButton, "Click to see first report", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    firstPageButtonHanlder(e);
-                                }
+
+        initButton(firstPageButton, "Click to see first report", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        firstPageButtonHanlder(e);
+                    }
                 });
-        initButton(prevPageButton, "Click to see previous report", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    prevPageButtonHanlder(e);
-                                }
+        initButton(prevPageButton, "Click to see previous report", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        prevPageButtonHanlder(e);
+                    }
                 });
-        initButton(nextPageButton, "Click to see next report", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    nextPageButtonHanlder(e);
-                                }
+        initButton(nextPageButton, "Click to see next report", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        nextPageButtonHanlder(e);
+                    }
                 });
-        initButton(lastPageButton, "Click to see last record", true, 
-                    new EventHandler<ActionEvent>() {
-                                @Override public void handle(ActionEvent e) {
-                                    lastPageButtonHanlder(e);
-                                }
+        initButton(lastPageButton, "Click to see last record", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        lastPageButtonHanlder(e);
+                    }
                 });
     }
+
     @FXML
     private void firstPageButtonHanlder(ActionEvent e) {
         Evaluation empEval = (Evaluation) reportPageManager.getFirstPage();
-        
+
         // Check if report is being shown on separate page
         boolean bSeparatePageReport = false;
         if (empFullReportPane.isVisible()) {
-            bSeparatePageReport = true; 
+            bSeparatePageReport = true;
         }
-        
+
         // Check if we need to show full report or concise report
         boolean bFullReport = isFullReportMode();
         if (bSeparatePageReport == false) {
             updateEmployeeFullReportDetails(empEval);
             enablePageControlButtons(prevPageButton, nextPageButton, paginationLabel);
         } else {
-            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);            
+            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);
             enablePageControlButtons(prevPageButton2, nextPageButton2, paginationLabel2);
         }
     }
+
     @FXML
     private void prevPageButtonHanlder(ActionEvent e) {
         Evaluation empEval = (Evaluation) reportPageManager.movePrevPage();
         // Check if report is being shown on separate page
         boolean bSeparatePageReport = false;
         if (empFullReportPane.isVisible()) {
-            bSeparatePageReport = true; 
+            bSeparatePageReport = true;
         }
-        
+
         // Check if we need to show full report or concise report
         boolean bFullReport = isFullReportMode();
         if (bSeparatePageReport == false) {
             updateEmployeeFullReportDetails(empEval);
             enablePageControlButtons(prevPageButton, nextPageButton, paginationLabel);
         } else {
-            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);            
+            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);
             enablePageControlButtons(prevPageButton2, nextPageButton2, paginationLabel2);
         }
     }
+
     @FXML
     private void nextPageButtonHanlder(ActionEvent e) {
         Evaluation empEval = (Evaluation) reportPageManager.moveNextPage();
         // Check if report is being shown on separate page
         boolean bSeparatePageReport = false;
         if (empFullReportPane.isVisible()) {
-            bSeparatePageReport = true; 
+            bSeparatePageReport = true;
         }
-        
+
         // Check if we need to show full report or concise report
         boolean bFullReport = isFullReportMode();
         if (bSeparatePageReport == false) {
             updateEmployeeFullReportDetails(empEval);
             enablePageControlButtons(prevPageButton, nextPageButton, paginationLabel);
         } else {
-            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);            
+            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);
             enablePageControlButtons(prevPageButton2, nextPageButton2, paginationLabel2);
         }
     }
+
     @FXML
     private void lastPageButtonHanlder(ActionEvent e) {
         Evaluation empEval = (Evaluation) reportPageManager.getLastPage();
         // Check if report is being shown on separate page
         boolean bSeparatePageReport = false;
         if (empFullReportPane.isVisible()) {
-            bSeparatePageReport = true; 
+            bSeparatePageReport = true;
         }
-        
+
         // Check if we need to show full report or concise report
         boolean bFullReport = isFullReportMode();
         if (bSeparatePageReport == false) {
             updateEmployeeFullReportDetails(empEval);
             enablePageControlButtons(prevPageButton, nextPageButton, paginationLabel);
         } else {
-            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);            
+            updateEmployeeFullReportDetailsOnSeparatePage(empEval, bFullReport);
             enablePageControlButtons(prevPageButton2, nextPageButton2, paginationLabel2);
         }
     }
+
     private void enablePageControlButtons(Button prevButton, Button nextButton, Label pageLabel) {
-        
+
         // Check prevPage button for enableing/disabling
         boolean enable = reportPageManager.isPrevPageAvailable();
         prevButton.setDisable(!enable);
-        
+
         // Check prevPage button for enableing/disabling
         enable = reportPageManager.isNextPageAvailable();
         nextButton.setDisable(!enable);
-        
+
         String tempStr = reportPageManager.getCurPageNumber() + " of " + reportPageManager.getPageCount() + " Pages";
         pageLabel.setText(tempStr);
     }
@@ -1484,13 +1510,13 @@ public class MmtController implements Initializable {
      */
     @FXML
     private void enableDetailPanel(boolean enable) {
-        System.out.println("enableDetailPanel Called -- enable: " + enable );
-        
+        System.out.println("enableDetailPanel Called -- enable: " + enable);
+
         // Keep the anchor-pane for report-page-buttons invisible all time
         // It will be made visible whenever report button is pressed and
         // there is more than 1 page to show/display.
         reportPagesAnchor.setVisible(false);
-        
+
         //if (enable == false) 
         {
             // Make details panel for all app-modes invisible
@@ -1499,22 +1525,22 @@ public class MmtController implements Initializable {
             evalResultPane.setVisible(false);
             reportDetailsPane.setVisible(false);
         }
-                   
+
         // Check which table is active
         boolean enableEvaluateBtn = false; // if we are not in EMPLOYEE page, disable the evaluate button
         boolean enablePlaceBtn = false;
-        switch(appMode){
+        switch (appMode) {
             /* Moved up to first hide all detail panels before showing
              * mode-specific panel.
              * case NONE:
-                if (enable == false) {
-                    // Make details panel for all app-modes invisible
-                    employeeDetailsPane.setVisible(false);
-                    employerDetailsPane.setVisible(false);
-                    evalResultPane.setVisible(false);
-                    reportDetailsPane.setVisible(false);
-                }
-                break;
+             if (enable == false) {
+             // Make details panel for all app-modes invisible
+             employeeDetailsPane.setVisible(false);
+             employerDetailsPane.setVisible(false);
+             evalResultPane.setVisible(false);
+             reportDetailsPane.setVisible(false);
+             }
+             break;
              */
             case EMPLOYEE:
                 enableEvaluateBtn = true;
@@ -1527,16 +1553,16 @@ public class MmtController implements Initializable {
             case REPORT_CONCISE:
                 reportDetailsPane.setVisible(enable);
                 break;
-             case REPORT_FULL:
+            case REPORT_FULL:
                 evalResultPane.setVisible(enable);
                 break;
         }
-        
+
         // if we are not in EMPLOYEE page, disable the evaluate button
         if (enableEvaluateBtn == false) {
             evaluateButton.setVisible(enableEvaluateBtn);
         }
-        
+
         // if we are not in EMPLOYEE page, disable the evaluate button
         if (enableEvaluateBtn == false) {
             placeEmployeePane.setVisible(enableEvaluateBtn);
@@ -1551,9 +1577,9 @@ public class MmtController implements Initializable {
      */
     @FXML
     private void clearDetailPanel(ViewMode mode) {
-        
+
         // Check which table is active
-        switch(mode){
+        switch (mode) {
             case EMPLOYEE:
                 clearDetailPanelForEmployee();
                 break;
@@ -1568,13 +1594,14 @@ public class MmtController implements Initializable {
     /*
      * Method to clear details panel based for employee 
      */
+
     @FXML
     private void clearDetailPanelForEmployee() {
-        
+
         addIsInProgress = true;
         // Mark the data dirty
         dataStateManager.setDirty(ViewMode.EMPLOYEE);
-        
+
         // Clear out the input fields
         employeeDetails_empNumber.clear();
         employeeDetails_firstName.clear();
@@ -1586,7 +1613,7 @@ public class MmtController implements Initializable {
         employeeDetails_city.clear();
         employeeDetails_state.clear();
         employeeDetails_zipCode.clear();
-        
+
         // id is set automatically
         String newId = idGenerator.getNextId(ViewMode.EMPLOYEE);
         employeeDetails_empNumber.setText(newId);
@@ -1594,11 +1621,12 @@ public class MmtController implements Initializable {
     /*
      * Method to clear details panel based for employee 
      */
+
     @FXML
     private void clearDetailPanelForEmployer() {
         // Mark the data dirty
         dataStateManager.setDirty(ViewMode.EMPLOYER);
-        
+
         employerDetails_empNumber.clear();
         employerDetails_companyName.clear();
         employerDetails_contactPersonName.clear();
@@ -1608,7 +1636,7 @@ public class MmtController implements Initializable {
         employerDetails_city.clear();
         employerDetails_state.clear();
         employerDetails_zipCode.clear();
-        
+
         // id is set automatically
         String newId = idGenerator.getNextId(ViewMode.EMPLOYER);
         employerDetails_empNumber.setText(newId);
@@ -1616,11 +1644,12 @@ public class MmtController implements Initializable {
     /*
      * Method to clear details panel based for employee 
      */
+
     @FXML
     private void clearDetailPanelForFullReport() {
         // Mark the data dirty
         dataStateManager.setDirty(ViewMode.REPORT_FULL);
-        
+
         // Clear everything in "evalResultPane"
         evalNumber.clear();
         employeeNumber.clear();
@@ -1644,45 +1673,45 @@ public class MmtController implements Initializable {
 
         pqs1.setSelected(true); // radtion button
         progressCommentTextArea.clear();
-        
+
         // id is set automatically
         String newId = idGenerator.getNextId(ViewMode.REPORT_FULL);
         evalNumber.setText(newId);
     }
-    
+
     @FXML
     private void enableEmployeeReportOnSeparatePage(boolean enable) {
-        
+
         // Disable/enanle the main page's controls
         mainAnchor.setVisible(!enable);
         firstPage.setVisible(!enable);
         enableDetailPanel(!enable);
-        
+
         // Enable/disable report page controls
         sepPageReportControlPane.setVisible(enable);
         empFullReportPane.setVisible(enable);
     }
-    
+
     @FXML
     private void enableMainPage(boolean enable) {
-        
+
         // Disable/enable the main page's controls
 
         // Enable/disable report page controls
         empFullReportPane.setVisible(enable);
     }
-    
+
     /*
      * Method to show details panel based on selected mode
      * @params : flag to enable or disable the details panel for current mode 
      */
     @FXML
     private void disableAllDetailPanel() {
-        
+
         // Save current mode
         ViewMode vm = appMode;
         appMode = ViewMode.NONE;
-        
+
         // disable
         enableDetailPanel(false);
 
@@ -1698,16 +1727,16 @@ public class MmtController implements Initializable {
     @FXML
     private void updateDetails(Number oldValue, Number newValue) {
         System.out.println("Selection Changed -- old: " + oldValue + ", new: " + newValue);
-        
+
         // Check if we are showing report-details
         // Hide it, if so
         if (evalResultPane.isVisible()) {
             evalResultPane.setVisible(false);
             enableDetailPanel(true);
         }
-        
+
         // Check which table is active
-        switch(appMode){
+        switch (appMode) {
             case EMPLOYEE:
                 updateEmployeeDetails(oldValue, newValue);
                 break;
@@ -1717,12 +1746,12 @@ public class MmtController implements Initializable {
             case REPORT_CONCISE:
                 updateConciseReportDetails(oldValue, newValue);
                 break;
-             case REPORT_FULL:
+            case REPORT_FULL:
                 //updateEvalReportDetails(oldValue, newValue);
                 break;
         }
     }
-    
+
     /*
      * Method is called when user selects different filter 
      * from filter choice-box
@@ -1732,9 +1761,9 @@ public class MmtController implements Initializable {
     @FXML
     private void onFilterSelectionChange(Number oldValue, Number newValue) {
         System.out.println("Selection Changed -- old: " + oldValue + ", new: " + newValue);
-        
+
         // Check which table is active
-        switch(appMode){
+        switch (appMode) {
             case EMPLOYEE:
                 // TODO
                 break;
@@ -1746,7 +1775,7 @@ public class MmtController implements Initializable {
                 break;
         }
     }
-    
+
     /*
      * Query methods
      */
@@ -1755,13 +1784,14 @@ public class MmtController implements Initializable {
         if (appMode == ViewMode.EMPLOYER) {
             bFullReport = false;
         }
-        
+
         return bFullReport;
     }
     /*
      * Method to return true if data is dirty and not yet committed to disk.
      * Otherwise, it returns false.
      */
+
     public boolean isDirty() {
         if (dataStateManager != null) {
             return dataStateManager.isDirty();
@@ -1778,16 +1808,16 @@ public class MmtController implements Initializable {
     @FXML
     private void updateEmployeeDetails(Number oldValue, Number newValue) {
         System.out.println("Employee Selection Changed -- old: " + oldValue + ", new: " + newValue);
-        
+
         // Get the selected employee
         String[] obj = (String[]) datatableview.getSelectionModel().getSelectedItem();
         String employeeId = obj[0];
 
         // if we are in EMPLOYEE page, row(s) is selected and
         // selected row employee is employed then enable the evaluate button
-        if ( fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
+        if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
             evaluateButton.setVisible(true);
-        }                            
+        }
 
         // Updates the details panel for employee
         System.out.println(obj);
@@ -1815,7 +1845,7 @@ public class MmtController implements Initializable {
 
         // Get the selected employer
         String[] obj = (String[]) datatableview.getSelectionModel().getSelectedItem();
-        
+
         // Updates the details panel for employer
         System.out.println(obj);
         // String[] dataHeader = new String[]{"id", "name", "address", "city", "state", "zipCode", "phone", "email", "contactPerson"};
@@ -1829,7 +1859,7 @@ public class MmtController implements Initializable {
         employerDetails_emailAddressss.setText(obj[7]);
         employerDetails_phoneNumber.setText(obj[6]);
     }
-    
+
     /*
      * Method to update details panel with evaluation result for currently
      * selected data/employee
@@ -1837,9 +1867,9 @@ public class MmtController implements Initializable {
      * @params newValue: new selected index
      */
     @FXML
-    private void updateEmployeeFullReportDetails( String[] obj) {
+    private void updateEmployeeFullReportDetails(String[] obj) {
         System.out.println("Report Selection Changed -- old: ");
-        
+
         // Get the selected employer
         evalNumber.setText(obj[0]);
         employeeNumber.setText(obj[1]);
@@ -1847,17 +1877,17 @@ public class MmtController implements Initializable {
         evalDate.setText(obj[3]);
         nextEvalDate.setText(obj[4]);
         //averageScore.setText(obj[0]);
-        
+
         // Get the average score
         float avgScore = 0;
         int tempInt = 0;
         final int scoreStartIndex = 5;
         int tempI = 0;
-        for(tempI=0; tempI < 5; tempI ++) {
-            tempInt = Integer.valueOf(obj[scoreStartIndex + tempI*2]);
+        for (tempI = 0; tempI < 5; tempI++) {
+            tempInt = Integer.valueOf(obj[scoreStartIndex + tempI * 2]);
             avgScore += tempInt;
         }
-        avgScore = (avgScore/tempI);
+        avgScore = (avgScore / tempI);
         String tempStr = String.format("%.2f", avgScore);
         averageScore.setText(tempStr);
 
@@ -1866,24 +1896,24 @@ public class MmtController implements Initializable {
         evalRecommendation.setSelected(bRecommended);
 
         /*
-        // Update the tabs for qscore-data
-        ObservableList tabsList = empScoreTabs.getTabs();
-        //Object[] tabs = (Tab[]) tabsList.toArray();
-        for(int i = 0; i < tabsList.size(); i++) {
-            Tab curTab = (Tab) tabsList.get(i);
-            if (curTab.getId().equals("qualityTab")) {
-               // Set the score value
+         // Update the tabs for qscore-data
+         ObservableList tabsList = empScoreTabs.getTabs();
+         //Object[] tabs = (Tab[]) tabsList.toArray();
+         for(int i = 0; i < tabsList.size(); i++) {
+         Tab curTab = (Tab) tabsList.get(i);
+         if (curTab.getId().equals("qualityTab")) {
+         // Set the score value
                 
-               int xxx = 5;
-               xxx++;
-               // Set the comment
-           }
-        }
-        */
-        
+         int xxx = 5;
+         xxx++;
+         // Set the comment
+         }
+         }
+         */
+
         // Update quality-tab        
     }
-    
+
     /*
      * Method to update details panel with evaluation result for currently
      * selected data/employee
@@ -1891,9 +1921,9 @@ public class MmtController implements Initializable {
      * @params newValue: new selected index
      */
     @FXML
-    private void updateEmployeeFullReportDetails( Evaluation empEval) {
+    private void updateEmployeeFullReportDetails(Evaluation empEval) {
         System.out.println("Report Selection Changed -- old: ");
-        
+
         // Get the selected employer
         evalNumber.setText(empEval.getEvaluationNumber());
         employeeNumber.setText(empEval.getEmployeeNumber());
@@ -1910,7 +1940,7 @@ public class MmtController implements Initializable {
         int score = 1;
         score = empEval.getWorkQualityScore();
         sumScore += score;
-        switch(score) {
+        switch (score) {
             case 1:
                 wqs1.setSelected(true);
                 break;
@@ -1928,11 +1958,11 @@ public class MmtController implements Initializable {
                 break;
         }
         qualityCommentTextArea.setText(empEval.getWorkHabitsComments());
-        
+
         // Update behavior-tab
         score = empEval.getBehaviorScore();
         sumScore += score;
-        switch(score) {
+        switch (score) {
             case 1:
                 bqs1.setSelected(true);
                 break;
@@ -1950,11 +1980,11 @@ public class MmtController implements Initializable {
                 break;
         }
         behaviorCommentTextArea.setText(empEval.getBehaviorComments());
-        
+
         // Update overall-progress-tab
         score = empEval.getOverallProgressScore();
         sumScore += score;
-        switch(score) {
+        switch (score) {
             case 1:
                 pqs1.setSelected(true);
                 break;
@@ -1972,12 +2002,12 @@ public class MmtController implements Initializable {
                 break;
         }
         progressCommentTextArea.setText(empEval.getOverallProgressComments());
-        
-        
+
+
         // Update knowledge-tab
         score = empEval.getJobKnowledgeScore();
         sumScore += score;
-        switch(score) {
+        switch (score) {
             case 1:
                 kqs1.setSelected(true);
                 break;
@@ -1995,11 +2025,11 @@ public class MmtController implements Initializable {
                 break;
         }
         knowledgeCommentTextArea.setText(empEval.getJobKnowledgeComments());
-        
+
         // Update habits-tab
         score = empEval.getWorkHabitsScore();
         sumScore += score;
-        switch(score) {
+        switch (score) {
             case 1:
                 hqs1.setSelected(true);
                 break;
@@ -2017,12 +2047,12 @@ public class MmtController implements Initializable {
                 break;
         }
         habitsCommentTextArea.setText(empEval.getWorkHabitsComments());
- 
+
         // Get the average score
         double avgScore = empEval.getAverageScore();
-        avgScore = sumScore/5.0;
+        avgScore = sumScore / 5.0;
         String tempStr = avgScore + "";
-        averageScore.setText(tempStr);        
+        averageScore.setText(tempStr);
     }
 
     /*
@@ -2032,9 +2062,9 @@ public class MmtController implements Initializable {
      * @params newValue: new selected index
      */
     @FXML
-    private void updateEmployeeFullReportDetailsOnSeparatePage( Evaluation empEval, boolean bFullReport) {
+    private void updateEmployeeFullReportDetailsOnSeparatePage(Evaluation empEval, boolean bFullReport) {
         System.out.println("Report Selection Changed -- old: ");
-        
+
         // Get the employee name from the employee-data
         String firstName = ""; // Aditya
         String lastName = ""; // Mishra
@@ -2042,19 +2072,19 @@ public class MmtController implements Initializable {
         Iterator<String[]> iter = employeeDataManager.masterData.iterator();
         while (iter.hasNext()) {
             String[] rowStings = iter.next();
-                if (matchesFilter(rowStings, searchString, 0)) {
-                    firstName = rowStings[1];
-                    lastName = rowStings[2];
-                    break;
-                }
+            if (matchesFilter(rowStings, searchString, 0)) {
+                firstName = rowStings[1];
+                lastName = rowStings[2];
+                break;
+            }
         }
         String reportTitle = "Performance report for " + firstName + " " + lastName;
         printReportForLabel.setText(reportTitle);
-        
+
         // Get the selected employer
         //Get the employee name
         StringBuilder sb = new StringBuilder();
-        
+
         sb.append("Evaluation Number:      ");
         sb.append(empEval.getEvaluationNumber());
         sb.append("\nEmployee Number:      ");
@@ -2066,7 +2096,7 @@ public class MmtController implements Initializable {
         sb.append("\nNext Evaluation Date: ");
         sb.append(empEval.getNxtEvalDate());
         //averageScore.setText(obj[0]);
-        
+
         // Update quality-tab
         int score = 1;
         score = empEval.getWorkQualityScore();
@@ -2076,34 +2106,34 @@ public class MmtController implements Initializable {
             sb.append("\nWork Quality Comment: ");
             sb.append(empEval.getWorkHabitsComments());
         }
-        
+
         // Update behavior-tab
         score = empEval.getBehaviorScore();
         sb.append("\n\nWork Behavior Score: ");
         sb.append(Integer.toString(score));
         if (bFullReport) {
             sb.append("\nWork Behavior Comment: ");
-        sb.append(empEval.getBehaviorComments());
+            sb.append(empEval.getBehaviorComments());
         }
-        
+
         // Update overall-progress-tab
         score = empEval.getOverallProgressScore();
         sb.append("\n\nOverall Score: ");
         sb.append(Integer.toString(score));
         if (bFullReport) {
             sb.append("\nOverall Progress Comment: ");
-        sb.append(empEval.getOverallProgressComments());
+            sb.append(empEval.getOverallProgressComments());
         }
-        
+
         // Update knowledge-tab
         score = empEval.getJobKnowledgeScore();
         sb.append("\n\nJob Knowledge Score: ");
         sb.append(Integer.toString(score));
         if (bFullReport) {
             sb.append("\nJob Knowledge Comment: ");
-        sb.append(empEval.getJobKnowledgeComments());
+            sb.append(empEval.getJobKnowledgeComments());
         }
-        
+
         // Update habits-tab
         score = empEval.getWorkHabitsScore();
         sb.append("\n\nWork Habits Score: ");
@@ -2112,7 +2142,7 @@ public class MmtController implements Initializable {
             sb.append("\nWork Habits Comment: ");
             sb.append(empEval.getWorkHabitsComments());
         }
-        
+
         // Get the average score
         float avgScore = (float) empEval.getAverageScore();
         String tempStr = String.format("%.2f", avgScore);
@@ -2128,11 +2158,11 @@ public class MmtController implements Initializable {
         }
         sb.append("\t\t\t\t\tRecommended:   ");
         sb.append(tempStr);
-        
+
         // Write it out to report area
         empFullReportTextAreaa.setText(sb.toString());
     }
-    
+
     /*
      * Updates the master-report data with passed values of the data
      * if search string in the search column matches
@@ -2144,14 +2174,14 @@ public class MmtController implements Initializable {
     private boolean updateReportData(int searchColumnIndex, int updateColumnIndex, ArrayList<String> searchStringInRecords, ArrayList<String> newValueRecords) {
         //You are here that means data is valid
         // Update master data (it should triger to update filtered data automatically).
-        boolean status = false;
         if (searchStringInRecords.size() != newValueRecords.size()) {
             return false;
         }
+        boolean status = true;
         int dataLength = reportDataManager.masterData.size();
         for (int i = 0; i < dataLength; i++) {
             String[] rowStings = reportDataManager.masterData.get(i);
-            
+
             // Check if find any matching for requested records
             for (int record = 0; record < searchStringInRecords.size(); record++) {
                 if (matchesFilter(rowStings, searchStringInRecords.get(record), searchColumnIndex)) {
@@ -2162,6 +2192,9 @@ public class MmtController implements Initializable {
                 }
             }// for records in the input parameters
         } // for each record in the master-data
+        
+        // We are here either because we have updated report-data or did  not
+        // find any matching record. In all case, it means we are successful.
         return status;
     }
 
@@ -2173,10 +2206,10 @@ public class MmtController implements Initializable {
     @FXML
     private void updateConciseReportDetails(Number oldValue, Number newValue) {
         System.out.println("Report Selection Changed -- old: " + oldValue + ", new: " + newValue);
-        
+
         // Get the selected employer
         String[] obj = (String[]) datatableview.getSelectionModel().getSelectedItem();
-        
+
         // Updates the details panel for employer
         report_evalNumber.setText(obj[0]);
         report_employeeNumber.setText(obj[1]);
@@ -2184,7 +2217,7 @@ public class MmtController implements Initializable {
         report_evalDate.setText(obj[3]);
         report_nextEvalDate.setText(obj[4]);
         //report_evalNumber.setPromptText("Aditya Mishra");
-        
+
         // Get the employee name from the employee-data
         String firstName = ""; // Aditya
         String lastName = ""; // Mishra
@@ -2192,39 +2225,39 @@ public class MmtController implements Initializable {
         Iterator<String[]> iter = employeeDataManager.masterData.iterator();
         while (iter.hasNext()) {
             String[] rowStings = iter.next();
-                if (matchesFilter(rowStings, searchString, 0)) {
-                    firstName = rowStings[1];
-                    lastName = rowStings[2];
-                    break;
-                }
+            if (matchesFilter(rowStings, searchString, 0)) {
+                firstName = rowStings[1];
+                lastName = rowStings[2];
+                break;
+            }
         }
         String reportTitle = "Performance report for " + firstName + " " + lastName;
-        printReportForLabel.setText(reportTitle);        
-        
+        printReportForLabel.setText(reportTitle);
+
         // Get the average score
         final int scoreStartIndex = 5;
         /*
-        float avgScore = 0;
-        int tempInt = 0;
-        int tempI = 0;
-        for(tempI=0; tempI < 5; tempI ++) {
-            tempInt = Integer.valueOf(obj[scoreStartIndex + tempI*2]);
-            avgScore += tempInt;
-        }
-        avgScore = (avgScore/tempI);
-        String tempStr = avgScore + "";
-        */
+         float avgScore = 0;
+         int tempInt = 0;
+         int tempI = 0;
+         for(tempI=0; tempI < 5; tempI ++) {
+         tempInt = Integer.valueOf(obj[scoreStartIndex + tempI*2]);
+         avgScore += tempInt;
+         }
+         avgScore = (avgScore/tempI);
+         String tempStr = avgScore + "";
+         */
         String tempStr = obj[14];
         report_averageScore.setText(tempStr);
-        
+
         boolean bRecommended = false;
         bRecommended = Integer.valueOf(obj[16]) == 1;
         report_recommended.setSelected(bRecommended);
-        
+
         // update the table
         updateConciseReportDetailsScoreTable(obj, scoreStartIndex);
     }
-    
+
     /*
      * Method to get directory name from user
      */
@@ -2233,10 +2266,10 @@ public class MmtController implements Initializable {
         dirChooser.setTitle(title);
         File dirFile1 = new File(AppUtils.class.getClassLoader().getResource(initialDir).getPath());
         dirChooser.setInitialDirectory(dirFile1);
-        
-        Window mainWindow = mainAnchor.getScene().getWindow();        
+
+        Window mainWindow = mainAnchor.getScene().getWindow();
         File dirFile2 = dirChooser.showDialog(mainWindow);
-        
+
         return dirFile2;
     }
     /*
@@ -2246,6 +2279,7 @@ public class MmtController implements Initializable {
      * @params String: search string
      * @params int: which column to look for matching
      */
+
     private String[] getRowDataMatchColumn(DataManager dataManager, String searchString, int columnIndex) {
         // Check if we have evaluation report available for this employee
         String[] reportRowStrings = null;
@@ -2255,14 +2289,15 @@ public class MmtController implements Initializable {
             if (matchesFilter(reportRowStrings, searchString, columnIndex)) {
                 return reportRowStrings;
             }
-         }
+        }
         return null;
     }
+
     private Evaluation getEvalForEmployee(String selEmployeeId, String todayDateString) {
         String[] reportRowStrings = null;
         reportRowStrings = getRowDataMatchColumn(reportDataManager, selEmployeeId, 1); //reportDataManager.masterData.iterator();
         if (reportRowStrings == null) {
-            reportRowStrings = new String[]{"", "", "", "", "", "1", "", "1","","1","","1","","1", "1","","0"};
+            reportRowStrings = new String[]{"", "", "", "", "", "1", "", "1", "", "1", "", "1", "", "1", "1", "", "0"};
             reportRowStrings[0] = idGenerator.getNextId(ViewMode.REPORT_FULL);
             reportRowStrings[1] = selEmployeeId;
             // TODO : get the employer id from the field placement data
@@ -2270,7 +2305,7 @@ public class MmtController implements Initializable {
             reportRowStrings[3] = todayDateString;
             reportRowStrings[4] = todayDateString;
         }
-        
+
         Evaluation empEval1 = new Evaluation(reportRowStrings);
         return empEval1;
     }
@@ -2278,118 +2313,124 @@ public class MmtController implements Initializable {
      * Method to return selected employee's report data from report data-manager
      * using id of selected employee
      */
+
     private List getSelectedEmployeeReportData() {
         // Get selected employee for evaluation
         String[] selRowStr = (String[]) datatableview.getSelectionModel().getSelectedItem();
 
         // Get id of the employee
         String selEmployeeId = selRowStr[0];
-        
+
         Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.HOUR); calendar.clear(Calendar.MINUTE); calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.HOUR);
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
         Date todayDate = calendar.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String todayDateString = "03/02/2013";
         try {
-            todayDateString =  dateFormat.format(todayDate);
-        } catch(Exception ex) {
+            todayDateString = dateFormat.format(todayDate);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
         List empEvalList = new ArrayList();
         /*
-        // Check if we have evaluation report available for this employee
-        String[] reportRowStrings = null;
-        reportRowStrings = getRowDataMatchColumn(reportDataManager, selEmployeeId, 1); reportDataManager.masterData.iterator();
-        if (reportRowStrings == null) {
-            reportRowStrings = new String[]{"", "", "", "", "", "1", "", "1","","1","","1","","1", "1","","0"};
-            reportRowStrings[0] = idGenerator.getNextId(ViewMode.REPORT_FULL);
-            reportRowStrings[1] = selEmployeeId;
-            // TODO : get the employer id from the field placement data
-            reportRowStrings[2] = fieldPlacementManager.findEmployerOf(selEmployeeId);
-            reportRowStrings[3] = todayDateString;
-            reportRowStrings[4] = todayDateString;
-        }
+         // Check if we have evaluation report available for this employee
+         String[] reportRowStrings = null;
+         reportRowStrings = getRowDataMatchColumn(reportDataManager, selEmployeeId, 1); reportDataManager.masterData.iterator();
+         if (reportRowStrings == null) {
+         reportRowStrings = new String[]{"", "", "", "", "", "1", "", "1","","1","","1","","1", "1","","0"};
+         reportRowStrings[0] = idGenerator.getNextId(ViewMode.REPORT_FULL);
+         reportRowStrings[1] = selEmployeeId;
+         // TODO : get the employer id from the field placement data
+         reportRowStrings[2] = fieldPlacementManager.findEmployerOf(selEmployeeId);
+         reportRowStrings[3] = todayDateString;
+         reportRowStrings[4] = todayDateString;
+         }
         
-        Evaluation empEval1 = new Evaluation(reportRowStrings);
-        */
+         Evaluation empEval1 = new Evaluation(reportRowStrings);
+         */
         Evaluation empEval1 = getEvalForEmployee(selEmployeeId, todayDateString);
         empEvalList.add(empEval1);
-        
+
         return empEvalList;
     }
     /*
      * Method to return selected employer's all employee's report data 
      * from report data-manager using id of selected employee
      */
+
     private List getSelectedEmployerEmployeeReportData() {
         // HACK : TODO get the object
         /*
-        List empEvalList =  new ArrayList();
-        String[] reportData2 = new String[] {"100", "90000", "1", "10/3/2012", "3/8/2013", "1", "qs1", "2","hs1","3","semper","1","dolor","1","2","posuere","0"};
-        Evaluation empEval2 = new Evaluation(reportData2);
-        empEvalList.add(empEval2);
+         List empEvalList =  new ArrayList();
+         String[] reportData2 = new String[] {"100", "90000", "1", "10/3/2012", "3/8/2013", "1", "qs1", "2","hs1","3","semper","1","dolor","1","2","posuere","0"};
+         Evaluation empEval2 = new Evaluation(reportData2);
+         empEvalList.add(empEval2);
 
-        reportData2[0] = "123";
-        reportData2[1] = "801";
-        reportData2[15] = "1";
-        empEval2 = new Evaluation(reportData2);
-        empEvalList.add(empEval2);
+         reportData2[0] = "123";
+         reportData2[1] = "801";
+         reportData2[15] = "1";
+         empEval2 = new Evaluation(reportData2);
+         empEvalList.add(empEval2);
 
-        reportData2[0] = "124";
-        reportData2[1] = "901";
-        empEval2 = new Evaluation(reportData2);
-        empEvalList.add(empEval2);
-        */
+         reportData2[0] = "124";
+         reportData2[1] = "901";
+         empEval2 = new Evaluation(reportData2);
+         empEvalList.add(empEval2);
+         */
         // Get selected employer 
         String[] selRowStr = (String[]) datatableview.getSelectionModel().getSelectedItem();
 
         // Get id of the employer
         String selEmployerId = selRowStr[0];
-        
+
         // Get employee ids of the this employer from field placement
         List employeeIdList = fieldPlacementManager.findEmployeesOf(selEmployerId);
-        
+
         Calendar calendar = Calendar.getInstance();
-        calendar.clear(Calendar.HOUR); calendar.clear(Calendar.MINUTE); calendar.clear(Calendar.SECOND);
+        calendar.clear(Calendar.HOUR);
+        calendar.clear(Calendar.MINUTE);
+        calendar.clear(Calendar.SECOND);
         Date todayDate = calendar.getTime();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         String todayDateString = "03/02/2013";
         try {
-            todayDateString =  dateFormat.format(todayDate);
-        } catch(Exception ex) {
+            todayDateString = dateFormat.format(todayDate);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
-        
+
         List empEvalList = new ArrayList();
-        
+
         for (int i = 0; i < employeeIdList.size(); i++) {
-            Evaluation empEval1 = getEvalForEmployee( (String) employeeIdList.get(i), todayDateString);
+            Evaluation empEval1 = getEvalForEmployee((String) employeeIdList.get(i), todayDateString);
             empEvalList.add(empEval1);
         }
-        
+
         return empEvalList;
     }
     // Gets the score list from row of report-table
+
     private ObservableList<Score> getScoreTable(String[] rowData, int scoreStartIndex) {
-	ObservableList<Score> data =
-        FXCollections.observableArrayList(
-            new Score("Quality", rowData[scoreStartIndex]),
-            new Score("Habit", rowData[scoreStartIndex+2]),
-            new Score("Knowledge", rowData[scoreStartIndex+4]),
-            new Score("Behavior", rowData[scoreStartIndex+6]),
-            new Score("Overall", rowData[scoreStartIndex+9])
-        );
-        
+        ObservableList<Score> data =
+                FXCollections.observableArrayList(
+                new Score("Quality", rowData[scoreStartIndex]),
+                new Score("Habit", rowData[scoreStartIndex + 2]),
+                new Score("Knowledge", rowData[scoreStartIndex + 4]),
+                new Score("Behavior", rowData[scoreStartIndex + 6]),
+                new Score("Overall", rowData[scoreStartIndex + 9]));
+
         return data;
     }
-    
+
     /*
      * updates the concise report's score table
      */
     private void updateConciseReportDetailsScoreTable(String[] rowData, int scoreStartIndex) {
 
-	TableColumn firstCol = new TableColumn("Performance Metrics");
+        TableColumn firstCol = new TableColumn("Performance Metrics");
         firstCol.setMinWidth(100);
         firstCol.setCellValueFactory(
                 new PropertyValueFactory<Score, String>("Category"));
@@ -2401,25 +2442,25 @@ public class MmtController implements Initializable {
 
         // get data
         ObservableList<Score> data = getScoreTable(rowData, scoreStartIndex);
-	reportDetails_scoreTable.setItems(data);
-	reportDetails_scoreTable.getColumns().setAll(firstCol, secondCol);
-	
-	// create data from selected row
+        reportDetails_scoreTable.setItems(data);
+        reportDetails_scoreTable.getColumns().setAll(firstCol, secondCol);
+
+        // create data from selected row
     }
-    
+
     /**
-     * Updates the id generator to match with restored data.
-     * Should be called only when data is restored very first time on launch.
+     * Updates the id generator to match with restored data. Should be called
+     * only when data is restored very first time on launch.
      */
     private void updateIdGenerator(ViewMode mode) {
-        
+
         int nextEmployeeId = Integer.parseInt(idGenerator.getNextId(ViewMode.EMPLOYEE));
         int nextEmployerId = Integer.parseInt(idGenerator.getNextId(ViewMode.EMPLOYER));
         int nextReportId = Integer.parseInt(idGenerator.getNextId(ViewMode.REPORT_CONCISE));
         boolean updateEmployeeId = false;
         boolean updateEmployerId = false;
         boolean updateReportId = false;
-        switch(mode){
+        switch (mode) {
             case NONE: // wrong type but did not want to add another one.. to update all in one call
                 updateEmployeeId = true;
                 updateEmployerId = true;
@@ -2436,14 +2477,14 @@ public class MmtController implements Initializable {
                 updateReportId = true;
                 break;
         } // switch
-        
+
         if (updateEmployeeId) {
             // datatableview is sorted on id, so get the last row and corresponding column
             // from this row to fetch id
             ObservableList<String[]> obsEmployeeList = datatableview.getItems();
             if (obsEmployeeList != null && !obsEmployeeList.isEmpty()) {
                 nextEmployeeId = Integer.parseInt(obsEmployeeList.get(obsEmployeeList.size() - 1)[0]);
-            }                
+            }
         }
         if (updateEmployerId) {
             // datatableview is sorted on id, so get the last row and corresponding column
@@ -2458,21 +2499,21 @@ public class MmtController implements Initializable {
             ObservableList<String[]> obsReportList = datatableview.getItems();
             if (obsReportList != null && !obsReportList.isEmpty()) {
                 nextReportId = Integer.parseInt(obsReportList.get(obsReportList.size() - 1)[0]);
-            }                
+            }
         }
-        
+
         // Got the updated info from tableview
         // update the generator
         idGenerator.reset(nextEmployeeId, nextEmployerId, nextReportId);
     }
-    
+
     /**
      * Updates the filteredData to contain all data from the masterData that
      * matches the current filter.
      */
     private boolean updateFilteredData(ViewMode mode) {
         DataManager dataManager = null;
-        
+
         // Check if caller has overriden the app-mode to be used
         // for updating the filtered data. Use if if so.
         ViewMode curAppMode = appMode;
@@ -2481,7 +2522,7 @@ public class MmtController implements Initializable {
         }
 
         // Check which table is active
-        switch(curAppMode){
+        switch (curAppMode) {
             case EMPLOYEE:
                 dataManager = employeeDataManager;
                 break;
@@ -2491,15 +2532,15 @@ public class MmtController implements Initializable {
             case REPORT_CONCISE:
                 dataManager = reportDataManager;
                 break;
-             case REPORT_FULL:
+            case REPORT_FULL:
                 //dataManager = evalResultDataManager;
                 break;
         }
-        
+
         if (dataManager == null || dataManager.masterData == null) {
             return false;
         }
-        
+
         // If it is first time then filtered-data must be null.
         // Check it if it is null and insitlaize the filter data from master data
         //if (dataManager.filteredData == null) {
@@ -2512,20 +2553,20 @@ public class MmtController implements Initializable {
             dataManager.filteredData.clear();
             String searchString = searchField.getText();
             /*		
-            for (String[] colStr : dataManager.masterData) {
-                if (matchesFilter(colStr, searchString, -1)) {
-                    dataManager.filteredData.add(colStr);
-                }
-            }
-            * 
-            * // this works too
-            for (int i = 0; i < dataLength; i++) {
-                String[] colStr = dataManager.masterData.get(i);
-                if (matchesFilter(colStr, searchString, -1)) {
-                    dataManager.filteredData.add(colStr);
-                }
-            }
-            */
+             for (String[] colStr : dataManager.masterData) {
+             if (matchesFilter(colStr, searchString, -1)) {
+             dataManager.filteredData.add(colStr);
+             }
+             }
+             * 
+             * // this works too
+             for (int i = 0; i < dataLength; i++) {
+             String[] colStr = dataManager.masterData.get(i);
+             if (matchesFilter(colStr, searchString, -1)) {
+             dataManager.filteredData.add(colStr);
+             }
+             }
+             */
             Iterator<String[]> iter = dataManager.masterData.iterator();
             while (iter.hasNext()) {
                 String[] rowStings = iter.next();
@@ -2534,50 +2575,50 @@ public class MmtController implements Initializable {
                 }
             }
         }
-        
-	// Must re-sort table after items changed
+
+        // Must re-sort table after items changed
         reapplyTableSortOrder();
-        
+
         // Check if match has been found
         boolean matchFound = !dataManager.filteredData.isEmpty();
-        
+
         return matchFound;
     }
 
     /**
-     * Returns true if the parameter matches the current filter. Lower/Upper case
-     * is ignored.
-     * 
+     * Returns true if the parameter matches the current filter. Lower/Upper
+     * case is ignored.
+     *
      * @param String[] : row data
      * @param String: search string
      * @param int : column index to look for. Pass -1, for all columns
      * @return
      */
     private boolean matchesFilter(String[] rowData, String searchString, int columnIndex) {
-        
+
         if (searchString == null) {
             // No filter --> Add all.
             return true;
         }
-         if (searchString.isEmpty()) {
-             // No filter --> Add all.
-             //searchField.setPromptText(Prompts.getSearchPrompt());
-             return true;
+        if (searchString.isEmpty()) {
+            // No filter --> Add all.
+            //searchField.setPromptText(Prompts.getSearchPrompt());
+            return true;
         }
 
         // Check each column, return true if any column matches with search/filter string
         String lowerCaseFilterString = searchString.toLowerCase();
-        if ( columnIndex < 0 ) {
+        if (columnIndex < 0) {
             // Search all columns
-            for (String colStr: rowData) {
+            for (String colStr : rowData) {
                 if (colStr.toLowerCase().indexOf(lowerCaseFilterString) != -1) {
                     return true;
                 }
             }
         } else {
             // look only into requested column
-            if ( 0 <= columnIndex && columnIndex < rowData.length) {
-                if ( rowData[columnIndex].compareToIgnoreCase(searchString) == 0) {
+            if (0 <= columnIndex && columnIndex < rowData.length) {
+                if (rowData[columnIndex].compareToIgnoreCase(searchString) == 0) {
                     return true;
                 }
             }
@@ -2585,30 +2626,30 @@ public class MmtController implements Initializable {
 
         return false; // Does not match
     }
+
     private void reapplyTableSortOrder() {
         ArrayList<TableColumn<String[], ?>> sortOrder = new ArrayList<>(datatableview.getSortOrder());
         datatableview.getSortOrder().clear();
         datatableview.getSortOrder().addAll(sortOrder);
     }
-        
+
     @FXML
     private void printPane(Pane pane) {
         pane.snapshot(printCallback, null, null);
     }
-    
+
     @FXML
     private void onClickBackButton(ActionEvent event) {
         enableEmployeeReportOnSeparatePage(false);
     }
-    
+
     /*
      * Method to auto select menu-item if user enters search-string without
      * pre-selecing menu-items.
      */
     private void autoSelectMenuItem() {
-        
     }
-    
+
     /*
      * Utitlity method to get hyperlink object associated with menu-item
      */
@@ -2616,7 +2657,7 @@ public class MmtController implements Initializable {
     private Hyperlink getHyperLinkAssociateToMenuItem(ViewMode viewMode) {
         Hyperlink hyperlink = null;
         // Check for which mode associated menu item is needed
-        switch(viewMode){
+        switch (viewMode) {
             case EMPLOYEE:
                 hyperlink = employeeHyperlink;
                 break;
@@ -2626,17 +2667,17 @@ public class MmtController implements Initializable {
             case REPORT_CONCISE:
                 hyperlink = reportHyperlink;
                 break;
-             case HELP:
-                 hyperlink = helpHyperlink;
+            case HELP:
+                hyperlink = helpHyperlink;
                 break;
-             case HELP_ABOUT:
+            case HELP_ABOUT:
                 hyperlink = helpAboutHyperlink;
                 break;
         }
-        
+
         return hyperlink;
     }
-    
+
     /*
      * This Method is called whenever user clicks on any Main Menu Options
      * choices (like Employee, Employer, Report, Help), etc to 
@@ -2645,7 +2686,7 @@ public class MmtController implements Initializable {
      */
     @FXML
     private void beforeSwitchingToNewSelectedPage(ViewMode newAppMode) {
-        
+
         // Remove the selected style from the current menu-item
         Hyperlink hyperLink = null;
         hyperLink = getHyperLinkAssociateToMenuItem(appMode);
@@ -2667,10 +2708,10 @@ public class MmtController implements Initializable {
             //appModeChanged = true;
             enableDetailPanel(false);
         }
-        
+
         // Clear up the search field too
         searchField.clear();
-        
+
         // If we are switching to HELP page hide main page
         if (newAppMode == ViewMode.HELP) {
             firstPage.setVisible(false);
@@ -2685,6 +2726,7 @@ public class MmtController implements Initializable {
      * Method initializes all filtered data (Employee, employer, reports)
      * if they ar not already initialized.
      */
+
     @FXML
     private void initFilteredData() {
         // If it is first time then initialize the filter data from master data
@@ -2700,6 +2742,7 @@ public class MmtController implements Initializable {
             initEvalResultsFilteredData();
         }
     }
+
     @FXML
     private void initEmployeeFilteredData() {
         // If it is first time then insitlaize the filter data from master data
@@ -2712,13 +2755,14 @@ public class MmtController implements Initializable {
             // Listen for changes in master data.
             // Whenever the master data changes we must also update the filtered data.
             employeeDataManager.masterData.addListener(new ListChangeListener<String[]>() {
-                    @Override
-                    public void onChanged(ListChangeListener.Change<? extends String[]> change) {
-                            updateFilteredData(ViewMode.EMPLOYEE); // TODO
-                    }
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends String[]> change) {
+                    updateFilteredData(ViewMode.EMPLOYEE); // TODO
+                }
             });
-        } 
+        }
     }
+
     @FXML
     private void initEmployerFilteredData() {
         // If it is first time then insitlaize the filter data from master data
@@ -2727,17 +2771,18 @@ public class MmtController implements Initializable {
             employerDataManager.filteredData = FXCollections.observableArrayList();
             employerDataManager.filteredData.addAll(employerDataManager.masterData);
             System.out.println("1st time init of employer filter, size is : " + employerDataManager.filteredData.size());
-        
+
             // Listen for changes in master data.
             // Whenever the master data changes we must also update the filtered data.
             employerDataManager.masterData.addListener(new ListChangeListener<String[]>() {
-                    @Override
-                    public void onChanged(ListChangeListener.Change<? extends String[]> change) {
-                            updateFilteredData(ViewMode.EMPLOYER); // TODO
-                    }
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends String[]> change) {
+                    updateFilteredData(ViewMode.EMPLOYER); // TODO
+                }
             });
-        }   
+        }
     }
+
     @FXML
     private void initEvalResultsFilteredData() {
         // If it is first time then insitlaize the filter data from master data
@@ -2745,18 +2790,18 @@ public class MmtController implements Initializable {
             reportDataManager.filteredData = FXCollections.observableArrayList();
             reportDataManager.filteredData.addAll(reportDataManager.masterData);
             System.out.println("1st time init of report-filter, size is : " + reportDataManager.filteredData.size());
-        
+
             // Listen for changes in master data.
             // Whenever the master data changes we must also update the filtered data.
             reportDataManager.masterData.addListener(new ListChangeListener<String[]>() {
-                    @Override
-                    public void onChanged(ListChangeListener.Change<? extends String[]> change) {
-                            updateFilteredData(ViewMode.REPORT_CONCISE); // TODO
-                    }
+                @Override
+                public void onChanged(ListChangeListener.Change<? extends String[]> change) {
+                    updateFilteredData(ViewMode.REPORT_CONCISE); // TODO
+                }
             });
-        }  
+        }
     }
-    
+
     /*
      * Method to restore data from given path. If no path is supplied then
      * it reads the app-data
@@ -2820,10 +2865,10 @@ public class MmtController implements Initializable {
             mb.showAndWait();
         }
         dataStateManager.setClean(ViewMode.REPORT_FULL);
-        
+
         // restore field placement data
         int count = fieldPlacementManager.importData(dataPath, AppSettings.fieldPlacementDataFileName);
-        
+
         // Data has been read into application.
         boolean status = status1 && status2 && status3;
         String statusMsg = "";
@@ -2838,7 +2883,7 @@ public class MmtController implements Initializable {
             MessageBox mb = new MessageBox(statusMsg, MessageBoxType.OK_ONLY);
             mb.showAndWait();
         }
-        
+
         // Update app-data from restore data only if we have restored from 
         // different path
         if (status && dataPath != null) {
@@ -2853,7 +2898,7 @@ public class MmtController implements Initializable {
 
         return status;
     }
-    
+
     /*
      * Method to backups data to the given path. If no path is supplied then
      * it writes to app-data
@@ -2861,7 +2906,7 @@ public class MmtController implements Initializable {
     private boolean backupData(String dataPath) {
         // Make sure that filtered data are poopulated for each category/pages
         initFilteredData();
-        
+
         // Write employee's data: Write it to disk
         boolean status1 = AppUtils.BackupData(ViewMode.EMPLOYEE, AppUtils.dataHeaderEmployee, employeeDataManager, dataPath);
         if (status1 == false) {
@@ -2879,7 +2924,7 @@ public class MmtController implements Initializable {
             mb.showAndWait();
         }
         dataStateManager.setClean(ViewMode.EMPLOYER);
-        
+
         // Write report/evaluation results data: Write it to disk
         boolean status3 = AppUtils.BackupData(ViewMode.REPORT_FULL, AppUtils.dataHeaderFullEvalReport, reportDataManager, dataPath);
         if (status3 == false) {
@@ -2899,11 +2944,11 @@ public class MmtController implements Initializable {
                     Evaluation empEval = new Evaluation(reportRowStrings);
                     boolean status4 = AppUtils.backupSingleEvalData(empEval, dataPath);
                     status3 &= status4;
-                 } // while
+                } // while
             }
         }
         dataStateManager.setClean(ViewMode.REPORT_FULL);
-        
+
         // restore field placement data
         boolean status4 = fieldPlacementManager.exportData(dataPath, AppSettings.fieldPlacementDataFileName);
         if (status4 == false) {
@@ -2911,35 +2956,35 @@ public class MmtController implements Initializable {
             MessageBox mb = new MessageBox("Error in storing field placement data.", MessageBoxType.OK_ONLY);
             mb.showAndWait();
         }
-        
+
         boolean status = status1 && status2 && status3 && status4;
 
         return status;
     }
-    
-    /**
-    * The constructor. The constructor is called before the initialize()
-    * method.
-     */
-	public MmtController() {
-            // Initialize id generator
-            idGenerator = IdGenerator.GetIdGenerator(AppUtils.getNextIdListFileName());
 
-            /*
-            // Rstore the data before loading
-            // Restore employee data before loading
-            AppUtils.GetEmployeeData(BackupRestoreMode.RESTORE, employeeDataManager, null);
-            //updateIdGenerator(ViewMode.EMPLOYEE);
-            // Restore employer data before loading
-            AppUtils.GetEmployerData(BackupRestoreMode.RESTORE, employerDataManager, null);            
-            //updateIdGenerator(ViewMode.EMPLOYER);
-            // Restore report before loading
-            AppUtils.GetEvalResultData(BackupRestoreMode.RESTORE, reportDataManager, null);
-            //updateIdGenerator(ViewMode.REPORT_CONCISE);
-            */
-            restoreData(null);
-            //updateIdGenerator(ViewMode.NONE);
-        }
+    /**
+     * The constructor. The constructor is called before the initialize()
+     * method.
+     */
+    public MmtController() {
+        // Initialize id generator
+        idGenerator = IdGenerator.GetIdGenerator(AppUtils.getNextIdListFileName());
+
+        /*
+         // Rstore the data before loading
+         // Restore employee data before loading
+         AppUtils.GetEmployeeData(BackupRestoreMode.RESTORE, employeeDataManager, null);
+         //updateIdGenerator(ViewMode.EMPLOYEE);
+         // Restore employer data before loading
+         AppUtils.GetEmployerData(BackupRestoreMode.RESTORE, employerDataManager, null);            
+         //updateIdGenerator(ViewMode.EMPLOYER);
+         // Restore report before loading
+         AppUtils.GetEvalResultData(BackupRestoreMode.RESTORE, reportDataManager, null);
+         //updateIdGenerator(ViewMode.REPORT_CONCISE);
+         */
+        restoreData(null);
+        //updateIdGenerator(ViewMode.NONE);
+    }
 
     /**
      * Initializes the controller class.
@@ -2947,42 +2992,42 @@ public class MmtController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         // Rstore the data before loading
         //initEmployeeData();
-        
+
         // Initialize table for multiple selectiom
         datatableview.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+
         // Initialize filter choice box
         //initFilterChoiceBox(null, 0); : FILTERNM
         //showFilterChoiceBox(true); : FILTERNM
 
-        
+
 // Creates a button with image : testing only            
 //            InputStream is = this.getClass().getClassLoader().getResourceAsStream("mmt/Resources/commitToDisk.png");
 //            Image imageDecline = new Image(is);
 //            testButton2.setGraphic(new ImageView(imageDecline));
-        
+
         // Initialize the buttons
         initContolButtons();
         initPageContolButtons();
-        
+
         // Listen for text changes in the filter text field
-	searchField.textProperty().addListener(new ChangeListener<String>() {
-                        @Override
-			public void changed(ObservableValue<? extends String> observable,
-                            String oldValue, String newValue) {
-                            updateFilteredData(null);
-			}
-	});
-        
+        searchField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                updateFilteredData(null);
+            }
+        });
+
         // Add the change-listener to table view for user's single-selection
         datatableview.getSelectionModel().selectedIndexProperty().addListener(
                 new ChangeListener<Number>() {
                     public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
                         System.out.println("Category Selection Changed -- old: " + oldValue + ", new: " + newValue);
-                        if (newValue.intValue() >=0 && oldValue.intValue() != newValue.intValue() ) {
+                        if (newValue.intValue() >= 0 && oldValue.intValue() != newValue.intValue()) {
                             updateDetails(oldValue, newValue);
                         }
                     }
@@ -2991,45 +3036,49 @@ public class MmtController implements Initializable {
         // Add the change-listener to filter choice-box
         /* No more filter: FILTERNM
          * filterChoiceBox.getSelectionModel().selectedIndexProperty().addListener(
-                new ChangeListener<Number>() {
-                    public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-                        System.out.println("Filter Selection Changed -- old: " + oldValue + ", new: " + newValue);
-                        if (newValue.intValue() >=0 && oldValue.intValue() != newValue.intValue() ) {
-                            onFilterSelectionChange(oldValue, newValue);
-                        }
-                    }
-                });
-        */
+         new ChangeListener<Number>() {
+         public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+         System.out.println("Filter Selection Changed -- old: " + oldValue + ", new: " + newValue);
+         if (newValue.intValue() >=0 && oldValue.intValue() != newValue.intValue() ) {
+         onFilterSelectionChange(oldValue, newValue);
+         }
+         }
+         });
+         */
         // Keep all details panel invisible on start
         enableDetailPanel(false);
-        
+
         // Set the maximum chars in comment
         setMaxCharsInCommentTextArea();
-        imageLoader = new ImageLoader(helpImagePane);
-        Thread t = new Thread(imageLoader);
-        t.setDaemon(true);
-        t.start();
-        
-        imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
-        beforeSwitchingToNewSelectedPage(ViewMode.HELP);
-        
-        // Set the view mode to employee
-        appMode = ViewMode.HELP;
-        
-        // Show help page
-        helpPageAnchor.setVisible(true);
-    }    
-    
+        try {
+            imageLoader = new ImageLoader(helpImagePane);
+            Thread t = new Thread(imageLoader);
+            t.setDaemon(true);
+            t.start();
+
+            imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
+            beforeSwitchingToNewSelectedPage(ViewMode.HELP);
+
+            // Set the view mode to employee
+            appMode = ViewMode.HELP;
+
+            // Show help page
+            helpPageAnchor.setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }
     @FXML
     AnchorPane helpImagePane;
-    
     ImageLoader imageLoader;
-    
+
     @FXML
     private void onSlideButtonClickedAction(ActionEvent event) {
         Object source = event.getSource();
-        if (source instanceof Button) { 
-            switch (((Button)source).getId()) {
+        if (source instanceof Button) {
+            switch (((Button) source).getId()) {
                 case "leftSlideBtn":
                     //System.out.println("Handling leftSlide..."); 
                     imageLoader.paused = true;
@@ -3038,15 +3087,15 @@ public class MmtController implements Initializable {
                 case "rightSlideBtn":
                     imageLoader.paused = true;
                     //System.out.println("Handling rightSlide..."); 
-                    
+
                     imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
                     break;
-                    
-                default: System.out.println("Unsupported " + source);
-}
-        }
-        else {
-            System.out.println("Unsupported source: " + source);    
+
+                default:
+                    System.out.println("Unsupported " + source);
+            }
+        } else {
+            System.out.println("Unsupported source: " + source);
         }
     }
 
@@ -3058,5 +3107,4 @@ public class MmtController implements Initializable {
             imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
         }
     }
-
 }
