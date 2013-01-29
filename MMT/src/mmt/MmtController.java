@@ -5,9 +5,6 @@
 package mmt;
 
 import java.io.File;
-import java.io.OutputStream;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
@@ -16,12 +13,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 
 import java.lang.String;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +33,7 @@ import javafx.event.EventHandler;
 import javafx.scene.SnapshotResult;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -124,6 +126,15 @@ public class MmtController implements Initializable {
     private Button nextPageButton;
     @FXML 
     private Button lastPageButton;
+    /*
+     * Employee placement related controls
+     */
+    @FXML
+    private AnchorPane placeEmployeePane;
+    @FXML
+    private ChoiceBox employerChoiceBox;
+    @FXML
+    private Button placeButton;
 
     /*
      * Controls for employee evaluation report panel
@@ -309,6 +320,11 @@ public class MmtController implements Initializable {
     private boolean addIsInProgress = false; //set to true when clicked add, resets to false when saved
     private final boolean empEvalInSeparateRecord = true; // holds true if evaluaiton result is stored in separate record/file
     private FieldPlacementManager fieldPlacementManager = new FieldPlacementManager(); // keeps the employeeId-employerId map for placed employees
+    private ObservableList<EmployerIdName> employerIdNameList = FXCollections.observableArrayList();
+    
+    /*
+     * Class to represent score table for concise report
+     */
     public static class Score {
  
         private final SimpleStringProperty Category;
@@ -335,7 +351,46 @@ public class MmtController implements Initializable {
             this.ScoreVal.set(sc);
         }
     }
+    
+    /*
+     * Class to represent employer name and id for selection purpose
+     * during placement of the employee.
+     */
+    public static class EmployerIdName {
+        private String name;
+        private String id;
 
+        @Override
+        public String toString() {
+            //return name + " (id:" + id + ")";
+            String str = name;
+            if ( !id.isEmpty() ) {
+                str = str + " (id:" + id + ")";
+            }
+            return str;
+        }
+
+        public EmployerIdName(String name, String id) {
+            this.name = name;
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public void setSalary(String id) {
+            this.id = id;
+        }
+    }
 
     /*
      * Handler for Employee Button-Click
@@ -636,6 +691,100 @@ public class MmtController implements Initializable {
                                     commitButtonHanlder(e);
                                 }
                 });
+        initButton(placeButton, "Click to place selected employee(s) to this employer", true, 
+                    new EventHandler<ActionEvent>() {
+                                @Override public void handle(ActionEvent e) {
+                                    placeButtonHanlder(e);
+                                }
+                });
+    }
+    /*
+     * Method to find employer id-name list from the
+     * employer data
+     */
+    private List getEmployerIdNameList() {
+        List idNameList = new ArrayList<EmployerIdName>();
+        // Get the employer id and name from the employer-data
+        // Build the employer id-name observableList which will be used to update 
+        HashMap<String,EmployerIdName>  hashMap = new HashMap<String,EmployerIdName>();
+        if (employerDataManager.masterData != null && !employerDataManager.masterData.isEmpty()) {
+            // Iterare thru list and get the
+            hashMap.put("Google",new EmployerIdName("Google", "17"));
+            hashMap.put("Yahoo",new EmployerIdName("Yahoo", "73"));
+            hashMap.put("Microsoft",new EmployerIdName("Microsoft", "87"));
+            
+            hashMap.put("Google",new EmployerIdName("Google", "17"));
+            hashMap.put("Yahoo",new EmployerIdName("Yahoo", "73"));
+            hashMap.put("Microsoft",new EmployerIdName("Microsoft", "87"));
+        }
+        
+        // Get the unique id and name from the hashmap to build list
+        Iterator<EmployerIdName> iter = hashMap.values().iterator();
+        while ( iter.hasNext() ) {
+            EmployerIdName object = (EmployerIdName) iter.next();
+            idNameList.add(object);
+        }
+        
+        return idNameList;
+    }
+    @FXML
+    private void initEmployeePlacementControl(boolean enable) {
+        // choice box
+        //
+        employerIdNameList.clear();
+        employerIdNameList.add(new EmployerIdName("Select an employer", ""));
+        List idNameList = getEmployerIdNameList();
+        employerIdNameList.addAll(idNameList);
+
+        // Update the choice-box
+        employerChoiceBox.setItems(employerIdNameList);
+        employerChoiceBox.getSelectionModel().selectFirst(); // Select first as default
+        employerChoiceBox.setTooltip(new Tooltip("Select employer & click place button"));
+        
+        // show the choice-box, if enable
+        placeEmployeePane.setVisible(enable);
+    }
+    @FXML
+    private void placeButtonHanlder(ActionEvent e) {
+        //Get the user's choice
+        EmployerIdName selIdName = (EmployerIdName) employerChoiceBox.getSelectionModel().getSelectedItem();
+        final String newEmployerId = selIdName.getId();
+        if ( !selIdName.getId().isEmpty()) {
+            // DEBUG
+            //String msg = newEmployerId + " : is selected: " + selIdName.getName();
+            //MessageBox mb = new MessageBox(msg, MessageBoxType.OK_ONLY);
+            //mb.showAndWait();
+            // DEBUG
+            
+            // Get all selected employee from employee-data and its employer id
+            ArrayList<String> employeeIdsForUpdate = new ArrayList<String>();
+            ArrayList<String> newEmployerIds = new ArrayList<String>();
+            ObservableList<String[]> selEmployeeList = datatableview.getSelectionModel().getSelectedItems();
+            int count = selEmployeeList.size();
+            for (int i = 0; i <count; i++) {
+                String[] employeeDataStrings = selEmployeeList.get(i);
+                // Get the employee id
+                String employeeId = employeeDataStrings[0];
+                employeeIdsForUpdate.add(employeeId);
+                newEmployerIds.add(newEmployerId); // the list will have same values for all entry
+            } // check each selected item
+            
+            // Update the field-placement-data
+            fieldPlacementManager.placeEmployee(newEmployerId, employeeIdsForUpdate);
+            // Update the employee's report data with new employer id
+            final int colIndexForEmployeeIdInReport = 1;
+            final int colIndexForEmployerIdInReport = 2;
+            boolean status = updateReportData(colIndexForEmployeeIdInReport, colIndexForEmployerIdInReport, employeeIdsForUpdate, newEmployerIds);
+            String statusMsg;
+            if (status == false) {
+                statusMsg = "Fatal Error in updating employer to : " + selIdName.toString();
+            } else {
+                statusMsg = "Success in updating employer to : " + selIdName.toString();
+            }
+            // Show error message box
+            MessageBox mb = new MessageBox(statusMsg, MessageBoxType.OK_ONLY);
+            mb.showAndWait();
+        }
     }
     @FXML
     private void backupButtonHanlder(ActionEvent e) {
@@ -1353,6 +1502,7 @@ public class MmtController implements Initializable {
                    
         // Check which table is active
         boolean enableEvaluateBtn = false; // if we are not in EMPLOYEE page, disable the evaluate button
+        boolean enablePlaceBtn = false;
         switch(appMode){
             /* Moved up to first hide all detail panels before showing
              * mode-specific panel.
@@ -1368,6 +1518,7 @@ public class MmtController implements Initializable {
              */
             case EMPLOYEE:
                 enableEvaluateBtn = true;
+                enablePlaceBtn = true;
                 employeeDetailsPane.setVisible(enable);
                 break;
             case EMPLOYER:
@@ -1385,8 +1536,15 @@ public class MmtController implements Initializable {
         if (enableEvaluateBtn == false) {
             evaluateButton.setVisible(enableEvaluateBtn);
         }
+        
+        // if we are not in EMPLOYEE page, disable the evaluate button
+        if (enableEvaluateBtn == false) {
+            placeEmployeePane.setVisible(enableEvaluateBtn);
+        } else {
+            initEmployeePlacementControl(enableEvaluateBtn);
+        }
     }
-    
+
     /*
      * Method to clear details panel based on selected mode
      * @params : flag to enable or disable the details panel for current mode 
@@ -1974,6 +2132,38 @@ public class MmtController implements Initializable {
         // Write it out to report area
         empFullReportTextAreaa.setText(sb.toString());
     }
+    
+    /*
+     * Updates the master-report data with passed values of the data
+     * if search string in the search column matches
+     * @param int: searchColumnIndex, which column to search
+     * @param int : updateColumnIndex, which column to update if match found
+     * @param ArrayList<String>: search-string for each record (e.g; Ids of all records that need update)
+     * @param ArrayList<String>: newValueRecords, new value to update selected column with
+     */
+    private boolean updateReportData(int searchColumnIndex, int updateColumnIndex, ArrayList<String> searchStringInRecords, ArrayList<String> newValueRecords) {
+        //You are here that means data is valid
+        // Update master data (it should triger to update filtered data automatically).
+        boolean status = false;
+        if (searchStringInRecords.size() != newValueRecords.size()) {
+            return false;
+        }
+        int dataLength = reportDataManager.masterData.size();
+        for (int i = 0; i < dataLength; i++) {
+            String[] rowStings = reportDataManager.masterData.get(i);
+            
+            // Check if find any matching for requested records
+            for (int record = 0; record < searchStringInRecords.size(); record++) {
+                if (matchesFilter(rowStings, searchStringInRecords.get(record), searchColumnIndex)) {
+                    rowStings[updateColumnIndex] = newValueRecords.get(record);
+                    //reportDataManager.masterData.set(i, rowStings); // I dont need to call this as reference is updating the record/value
+                    status = true;
+                    // match is found: should I break the loop???
+                }
+            }// for records in the input parameters
+        } // for each record in the master-data
+        return status;
+    }
 
     /*
      * Method to update employer details panel based on selected index
@@ -2070,7 +2260,7 @@ public class MmtController implements Initializable {
     }
     private Evaluation getEvalForEmployee(String selEmployeeId, String todayDateString) {
         String[] reportRowStrings = null;
-        reportRowStrings = getRowDataMatchColumn(reportDataManager, selEmployeeId, 1); reportDataManager.masterData.iterator();
+        reportRowStrings = getRowDataMatchColumn(reportDataManager, selEmployeeId, 1); //reportDataManager.masterData.iterator();
         if (reportRowStrings == null) {
             reportRowStrings = new String[]{"", "", "", "", "", "1", "", "1","","1","","1","","1", "1","","0"};
             reportRowStrings[0] = idGenerator.getNextId(ViewMode.REPORT_FULL);
