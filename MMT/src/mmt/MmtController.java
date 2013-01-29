@@ -1799,6 +1799,18 @@ public class MmtController implements Initializable {
 
         return false;
     }
+    /*
+     * Method to return true if record(s) in table is selected.
+     * Otherwise, it returns false.
+     */
+    public boolean isRecordSelected() {
+        int i = datatableview.getSelectionModel().getSelectedIndex();
+        if (i != -1) {
+            return true;
+        }
+
+        return false;
+    }
 
     /*
      * Method to update employee details panel based on selected index
@@ -1815,7 +1827,10 @@ public class MmtController implements Initializable {
 
         // if we are in EMPLOYEE page, row(s) is selected and
         // selected row employee is employed then enable the evaluate button
-        if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
+//        if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
+//            evaluateButton.setVisible(true);
+//        }
+        if (!evaluateButton.isVisible()) {
             evaluateButton.setVisible(true);
         }
 
@@ -2439,6 +2454,9 @@ public class MmtController implements Initializable {
         secondCol.setMinWidth(100);
         secondCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("score"));
         
+        // Get rid of extra columm from table
+        reportDetails_scoreTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
         // get data
         ObservableList<EvalScore> data = getScoreTable(rowData, scoreStartIndex);
         reportDetails_scoreTable.setItems(data);
@@ -2992,7 +3010,6 @@ public class MmtController implements Initializable {
         
         // Get rid of extra columm from all tables
         //datatableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        reportDetails_scoreTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Rstore the data before loading
         //initEmployeeData();
