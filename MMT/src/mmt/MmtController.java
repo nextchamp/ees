@@ -2989,6 +2989,10 @@ public class MmtController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
+        // Get rid of extra columm from all tables
+        //datatableview.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        reportDetails_scoreTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // Rstore the data before loading
         //initEmployeeData();
