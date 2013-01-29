@@ -68,11 +68,15 @@
         </Hyperlink>
       </children>
     </AnchorPane>
-    <AnchorPane fx:id="helpPageAnchor" prefHeight="619.0" prefWidth="1047.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" visible="false">
+    <AnchorPane fx:id="helpPageAnchor" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
       <children>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="310.0" prefWidth="440.0" text="Help me to fill here.." />
+        <Button fx:id="leftSlideBtn" layoutX="4.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSlideButtonClickedAction" text="&lt;" />
+        <Button fx:id="rightSlideBtn" layoutX="1015.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSlideButtonClickedAction" text="&gt;" />
+        <AnchorPane id="imagePane" fx:id="helpImagePane" layoutX="33.0" layoutY="22.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onImageClicked" prefHeight="595.0" prefWidth="982.0" />
       </children>
-    </AnchorPane>    
-    <Pane fx:id="firstPage" prefHeight="619.0" prefWidth="1047.0" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
+    </AnchorPane>
+    <Pane fx:id="firstPage" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
       <children>
         <Pane fx:id="tablePane" prefHeight="298.0" prefWidth="1047.0">
           <children>
@@ -166,7 +170,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="13.0" layoutY="29.0" text="Work Quality Score" />
-                        <Group id="Group" layoutX="150.0" layoutY="29.0">
+                        <Group id="Group" layoutX="180.0" layoutY="32.0">
                           <children>
                             <RadioButton fx:id="wqs1" alignment="BASELINE_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" text="1">
                               <toggleGroup>
@@ -190,7 +194,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="207.0" prefWidth="305.0">
                       <children>
                         <Label layoutX="13.0" layoutY="29.0" text="Work Habits Score" />
-                        <Group id="Group" layoutX="150.0" layoutY="29.0">
+                        <Group id="Group" layoutX="180.0" layoutY="32.0">
                           <children>
                             <RadioButton fx:id="hqs1" alignment="BASELINE_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" text="1">
                               <toggleGroup>
@@ -214,7 +218,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="169.0" prefWidth="233.0">
                       <children>
                         <Label layoutX="13.0" layoutY="29.0" text="Job Knowledge Score" />
-                        <Group id="Group" layoutX="150.0" layoutY="29.0">
+                        <Group id="Group" layoutX="180.0" layoutY="32.0">
                           <children>
                             <RadioButton fx:id="kqs1" alignment="BASELINE_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" text="1">
                               <toggleGroup>
@@ -238,7 +242,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="13.0" layoutY="29.0" text="Behavior Score" />
-                        <Group id="Group" layoutX="150.0" layoutY="29.0">
+                        <Group id="Group" layoutX="180.0" layoutY="32.0">
                           <children>
                             <RadioButton fx:id="bqs1" alignment="BASELINE_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" text="1">
                               <toggleGroup>
@@ -262,7 +266,7 @@
                     <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
                         <Label layoutX="13.0" layoutY="29.0" text="Overall Progress Score" />
-                        <Group id="Group" layoutX="150.0" layoutY="29.0">
+                        <Group id="Group" layoutX="180.0" layoutY="32.0">
                           <children>
                             <RadioButton fx:id="pqs1" alignment="BASELINE_LEFT" contentDisplay="BOTTOM" mnemonicParsing="false" text="1">
                               <toggleGroup>

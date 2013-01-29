@@ -71,6 +71,9 @@
     <AnchorPane fx:id="helpPageAnchor" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
       <children>
         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="310.0" prefWidth="440.0" text="Help me to fill here.." />
+        <Button fx:id="leftSlideBtn" layoutX="4.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSlideButtonClickedAction" text="&lt;" />
+        <Button fx:id="rightSlideBtn" layoutX="1015.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSlideButtonClickedAction" text="&gt;" />
+        <AnchorPane id="imagePane" fx:id="helpImagePane" layoutX="33.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onImageClicked" prefHeight="595.0" prefWidth="982.0" />
       </children>
     </AnchorPane>
     <Pane fx:id="firstPage" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
@@ -388,16 +391,7 @@
       <children>
         <Button fx:id="reportControlPane_printButton" contentDisplay="GRAPHIC_ONLY" layoutX="272.0" layoutY="11.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onAction="#printButtonHanlder" prefHeight="24.0" prefWidth="24.0" text="Button" />
         <Button fx:id="reportControlPane_backButton" contentDisplay="GRAPHIC_ONLY" layoutX="309.0" layoutY="11.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" onAction="#onClickBackButton" prefHeight="24.0" prefWidth="24.0" text="Button" />
-      </children>      		
-      <AnchorPane fx:id="reportPagesAnchor2" layoutX="506.0" layoutY="6.0" prefHeight="31.0" prefWidth="263.0">
-      <children>
-      	<Label  fx:id="paginationLabel2" layoutX="2.0" layoutY="5.0" text="X of Y Reports" />
-      	<Button fx:id="firstPageButton2" layoutX="91.0" layoutY="4.0" onAction="#firstPageButtonHanlder" mnemonicParsing="false" text="&lt;&lt;" />
-      	<Button fx:id="prevPageButton2" layoutX="137.0" layoutY="4.0" onAction="#prevPageButtonHanlder" mnemonicParsing="false" text="&lt;" />
-      	<Button fx:id="nextPageButton2" layoutX="181.0" layoutY="4.0" onAction="#nextPageButtonHanlder" mnemonicParsing="false" text="&gt;" />
-      	<Button fx:id="lastPageButton2" layoutX="221.0" layoutY="4.0" onAction="#lastPageButtonHanlder" mnemonicParsing="false" text="&gt;&gt;" />
       </children>
-      </AnchorPane>
     </AnchorPane>
   </children>
   <stylesheets>

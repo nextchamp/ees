@@ -43,8 +43,8 @@ root {
 .button {
     -fx-text-fill: white;
     -fx-font-family: "Arial Narrow";
-    -fx-font-weight: bold;
-    /*-fx-background-color: linear-gradient(#61a2b1, #2A5058);*/
+    -fx-font-weight: normal;
+    -fx-background-color: linear-gradient(#FFFFFF, #8F0313);
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
 .button:hover {
@@ -52,14 +52,14 @@ root {
 }
 
 .options-text {
-   -fx-font-size: 16px;
+   -fx-font-size: 14px;
    -fx-font-family: "Arial Narrow";
    -fx-fill: BLACK;
    -fx-underline: false;
    -fx-text-fill: white;
    -fx-font-family: "Arial Narrow";
    -fx-font-weight: normal;
-   -fx-background-color: linear-gradient(#61a2b1, #2A5058);
+   -fx-background-color: linear-gradient(#FFFFFF, #8F0313);
    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
    -fx-border-radius: 5px;
    -fx-background-radius: 7px;
@@ -70,7 +70,7 @@ root {
 }
 .options-text-selected {
    -fx-underline: true;
-   -fx-text-fill: yellow;
+   -fx-text-fill: white;
    -fx-font-weight: bold;
    -fx-opacity: 1.0;
 }
@@ -211,7 +211,7 @@ root {
 
 #reportControlPane_backButton {
 	-fx-background-image: url("back.png");
-    -fx-background-size: 100%;
+        -fx-background-size: 100%;
 	-fx-opacity: 0.8;
 }
 #reportControlPane_backButton:hover {
@@ -222,6 +222,7 @@ root {
     /*-fx-text-fill: white;*/
     -fx-font-family: "Arial Narrow";
     -fx-font-weight: lighter;
+    -fx-font-size: 9;
     /*-fx-background-color: linear-gradient(#61a2b1, #2A5058);*/
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
 }
@@ -235,8 +236,9 @@ root {
 
 #tablePane {
 	-fx-border-color: #61a2b1;
-	-fx-border-width: 2px;
+	-fx-border-width: 1px;
 	-fx-border-style: solid;
+        -fx-border-color: gray;
 	-fx-border-radius: 5px;
 }
 #tableView {

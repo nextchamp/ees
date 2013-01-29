@@ -39,6 +39,7 @@ public class Ees extends Application {
         //
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                     @Override public void handle(WindowEvent e) {
+                        System.out.println("you clicked " + e);
                         try {
                             boolean b = false;
                             Object o = e.getSource();
@@ -51,7 +52,7 @@ public class Ees extends Application {
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
-                        MessageBox mb = new MessageBox("Data has been changed. Do you still want to close?", MessageBoxType.YES_NO);
+                        MessageBox mb = new MessageBox("There is unsaved data, do you still want to close?", MessageBoxType.YES_NO);
                         mb.showAndWait();
 
                         if (mb.getMessageBoxResult() == MessageBoxResult.YES){
@@ -62,7 +63,7 @@ public class Ees extends Application {
                         }
                     }
         });
-        
+        stage.setResizable(false);
         stage.show();
     }
 

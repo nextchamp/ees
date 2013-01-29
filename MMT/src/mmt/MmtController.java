@@ -5,7 +5,6 @@
 package mmt;
 
 import java.io.File;
-import java.io.OutputStream;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -14,8 +13,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
-
-import java.lang.String;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +39,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
@@ -172,8 +171,7 @@ public class MmtController implements Initializable {
     private TextArea habitsCommentTextArea;
             
     // Holds the pages of evaluation reports
-    private ReportPageManager reportPageManager = null;
-    
+    private ReportPageManager reportPageManager = null;    
     
     /*
      * Controls for employee details panel
@@ -284,8 +282,7 @@ public class MmtController implements Initializable {
      * Help page related anchor-pane and controls
      */
     @FXML 
-    private AnchorPane helpPageAnchor;
-    
+    private AnchorPane helpPageAnchor;    
     
     /*
      * Print related stuff
@@ -2815,5 +2812,51 @@ public class MmtController implements Initializable {
         
         // Set the maximum chars in comment
         setMaxCharsInCommentTextArea();
+        imageLoader = new ImageLoader(helpImagePane);
+        Thread t = new Thread(imageLoader);
+        t.setDaemon(true);
+        t.start();
+        
+        imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
     }    
+    
+    @FXML
+    AnchorPane helpImagePane;
+    
+    ImageLoader imageLoader;
+    
+    @FXML
+    private void onSlideButtonClickedAction(ActionEvent event) {
+        Object source = event.getSource();
+        if (source instanceof Button) { 
+            switch (((Button)source).getId()) {
+                case "leftSlideBtn":
+                    System.out.println("Handling leftSlide..."); 
+                    imageLoader.paused = true;
+                    imageLoader.setNextImage(helpImagePane, imageLoader.getPrevImage());
+                    break;
+                case "rightSlideBtn":
+                    imageLoader.paused = true;
+                    System.out.println("Handling rightSlide..."); 
+                    
+                    imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
+                    break;
+                    
+                default: System.out.println("Unsupported " + source);
+            }
+        }
+        else {
+            System.out.println("Unsupported source: " + source);    
+        }
+    }
+    
+    @FXML
+    private void onImageClicked(MouseEvent event) {
+        imageLoader.togglePause();
+        System.out.println("paused is " + imageLoader.paused);
+        if (!imageLoader.paused) {
+            imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
+        }
+    }
+
 }
