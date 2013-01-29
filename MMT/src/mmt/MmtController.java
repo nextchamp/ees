@@ -302,30 +302,30 @@ public class MmtController implements Initializable {
     /*
      * Class to represent score table for concise report
      */
-    public static class Score {
+    public static class EvalScore {
 
-        private final SimpleStringProperty Category;
-        private final SimpleStringProperty ScoreVal;
+        private final SimpleStringProperty category;
+        private final SimpleStringProperty score;
 
-        private Score(String cat, String sc) {
-            this.Category = new SimpleStringProperty(cat);
-            this.ScoreVal = new SimpleStringProperty(sc);
+        private EvalScore(String category, String score) {
+            this.category = new SimpleStringProperty(category);
+            this.score = new SimpleStringProperty(score);
         }
 
         public String getCategory() {
-            return Category.get();
+            return category.get();
         }
 
-        public void setCategory(String cat) {
-            Category.set(cat);
+        public void setFirstName(String cat) {
+            category.set(cat);
         }
 
-        public String getSCore() {
-            return this.ScoreVal.get();
+        public String getScore() {
+            return score.get();
         }
 
-        public void setScore(String sc) {
-            this.ScoreVal.set(sc);
+        public void setLastName(String sc) {
+            score.set(sc);
         }
     }
 
@@ -2413,14 +2413,15 @@ public class MmtController implements Initializable {
     }
     // Gets the score list from row of report-table
 
-    private ObservableList<Score> getScoreTable(String[] rowData, int scoreStartIndex) {
-        ObservableList<Score> data =
+    private ObservableList<EvalScore> getScoreTable(String[] rowData, int scoreStartIndex) {
+        ObservableList<EvalScore> data =
                 FXCollections.observableArrayList(
-                new Score("Quality", rowData[scoreStartIndex]),
-                new Score("Habit", rowData[scoreStartIndex + 2]),
-                new Score("Knowledge", rowData[scoreStartIndex + 4]),
-                new Score("Behavior", rowData[scoreStartIndex + 6]),
-                new Score("Overall", rowData[scoreStartIndex + 9]));
+                new EvalScore("Quality", rowData[scoreStartIndex]),
+                new EvalScore("Habit", rowData[scoreStartIndex + 2]),
+                new EvalScore("Knowledge", rowData[scoreStartIndex + 4]),
+                new EvalScore("Behavior", rowData[scoreStartIndex + 6]),
+                new EvalScore("Overall", rowData[scoreStartIndex + 9])
+                );
 
         return data;
     }
@@ -2430,22 +2431,18 @@ public class MmtController implements Initializable {
      */
     private void updateConciseReportDetailsScoreTable(String[] rowData, int scoreStartIndex) {
 
-        TableColumn firstCol = new TableColumn("Performance Metrics");
+        TableColumn firstCol = new TableColumn("Performance Category");
         firstCol.setMinWidth(100);
-        firstCol.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("Category"));
+        firstCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("category"));
 
         TableColumn secondCol = new TableColumn("Score");
         secondCol.setMinWidth(100);
-        secondCol.setCellValueFactory(
-                new PropertyValueFactory<Score, String>("ScoreVal"));
-
+        secondCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("score"));
+        
         // get data
-        ObservableList<Score> data = getScoreTable(rowData, scoreStartIndex);
+        ObservableList<EvalScore> data = getScoreTable(rowData, scoreStartIndex);
         reportDetails_scoreTable.setItems(data);
         reportDetails_scoreTable.getColumns().setAll(firstCol, secondCol);
-
-        // create data from selected row
     }
 
     /**
