@@ -15,6 +15,7 @@ public class AppSettings {
     * @author Aditya Mishra
     */
    public static String DataRootPath  = "data/";
+   public static String HelpRootPath  = "data/help/";
    public static String DataEvalPath  = "data/evaluation/";
    public static String ConolidatedReportFileName = "evaluation.txt";
    public static String fieldPlacementDataFileName = "fieldPlacement.txt";

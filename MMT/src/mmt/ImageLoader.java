@@ -49,13 +49,14 @@ public class ImageLoader implements Runnable, FileVisitor<Path> {
     private int transitionDelayInSec = 1;
     private int pauseDurationInSec = 3;
     
-    public ImageLoader(AnchorPane pane) {
+    public ImageLoader(AnchorPane pane) throws Exception {
         if (pane!=null) {
-        this.pane = pane;
-        this.width = (int)pane.getPrefWidth();
-        this.height = (int)pane.getPrefHeight();
+            this.pane = pane;
+            this.width = (int)pane.getPrefWidth();
+            this.height = (int)pane.getPrefHeight();
         }
-        root = "E:/workspace/ees/MMT/data/help";        
+        //root = AppSettings.HelpRootPath;//"E:/workspace/ees/MMT/data/help";
+        root = AppUtils.getDataFile(AppSettings.HelpRootPath, "").getPath();
     }
     
     BlockingQueue<Image> images = new ArrayBlockingQueue(5);
