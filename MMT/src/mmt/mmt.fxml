@@ -146,7 +146,10 @@
         </Pane>
         <AnchorPane fx:id="evalResultPane" layoutX="-3.0" layoutY="309.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
           <children>
-            <TabPane fx:id="empScoreTabs" layoutX="465.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="297.9999000000025" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
+              <Label fx:id="evalResultPaneTitle" styleClass="detailsPaneTitle" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefWidth="1020.0" text="Employee Name: Aditya Mishra, Employer Name: Google" />            
+              <AnchorPane layoutX="7.0" layoutY="37.0" prefHeight="270.0" prefWidth="1047.0">
+                  <children>
+            <TabPane fx:id="empScoreTabs" layoutX="465.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="260.0" prefWidth="570.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab id="qualityTab" fx:id="qualityTab" text="Quality">
                   <content>
@@ -166,7 +169,7 @@
                             <RadioButton fx:id="wqs5" alignment="BASELINE_LEFT" layoutX="264.0" mnemonicParsing="false" text="5" toggleGroup="$qualityGroup" />
                           </children>
                         </Group>
-                        <TextArea fx:id="qualityCommentTextArea" layoutX="13.0" layoutY="76.0" prefWidth="548.0" promptText="Enter your comments here" wrapText="true" />
+                        <TextArea fx:id="qualityCommentTextArea" layoutX="13.0" layoutY="76.0" prefHeight="260.0" prefWidth="548.0" promptText="Enter your comments here" wrapText="true" />
                         <Label layoutX="14.0" layoutY="60.0" text="Comments" />
                       </children>
                     </AnchorPane>
@@ -285,34 +288,36 @@
             <Label layoutX="20.0" layoutY="190.0" text="Recommended" />
             <CheckBox fx:id="evalRecommendation" layoutX="152.0" layoutY="190.0" mnemonicParsing="false" />
           </children>
+              </AnchorPane>
+          </children>
         </AnchorPane>
         <AnchorPane id="evalEmployeePane" fx:id="employeeDetailsPane" layoutX="7.0" layoutY="319.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
-            <children>
-             <Label fx:id="employeeDetailsPaneTitle" styleClass="detailsPaneTitle" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefWidth="1020.0" text="Employee Name: Aditya Mishra, Employer Name: Google" />            
-         <AnchorPane layoutX="7.0" layoutY="37.0" prefHeight="270.0" prefWidth="1047.0">
           <children>
-            <Label layoutX="20.0" layoutY="26.0" text="Employee Number" />
-            <TextField id="evalNumber" fx:id="employeeDetails_empNumber" editable="false" layoutX="152.0" layoutY="25.0" prefWidth="200.0" />
-            <Label layoutX="20.0" layoutY="53.0" text="First Name" />
-            <TextField id="evalNumber" fx:id="employeeDetails_firstName" layoutX="152.0" layoutY="53.0" prefWidth="200.0" promptText="First Name" />
-            <Label layoutX="20.0" layoutY="82.0" text="Last Name" />
-            <TextField id="evalNumber" fx:id="employeeDetails_lastName" layoutX="152.0" layoutY="82.0" prefWidth="200.0" promptText="Last Name" />
-            <Label layoutX="20.0" layoutY="113.0" text="E-Mail Address" />
-            <TextField id="evalNumber" fx:id="employeeDetails_emailAddressss" layoutX="152.0" layoutY="110.0" prefWidth="200.0" promptText="e-mail address" />
-            <Label layoutX="20.0" layoutY="141.0" text="Phone Number" />
-            <TextField id="evalNumber" fx:id="employeeDetails_phoneNumber" layoutX="152.0" layoutY="140.0" prefWidth="200.0" promptText="Phone Number" />
-            <Label layoutX="20.0" layoutY="169.0" text="Cell Number" />
-            <TextField id="evalNumber" fx:id="employeeDetails_cellNumber" layoutX="152.0" layoutY="168.0" prefWidth="200.0" promptText="Cell Number" />
-            <Label layoutX="529.0" layoutY="25.0" text="Street Address" />
-            <TextField id="evalNumber" fx:id="employeeDetails_streetAddress" layoutX="661.0" layoutY="24.0" prefWidth="200.0" promptText="Street Address" />
-            <Label layoutX="529.0" layoutY="52.0" text="City" />
-            <TextField id="evalNumber" fx:id="employeeDetails_city" layoutX="661.0" layoutY="52.0" prefWidth="200.0" promptText="City" />
-            <Label layoutX="529.0" layoutY="81.0" text="State" />
-            <TextField id="evalNumber" fx:id="employeeDetails_state" layoutX="661.0" layoutY="81.0" prefWidth="200.0" promptText="State" />
-            <Label layoutX="529.0" layoutY="112.0" text="Zip Code" />
-            <TextField id="evalNumber" fx:id="employeeDetails_zipCode" layoutX="661.0" layoutY="109.0" prefWidth="200.0" promptText="Zip Code" />
-          </children>
-         </AnchorPane>
+              <Label fx:id="employeeDetailsPaneTitle" styleClass="detailsPaneTitle" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefWidth="1020.0" text="Employee Name: Aditya Mishra, Employer Name: Google" />            
+              <AnchorPane layoutX="7.0" layoutY="37.0" prefHeight="270.0" prefWidth="1047.0">
+                  <children>
+                      <Label layoutX="20.0" layoutY="26.0" text="Employee Number" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_empNumber" editable="false" layoutX="152.0" layoutY="25.0" prefWidth="200.0" />
+                      <Label layoutX="20.0" layoutY="53.0" text="First Name" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_firstName" layoutX="152.0" layoutY="53.0" prefWidth="200.0" promptText="First Name" />
+                      <Label layoutX="20.0" layoutY="82.0" text="Last Name" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_lastName" layoutX="152.0" layoutY="82.0" prefWidth="200.0" promptText="Last Name" />
+                      <Label layoutX="20.0" layoutY="113.0" text="E-Mail Address" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_emailAddressss" layoutX="152.0" layoutY="110.0" prefWidth="200.0" promptText="e-mail address" />
+                      <Label layoutX="20.0" layoutY="141.0" text="Phone Number" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_phoneNumber" layoutX="152.0" layoutY="140.0" prefWidth="200.0" promptText="Phone Number" />
+                      <Label layoutX="20.0" layoutY="169.0" text="Cell Number" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_cellNumber" layoutX="152.0" layoutY="168.0" prefWidth="200.0" promptText="Cell Number" />
+                      <Label layoutX="529.0" layoutY="25.0" text="Street Address" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_streetAddress" layoutX="661.0" layoutY="24.0" prefWidth="200.0" promptText="Street Address" />
+                      <Label layoutX="529.0" layoutY="52.0" text="City" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_city" layoutX="661.0" layoutY="52.0" prefWidth="200.0" promptText="City" />
+                      <Label layoutX="529.0" layoutY="81.0" text="State" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_state" layoutX="661.0" layoutY="81.0" prefWidth="200.0" promptText="State" />
+                      <Label layoutX="529.0" layoutY="112.0" text="Zip Code" />
+                      <TextField id="evalNumber" fx:id="employeeDetails_zipCode" layoutX="661.0" layoutY="109.0" prefWidth="200.0" promptText="Zip Code" />
+                  </children>
+              </AnchorPane>
           </children>
         </AnchorPane>
         <AnchorPane id="evalEmployerPane" fx:id="employerDetailsPane" layoutX="7.0" layoutY="319.0" prefHeight="308.0" prefWidth="1047.0" visible="false">

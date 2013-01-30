@@ -143,8 +143,8 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane evalResultPane;
-    //@FXML
-    //private Label evalReportPaneTitle;
+    @FXML
+    private Label evalResultPaneTitle;
     @FXML
     private TabPane empScoreTabs;
     @FXML
@@ -2322,7 +2322,7 @@ public class MmtController implements Initializable {
             
         // Update the title
         String title = getTitleForReportPage(empEval, false);
-        //evalReportPaneTitle.setText(title);
+        evalResultPaneTitle.setText(title);
 
         // Get the selected employer
         evalNumber.setText(empEval.getEvaluationNumber());
