@@ -123,6 +123,15 @@ root {
 	-fx-opacity: 1.0;
 }
 
+#filterButton {
+	-fx-background-image: url("filter.png");
+    -fx-background-size: 100%;
+	-fx-opacity: 0.8;
+}
+#filterButton:hover {
+	-fx-opacity: 1.0;
+}
+
 #addButton {
 	-fx-background-image: url("addGreen.png");
     -fx-background-size: 100%;
@@ -298,3 +307,16 @@ root {
     -fx-border-radius: 5px;
 }
 
+#empScoreTabs {
+	/*-fx-border-color: #61a2b1;*/
+	-fx-border-width: 1px;
+	-fx-border-style: solid;
+        -fx-border-color: gray;
+	/*-fx-border-radius: 5px;*/
+}
+
+.detailsPaneTitle {
+    -fx-underline: true;
+    /*-fx-font-style: italic;*/
+    -fx-font-weight: normal;
+}
