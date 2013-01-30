@@ -83,27 +83,26 @@
             <TableView id="" fx:id="datatableview" prefHeight="262.0" prefWidth="1047.0" styleClass="table-row" />
             <Pane layoutX="2.0" layoutY="262.0" prefHeight="33.0" prefWidth="1039.0">
               <children>
-                <AnchorPane id="AnchorPane" layoutX="7.0" layoutY="4.0" minHeight="27.76953125" prefHeight="27.76953125" prefWidth="1024.0">
+                <AnchorPane id="AnchorPane" layoutX="7.0" layoutY="4.0" minHeight="28.0" prefHeight="28.0" prefWidth="1024.0">
                   <children>
-                    <ImageView fx:id="filterButton" fitHeight="22.5" fitWidth="30.0" layoutX="-2.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@Resources/filter.jpg" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-                    <!-- Commented temporarily 
-                    <ChoiceBox fx:id="filterChoiceBox" layoutX="18.0" layoutY="1.0">
-                      <items>
-                        <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Item 1" />
-                          <String fx:value="Item 2" />
-                          <String fx:value="Item 3" />
-                        </FXCollections>
-                      </items>
-                      <stylesheets>
-                        <URL value="@Resources/MainApp.css" />
-                      </stylesheets>
-                    </ChoiceBox>
-                    -->
+                    <AnchorPane id="AnchorPane" fx:id="filterPane" layoutX="7.0" layoutY="2.0">
+                      <children>
+                        <ChoiceBox fx:id="filterChoiceBox" layoutX="7.0" layoutY="0.0">
+                          <items>
+                           <FXCollections fx:factory="observableArrayList">
+                             <String fx:value="Employee" />
+                             <String fx:value="Employer" />
+                           </FXCollections>
+                          </items>
+                           <stylesheets>
+                             <URL value="@Resources/MainApp.css" />
+                           </stylesheets>
+                        </ChoiceBox>
+                        <TextField fx:id="filterTextField" layoutX="115.0" layoutY="1.0" prefWidth="174.0" promptText="Enter employer name here" />
+                        <Button fx:id="filterButton" contentDisplay="GRAPHIC_ONLY" layoutX="290.0" layoutY="2.0" mnemonicParsing="false" />
+                      </children>
+                    </AnchorPane>
+                   
                     <AnchorPane id="AnchorPane" fx:id="reportPagesAnchor" layoutX="756.0" layoutY="-1.0" prefHeight="31.0" prefWidth="263.0" visible="false">
                       <children>
                         <Label id="paginationText" fx:id="paginationLabel" layoutX="-13.0" layoutY="5.0" text="X of Y Reports" />
@@ -115,7 +114,7 @@
                     </AnchorPane>
                     <AnchorPane id="AnchorPane" fx:id="placeEmployeePane" layoutX="756.0" layoutY="-1.0" prefHeight="31.0" prefWidth="180.0">
                       <children>
-                        <ChoiceBox id="filterChoiceBox" fx:id="employerChoiceBox" layoutX="28.0" layoutY="1.0" prefWidth="187.0">
+                        <ChoiceBox fx:id="employerChoiceBox" layoutX="28.0" layoutY="1.0" prefWidth="187.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Select Employer" />
@@ -130,39 +129,6 @@
                         <Button fx:id="placeButton" contentDisplay="GRAPHIC_ONLY" layoutX="221.0" layoutY="4.0" mnemonicParsing="false" />
                       </children>
                     </AnchorPane>
-                    <!-- ImageView is replaced with button
-					<ImageView fx:id="addButton" fitHeight="22.0" fitWidth="22.0" layoutX="469.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@Resources/addGreen.png" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-                    <ImageView fx:id="removeButton" fitHeight="22.0" fitWidth="22.0" layoutX="499.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@Resources/cancel.png" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-                    <ImageView fx:id="saveButton" fitHeight="22.0" fitWidth="22.0" layoutX="529.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" visible="false">
-                      <image>
-                        <Image url="@Resources/saveCommitted.png" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-                    <ImageView fx:id="printButton" fitHeight="32.0" fitWidth="32.0" layoutX="529.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@Resources/print.png" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-                    <ImageView fx:id="reportButton" fitHeight="22.0" fitWidth="22.0" layoutX="559.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@Resources/report.png" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-                    <ImageView fx:id="commitButton" fitHeight="22.0" fitWidth="22.0" layoutX="589.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                      <image>
-                        <Image url="@Resources/commitToDisk.png" preserveRatio="false" smooth="false" />
-                      </image>
-                    </ImageView>
-					-->
-                    <TextField id="searchField" fx:id="filterText" layoutX="27.0" layoutY="3.0" prefWidth="174.0" promptText="Enter employer name here" />
                     <Button fx:id="addButton" contentDisplay="GRAPHIC_ONLY" layoutX="469.0" layoutY="1.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="Button" />
                     <Button fx:id="removeButton" contentDisplay="GRAPHIC_ONLY" layoutX="499.0" layoutY="1.0" minHeight="24.0" minWidth="24.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="24.0" text="Button" />
                     <!-- Print Button
@@ -180,7 +146,7 @@
         </Pane>
         <AnchorPane fx:id="evalResultPane" layoutX="-3.0" layoutY="309.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
           <children>
-            <TabPane fx:id="empScoreTabs" layoutX="465.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="297.9999000000025" prefWidth="580.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="empScoreTabs" layoutX="465.0" layoutY="8.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="297.9999000000025" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab id="qualityTab" fx:id="qualityTab" text="Quality">
                   <content>
@@ -321,6 +287,9 @@
           </children>
         </AnchorPane>
         <AnchorPane id="evalEmployeePane" fx:id="employeeDetailsPane" layoutX="7.0" layoutY="319.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
+            <children>
+             <Label fx:id="employeeDetailsPaneTitle" styleClass="detailsPaneTitle" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefWidth="1020.0" text="Employee Name: Aditya Mishra, Employer Name: Google" />            
+         <AnchorPane layoutX="7.0" layoutY="37.0" prefHeight="270.0" prefWidth="1047.0">
           <children>
             <Label layoutX="20.0" layoutY="26.0" text="Employee Number" />
             <TextField id="evalNumber" fx:id="employeeDetails_empNumber" editable="false" layoutX="152.0" layoutY="25.0" prefWidth="200.0" />
@@ -342,6 +311,8 @@
             <TextField id="evalNumber" fx:id="employeeDetails_state" layoutX="661.0" layoutY="81.0" prefWidth="200.0" promptText="State" />
             <Label layoutX="529.0" layoutY="112.0" text="Zip Code" />
             <TextField id="evalNumber" fx:id="employeeDetails_zipCode" layoutX="661.0" layoutY="109.0" prefWidth="200.0" promptText="Zip Code" />
+          </children>
+         </AnchorPane>
           </children>
         </AnchorPane>
         <AnchorPane id="evalEmployerPane" fx:id="employerDetailsPane" layoutX="7.0" layoutY="319.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
@@ -366,7 +337,10 @@
             <TextField id="evalNumber" fx:id="employerDetails_zipCode" layoutX="661.0" layoutY="109.0" prefWidth="200.0" promptText="Zip Code" />
           </children>
         </AnchorPane>
-        <AnchorPane id="evalReportPane" fx:id="reportDetailsPane" layoutX="7.0" layoutY="319.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
+        <AnchorPane fx:id="reportDetailsPane" layoutX="7.0" layoutY="319.0" prefHeight="308.0" prefWidth="1047.0" visible="false">
+          <children>
+             <Label fx:id="reportDetailsPaneTitle" styleClass="detailsPaneTitle" alignment="CENTER" contentDisplay="CENTER" layoutY="7.0" prefWidth="1020.0" text="Employee Name: Aditya Mishra, Employer Name: Google" />            
+         <AnchorPane layoutX="7.0" layoutY="37.0" prefHeight="270.0" prefWidth="1047.0">
           <children>
             <Label layoutX="20.0" layoutY="14.0" text="Evaluation Number" />
             <TextField id="report" fx:id="report_evalNumber" layoutX="152.0" layoutY="13.0" prefWidth="200.0" />
@@ -387,6 +361,8 @@
                 <URL value="@Resources/MainApp.css" />
               </stylesheets>
             </TableView>
+          </children>
+         </AnchorPane>
           </children>
         </AnchorPane>
       </children>
@@ -413,7 +389,7 @@
       	  <Button fx:id="nextPageButton2" layoutX="181.0" layoutY="4.0" onAction="#nextPageButtonHanlder" mnemonicParsing="false" text="&gt;" />
       	  <Button fx:id="lastPageButton2" layoutX="221.0" layoutY="4.0" onAction="#lastPageButtonHanlder" mnemonicParsing="false" text="&gt;&gt;" />
         </children>
-      </AnchorPane>
+    </AnchorPane>
     </AnchorPane>
   </children>
   <stylesheets>

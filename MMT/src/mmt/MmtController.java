@@ -29,7 +29,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.SnapshotResult;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -39,7 +38,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -48,7 +46,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import javafx.util.Callback;
@@ -92,11 +89,18 @@ public class MmtController implements Initializable {
     /*
      * Shows data in filter choice-box : FILTERNM
      */
-    //@FXML
-    //private ChoiceBox filterChoiceBox;
+    @FXML 
+    private AnchorPane filterPane;
+    @FXML
+    private ChoiceBox filterChoiceBox;
+    @FXML
+    private TextField filterTextField;
+    
     /*
      * Definitions of all control buttons in the controller
      */
+    @FXML
+    private Button filterButton;
     @FXML
     private Button addButton;
     @FXML
@@ -139,6 +143,8 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane evalResultPane;
+    //@FXML
+    //private Label evalReportPaneTitle;
     @FXML
     private TabPane empScoreTabs;
     @FXML
@@ -183,6 +189,8 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane employeeDetailsPane;
+    @FXML
+    private Label employeeDetailsPaneTitle;
     @FXML
     private TextField employeeDetails_empNumber;
     @FXML
@@ -234,6 +242,8 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane reportDetailsPane;
+    @FXML
+    private Label reportDetailsPaneTitle;
     @FXML
     private TextField report_evalNumber;
     @FXML
@@ -573,26 +583,37 @@ public class MmtController implements Initializable {
      * @params : choices as string for selection
      * @params: index of choice to set as selected choice
      */
-    /* FILTERNM
-     * @FXML
-     private void initFilterChoiceBox(String[] choices, int curSelIndex) {
-     if (choices == null) {
-            
-     filterChoiceBox.setItems(FXCollections.observableArrayList(
-     "All", "Employer", "Employee") );
-            
-     } else {
-     filterChoiceBox.setItems(FXCollections.observableArrayList(choices));
-     }
+    @FXML
+     private void initFilterChoiceBox(int curSelIndex) {
         
-     // Add tooltip
-     filterChoiceBox.setTooltip(new Tooltip("Filter result by"));
-        
-     // Select default choice
-     filterChoiceBox.getSelectionModel().select(curSelIndex);
+        // Reset the filter-text field
+        filterTextField.clear();
+    
+        switch (appMode) {
+            case EMPLOYEE:
+                // In employee mode, we will be using filter-box to search by employer
+                filterChoiceBox.setItems(FXCollections.observableArrayList("Employer") );
+                filterTextField.setPromptText("Enter employer name here");
+                break;
+            case EMPLOYER:
+                // In employer mode, we will be using filter-box to search by employee
+                filterChoiceBox.setItems(FXCollections.observableArrayList("Employee") );
+                filterTextField.setPromptText("Enter employee name here");
+                break;
+            case REPORT_CONCISE:
+                // In report mode, we will be using filter-box to search by employee or employer
+                filterChoiceBox.setItems(FXCollections.observableArrayList("Employee", "Employer") );
+                filterTextField.setPromptText("Enter employee or employer name here");
+                break;
+        } // switch appMode
+
+        // Add tooltip
+        filterChoiceBox.setTooltip(new Tooltip("Filter result"));
+
+        // Select default choice
+        filterChoiceBox.getSelectionModel().select(curSelIndex);
 
      }
-     */
     /*
      * Helper Method to init button
      * @params : handle to image
@@ -636,6 +657,13 @@ public class MmtController implements Initializable {
                     @Override
                     public void handle(ActionEvent e) {
                         restoreButtonHanlder(e);
+                    }
+                });
+        initButton(filterButton, "Filter result by", true,
+                new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent e) {
+                        filterButtonHanlder(e);
                     }
                 });
         initButton(addButton, "Click to add new record", true,
@@ -754,6 +782,202 @@ public class MmtController implements Initializable {
         placeEmployeePane.setVisible(enable);
     }
 
+    @FXML
+    private void filterButtonHanlder(ActionEvent e) {
+ 
+        // If it is not report mode
+        // nothing to do, return
+//        if (appMode != ViewMode.REPORT_CONCISE) {
+//            return;
+//        }
+
+        try {
+            
+            // Get the report-data object and filter-mode based on page/app mode.
+            DataManager dataManager = null;
+            boolean searchForEmployeeName = false;
+            boolean searchForEmployerName = false;
+            switch(appMode) {
+                case EMPLOYEE:
+                    // In employee mode, we will be using filter-box to search by employer
+                    dataManager = employeeDataManager;            
+                    searchForEmployerName = true;
+                    break;
+                case EMPLOYER:
+                    // In employer mode, we will be using filter-box to search by employee
+                    dataManager = employerDataManager;
+                    searchForEmployeeName = true;
+                    break;
+                case REPORT_CONCISE:
+                    // In report mode, we will be using filter-box to search by employee or employer
+                    dataManager = reportDataManager;
+                    // Get the user's choice
+                    int filterSearchMode = filterChoiceBox.getSelectionModel().getSelectedIndex();
+                    if (filterSearchMode == 1) {
+                        searchForEmployerName = true;
+                    } else {
+                        searchForEmployeeName = true;
+                    }                    
+                    break;
+            } // switch appMode
+            
+            // sanity check
+            if (dataManager == null) {
+                System.out.println("Something went wrong.. well that's embarassing..");
+                return;
+            }
+
+            // Empty out the filtered data
+            dataManager.filteredData.clear();
+
+            // Get the filter search string
+            String filterString = filterTextField.getText();
+            if (filterString.isEmpty()) {
+                // Get the master data and copy it to filter data
+
+                // Get it from master
+                dataManager.filteredData.addAll(dataManager.masterData);
+                return;
+            }
+
+            // Search for this filter string
+            // This could be under columns of followings:
+            //    employee id or employer id or
+            //    employer name or employee first/last name
+            String lowerCaseFilterString = filterString.toLowerCase();
+            
+            // Find ids of all employee in employee-data matching with filterString
+            ArrayList<String> matchedIdList = new ArrayList<String>();
+
+            Iterator<String[]> iter = null;
+            if (searchForEmployeeName) {
+                iter = employeeDataManager.masterData.iterator();
+                while (iter.hasNext()) {
+                    String[] rowData = iter.next();
+
+                    // Search id, first name and last name for match
+                    String id = rowData[0];
+                    String firstName = rowData[1];
+                    String lastName = rowData[2];
+
+                    // Matches with id??
+//                    if (id.toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+//                        // match is found 
+//                        // add this employee's id to the list and continue 
+//                        matchedIdList.add(id);
+//                        continue;
+//                    }
+                    // Matches with First name??
+                    if (firstName.toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+                        // match is found 
+                        // add this employee's id to the list and continue 
+                        matchedIdList.add(id);
+                        continue;
+                    }                
+                    // Matches with Last name??
+                    if (lastName.toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+                        // match is found 
+                        // add this employee's id to the list and continue 
+                        matchedIdList.add(id);
+                        continue;
+                    }
+                } // while there is more record in employee-data
+
+                // At this point we have id of all matched employees from employee-data
+                // Add this id to the filtered data
+                int idCount = matchedIdList.size();
+                for (int i = 0; i < idCount; i++) {
+                    String employeeId = matchedIdList.get(i); // employee id from employee data
+                    iter = reportDataManager.masterData.iterator();
+                    while (iter.hasNext()) {
+                        String[] rowData = iter.next();
+                        String reportEmployeedId = rowData[1]; // employee id from report data
+
+                        // if id is found add it
+                        if ( reportEmployeedId.compareToIgnoreCase(employeeId) == 0) {
+                            dataManager.filteredData.add(rowData);
+                        }                
+                    }
+                } // for all matched ids of employee
+            }
+            
+            // Search for employer name, if required
+            if (searchForEmployerName) {
+                // Find ids of all employer in employer-data matching with filterString
+                matchedIdList.clear();
+                iter = employerDataManager.masterData.iterator();
+                while (iter.hasNext()) {
+                    String[] rowData = iter.next();
+
+                    // Search company id and name for match
+                    String id = rowData[0]; // id
+                    String name = rowData[1]; // company name
+
+                    // Matches with id??
+//                    if (id.toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+//                        // match is found 
+//                        // add this employee's id to the list and continue 
+//                        matchedIdList.add(id);
+//                        continue;
+//                    }
+                    // Matches with Company name??
+                    if (name.toLowerCase().indexOf(lowerCaseFilterString) != -1) {
+                        // match is found 
+                        // add this employee's id to the list and continue 
+                        matchedIdList.add(id);
+                        continue;
+                    }
+                } // while there is more record in employer-data
+
+                // At this point we have id of all matched employees
+                // Add this id to the filtered data
+                int idCount = matchedIdList.size();
+                for (int i = 0; i < idCount; i++) {
+                    String employerId = matchedIdList.get(i); // employer id from employer data
+                    iter = reportDataManager.masterData.iterator();
+                    while (iter.hasNext()) {
+                        String[] rowData = iter.next();
+                        String reportEmployerdId = rowData[2]; // employer id from report data
+                        String masterDataReportId = rowData[1]; // report id in master-data
+
+                        // Check if this report id (from master-data) is already present in filtered-data
+                        // Contnue if it is present
+                        boolean alreadyInFilteredData = false;
+                        String[] reportRowStrings = null;
+                        Iterator<String[]> iterReportFiletered = dataManager.filteredData.iterator();
+                        while (iterReportFiletered.hasNext()) {
+                            String[] filteredDataRowStrings = iterReportFiletered.next();
+                            String filteredDataReportId = filteredDataRowStrings[0];
+                            if (masterDataReportId.compareTo(filteredDataReportId) == 0) {
+                                alreadyInFilteredData = true;
+                                break;
+                            }
+                        }
+
+                        // If data is not already present in filtered-data                    
+                        if (alreadyInFilteredData == false) {
+                            // Check if employee associated with this employer-id is not yet added
+
+                            // Report id is not found in new filtered-data
+                            // Search for employer id in the master-data for presence
+                            // if id is found add it
+                            if (reportEmployerdId.compareToIgnoreCase(employerId) == 0) {
+                                dataManager.filteredData.add(rowData);
+                            }
+                        }
+                    }
+                } // for each employer-id see if we need to add report to filtered list
+            } // search for employer-name, if needed
+
+            // Must re-sort table after items changed
+            reapplyTableSortOrder();
+            
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return;        
+    }
     @FXML
     private void placeButtonHanlder(ActionEvent e) {
         // Check if user has selected a record to perform action
@@ -1366,7 +1590,8 @@ public class MmtController implements Initializable {
         switch (appMode) {
             case EMPLOYEE:
                 // Get currently selected employee
-                empEvalList = getSelectedEmployeeReportData();
+                int idColumnIndex1 = 0; // column-index of employee-id in report-data is 1
+                empEvalList = getSelectedEmployeeReportData(idColumnIndex1);
                 reportPageManager = new ReportPageManager(empEvalList);
                 break;
             case EMPLOYER:
@@ -1375,7 +1600,12 @@ public class MmtController implements Initializable {
                 // Get the employee's evaluation report
                 empEvalList = getSelectedEmployerEmployeeReportData();
                 reportPageManager = new ReportPageManager(empEvalList);
-
+                break;
+            case REPORT_CONCISE:
+                // Get currently selected report's employee-id
+                int idColumnIndex2 = 1; // column-index of employee-id in report-data is 1
+                empEvalList = getSelectedEmployeeReportData(idColumnIndex2);
+                reportPageManager = new ReportPageManager(empEvalList);
                 break;
         }
 
@@ -1626,6 +1856,11 @@ public class MmtController implements Initializable {
         } else {
             initEmployeePlacementControl(enableEvaluateBtn);
         }
+        
+        // Update the filter-choice box, if enable is called for selected page
+        if (enable) {
+            initFilterChoiceBox(0);
+        }
     }
 
     /*
@@ -1868,6 +2103,66 @@ public class MmtController implements Initializable {
 
         return false;
     }
+    
+    /*
+     * Method to get title for the report page
+     */
+    private String getTitleForReportPage(Evaluation empEval, boolean sepPage)
+    {
+        // Put title :
+        // Find employee-name and employer-name for this employee
+        String title = "";
+        try {
+            String employeeFirstName = "";
+            String employeeLastName = "";
+            String employerName = "";
+            String empolyeeId = empEval.getEmployeeNumber();
+            String empolyerId = empEval.getEmployerNumber();
+            String[] employeeRowStrings = getRowDataMatchColumn(employeeDataManager, empolyeeId, 0);
+            if (employeeRowStrings != null) {
+                employeeFirstName = employeeRowStrings[1]; // employee firstName
+                employeeLastName = employeeRowStrings[2];  // employee lastName
+            }
+            if (empolyerId != null && employerIdNameList != null) {
+                // Get the employer name
+                for (int i = 0; i < employerIdNameList.size(); i++) {
+                    EmployerIdName eidName = employerIdNameList.get(i);
+                    if (eidName.getId().compareToIgnoreCase(empolyerId) == 0) {
+                        employerName = eidName.getName();
+                        break;
+                    }
+                } // for each employer in the id-name list
+                
+                // Build the title
+                StringBuilder sb = new StringBuilder();
+                if ( !employeeFirstName.isEmpty() || !employeeLastName.isEmpty()) {
+                    if (sepPage) {
+                        sb.append("Performance Report of ");
+                    } else {
+                        sb.append("Employee Name: ");
+                    }
+                    sb.append(employeeFirstName);
+                    sb.append(" ");
+                    sb.append(employeeLastName);
+                }
+                // add employer if available
+                if (!employerName.isEmpty()) {
+                     if (sepPage) {
+                         sb.append(" @ ");
+                     } else {
+                        sb.append(", ");
+                        sb.append("Employer Name: ");
+                     }
+                    sb.append(employerName);
+                }
+                title = sb.toString();
+            } // valid state
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        return title;
+    }
 
     /*
      * Method to update employee details panel based on selected index
@@ -1878,29 +2173,61 @@ public class MmtController implements Initializable {
     private void updateEmployeeDetails(Number oldValue, Number newValue) {
         System.out.println("Employee Selection Changed -- old: " + oldValue + ", new: " + newValue);
 
-        // Get the selected employee
-        String[] obj = (String[]) datatableview.getSelectionModel().getSelectedItem();
-        String employeeId = obj[0];
+        try {
+            // Get the selected employee
+            String[] obj = (String[]) datatableview.getSelectionModel().getSelectedItem();
+            String employeeId = obj[0];
 
-        // if we are in EMPLOYEE page, row(s) is selected and
-        // selected row employee is employed then enable the evaluate button
-        if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
-            evaluateButton.setVisible(true);
+            // if we are in EMPLOYEE page, row(s) is selected and
+            // selected row employee is employed then enable the evaluate button
+            if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
+                evaluateButton.setVisible(true);
+            }
+
+            // Find employer of this employee then find employer name
+            String employerName = "";
+            String empolyerId = fieldPlacementManager.findEmployerOf(obj[0]);
+            if (empolyerId != null && employerIdNameList != null) {
+                // Get the employer name
+                for (int i = 0; i < employerIdNameList.size(); i++) {
+                    EmployerIdName eidName = employerIdNameList.get(i);
+                    if (eidName.getId().compareToIgnoreCase(empolyerId) == 0) {
+                        employerName = eidName.getName();
+                        break;
+                    }
+                } // for each employer in the id-name list
+            } // valid state
+            
+            // Update the title
+            StringBuilder sb = new StringBuilder();
+            sb.append("Employee Name: ");
+            sb.append(obj[1]);
+            sb.append(" ");
+            sb.append(obj[2]);
+            // add employer if available
+            if ( !employerName.isEmpty() ) {
+                sb.append(", ");
+                sb.append("Employer Name: ");
+                sb.append(employerName);
+            }
+            employeeDetailsPaneTitle.setText(sb.toString());
+
+            // Updates the details panel for employee
+            System.out.println(obj);
+            // String[] dataHeader = new String[]{"id", "firstName", "lastName", "email", "phone", "cellNumber", "address", "city", "state", "zipCode"};
+            employeeDetails_empNumber.setText(obj[0]);
+            employeeDetails_firstName.setText(obj[1]);
+            employeeDetails_lastName.setText(obj[2]);
+            employeeDetails_emailAddressss.setText(obj[3]);
+            employeeDetails_phoneNumber.setText(obj[4]);
+            employeeDetails_cellNumber.setText(obj[5]);
+            employeeDetails_streetAddress.setText(obj[6]);
+            employeeDetails_city.setText(obj[7]);
+            employeeDetails_state.setText(obj[8]);
+            employeeDetails_zipCode.setText(obj[9]);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
-        // Updates the details panel for employee
-        System.out.println(obj);
-        // String[] dataHeader = new String[]{"id", "firstName", "lastName", "email", "phone", "cellNumber", "address", "city", "state", "zipCode"};
-        employeeDetails_empNumber.setText(obj[0]);
-        employeeDetails_firstName.setText(obj[1]);
-        employeeDetails_lastName.setText(obj[2]);
-        employeeDetails_emailAddressss.setText(obj[3]);
-        employeeDetails_phoneNumber.setText(obj[4]);
-        employeeDetails_cellNumber.setText(obj[5]);
-        employeeDetails_streetAddress.setText(obj[6]);
-        employeeDetails_city.setText(obj[7]);
-        employeeDetails_state.setText(obj[8]);
-        employeeDetails_zipCode.setText(obj[9]);
     }
 
     /*
@@ -1992,6 +2319,10 @@ public class MmtController implements Initializable {
     @FXML
     private void updateEmployeeFullReportDetails(Evaluation empEval) {
         System.out.println("Report Selection Changed -- old: ");
+            
+        // Update the title
+        String title = getTitleForReportPage(empEval, false);
+        //evalReportPaneTitle.setText(title);
 
         // Get the selected employer
         evalNumber.setText(empEval.getEvaluationNumber());
@@ -2134,6 +2465,7 @@ public class MmtController implements Initializable {
     private void updateEmployeeFullReportDetailsOnSeparatePage(Evaluation empEval, boolean bFullReport) {
         System.out.println("Report Selection Changed -- old: ");
 
+        /*
         // Get the employee name from the employee-data
         String firstName = ""; // Aditya
         String lastName = ""; // Mishra
@@ -2148,6 +2480,9 @@ public class MmtController implements Initializable {
             }
         }
         String reportTitle = "Performance report for " + firstName + " " + lastName;
+        */
+        // Update the title
+        String reportTitle = getTitleForReportPage(empEval, true);
         printReportForLabel.setText(reportTitle);
 
         // Get the selected employer
@@ -2158,7 +2493,7 @@ public class MmtController implements Initializable {
         sb.append(empEval.getEvaluationNumber());
         sb.append("\nEmployee Number:      ");
         sb.append(empEval.getEmployeeNumber());
-        sb.append("\nEmployee Number:      ");
+        sb.append("\nEmployer Number:      ");
         sb.append(empEval.getEmployerNumber());
         sb.append("\nEvaluation Date:      ");
         sb.append(empEval.getEvaluationDate());
@@ -2285,8 +2620,8 @@ public class MmtController implements Initializable {
         report_employerNumber.setText(obj[2]);
         report_evalDate.setText(obj[3]);
         report_nextEvalDate.setText(obj[4]);
-        //report_evalNumber.setPromptText("Aditya Mishra");
 
+        /*
         // Get the employee name from the employee-data
         String firstName = ""; // Aditya
         String lastName = ""; // Mishra
@@ -2301,7 +2636,11 @@ public class MmtController implements Initializable {
             }
         }
         String reportTitle = "Performance report for " + firstName + " " + lastName;
-        printReportForLabel.setText(reportTitle);
+        */
+        // Update the title
+        Evaluation empEval = new Evaluation(obj);
+        String reportTitle = getTitleForReportPage(empEval, false);        
+        reportDetailsPaneTitle.setText(reportTitle);
 
         // Get the average score
         final int scoreStartIndex = 5;
@@ -2383,12 +2722,12 @@ public class MmtController implements Initializable {
      * using id of selected employee
      */
 
-    private List getSelectedEmployeeReportData() {
+    private List getSelectedEmployeeReportData(int idColumnIndex) {
         // Get selected employee for evaluation
         String[] selRowStr = (String[]) datatableview.getSelectionModel().getSelectedItem();
 
         // Get id of the employee
-        String selEmployeeId = selRowStr[0];
+        String selEmployeeId = selRowStr[idColumnIndex];
 
         Calendar calendar = Calendar.getInstance();
         calendar.clear(Calendar.HOUR);
@@ -2404,22 +2743,6 @@ public class MmtController implements Initializable {
         }
 
         List empEvalList = new ArrayList();
-        /*
-         // Check if we have evaluation report available for this employee
-         String[] reportRowStrings = null;
-         reportRowStrings = getRowDataMatchColumn(reportDataManager, selEmployeeId, 1); reportDataManager.masterData.iterator();
-         if (reportRowStrings == null) {
-         reportRowStrings = new String[]{"", "", "", "", "", "1", "", "1","","1","","1","","1", "1","","0"};
-         reportRowStrings[0] = idGenerator.getNextId(ViewMode.REPORT_FULL);
-         reportRowStrings[1] = selEmployeeId;
-         // TODO : get the employer id from the field placement data
-         reportRowStrings[2] = fieldPlacementManager.findEmployerOf(selEmployeeId);
-         reportRowStrings[3] = todayDateString;
-         reportRowStrings[4] = todayDateString;
-         }
-        
-         Evaluation empEval1 = new Evaluation(reportRowStrings);
-         */
         Evaluation empEval1 = getEvalForEmployee(selEmployeeId, todayDateString);
         empEvalList.add(empEval1);
 
@@ -2870,60 +3193,72 @@ public class MmtController implements Initializable {
 
     @FXML
     private void initEmployeeFilteredData() {
-        // If it is first time then insitlaize the filter data from master data
-        // And bind list-change event of master-data to update filtered-data
-        if (employeeDataManager.filteredData == null) {
-            employeeDataManager.filteredData = FXCollections.observableArrayList();
-            employeeDataManager.filteredData.addAll(employeeDataManager.masterData);
-            System.out.println("1st time init of filter, size is : " + employeeDataManager.filteredData.size());
+        try {
+            // If it is first time then insitlaize the filter data from master data
+            // And bind list-change event of master-data to update filtered-data
+            if (employeeDataManager.filteredData == null) {
+                employeeDataManager.filteredData = FXCollections.observableArrayList();
+                employeeDataManager.filteredData.addAll(employeeDataManager.masterData);
+                System.out.println("1st time init of filter, size is : " + employeeDataManager.filteredData.size());
 
-            // Listen for changes in master data.
-            // Whenever the master data changes we must also update the filtered data.
-            employeeDataManager.masterData.addListener(new ListChangeListener<String[]>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends String[]> change) {
-                    updateFilteredData(ViewMode.EMPLOYEE); // TODO
-                }
-            });
+                // Listen for changes in master data.
+                // Whenever the master data changes we must also update the filtered data.
+                employeeDataManager.masterData.addListener(new ListChangeListener<String[]>() {
+                    @Override
+                    public void onChanged(ListChangeListener.Change<? extends String[]> change) {
+                        updateFilteredData(ViewMode.EMPLOYEE); // TODO
+                    }
+                });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     @FXML
     private void initEmployerFilteredData() {
-        // If it is first time then insitlaize the filter data from master data
-        // And bind list-change event of master-data to update filtered-data
-        if (employerDataManager.filteredData == null) {
-            employerDataManager.filteredData = FXCollections.observableArrayList();
-            employerDataManager.filteredData.addAll(employerDataManager.masterData);
-            System.out.println("1st time init of employer filter, size is : " + employerDataManager.filteredData.size());
+        try {
+            // If it is first time then insitlaize the filter data from master data
+            // And bind list-change event of master-data to update filtered-data
+            if (employerDataManager.filteredData == null) {
+                employerDataManager.filteredData = FXCollections.observableArrayList();
+                employerDataManager.filteredData.addAll(employerDataManager.masterData);
+                System.out.println("1st time init of employer filter, size is : " + employerDataManager.filteredData.size());
 
-            // Listen for changes in master data.
-            // Whenever the master data changes we must also update the filtered data.
-            employerDataManager.masterData.addListener(new ListChangeListener<String[]>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends String[]> change) {
-                    updateFilteredData(ViewMode.EMPLOYER); // TODO
-                }
-            });
+                // Listen for changes in master data.
+                // Whenever the master data changes we must also update the filtered data.
+                employerDataManager.masterData.addListener(new ListChangeListener<String[]>() {
+                    @Override
+                    public void onChanged(ListChangeListener.Change<? extends String[]> change) {
+                        updateFilteredData(ViewMode.EMPLOYER); // TODO
+                    }
+                });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
     @FXML
     private void initEvalResultsFilteredData() {
-        // If it is first time then insitlaize the filter data from master data
-        if (reportDataManager.filteredData == null) {
-            reportDataManager.filteredData = FXCollections.observableArrayList();
-            reportDataManager.filteredData.addAll(reportDataManager.masterData);
-            System.out.println("1st time init of report-filter, size is : " + reportDataManager.filteredData.size());
+        try {
+            // If it is first time then insitlaize the filter data from master data
+            if (reportDataManager.filteredData == null) {
+                reportDataManager.filteredData = FXCollections.observableArrayList();
+                reportDataManager.filteredData.addAll(reportDataManager.masterData);
+                System.out.println("1st time init of report-filter, size is : " + reportDataManager.filteredData.size());
 
-            // Listen for changes in master data.
-            // Whenever the master data changes we must also update the filtered data.
-            reportDataManager.masterData.addListener(new ListChangeListener<String[]>() {
-                @Override
-                public void onChanged(ListChangeListener.Change<? extends String[]> change) {
-                    updateFilteredData(ViewMode.REPORT_CONCISE); // TODO
-                }
-            });
+                // Listen for changes in master data.
+                // Whenever the master data changes we must also update the filtered data.
+                reportDataManager.masterData.addListener(new ListChangeListener<String[]>() {
+                    @Override
+                    public void onChanged(ListChangeListener.Change<? extends String[]> change) {
+                        updateFilteredData(ViewMode.REPORT_CONCISE); // TODO
+                    }
+                });
+            } 
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -3141,7 +3476,7 @@ public class MmtController implements Initializable {
         initContolButtons();
         initPageContolButtons();
 
-        // Listen for text changes in the filter text field
+        // Listen for text changes in the search text field
         searchField.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable,
@@ -3165,6 +3500,20 @@ public class MmtController implements Initializable {
                     return;
                 }
                 updateFilteredData(null);
+            }
+        });
+        
+        // Listen for text changes in the filter text field
+        filterTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable,
+                    String oldValue, String newValue) {
+                // If new value is empty then update the view immediately
+                if (newValue.isEmpty())
+                {
+                    filterButtonHanlder(null);
+                    return;
+                }
             }
         });
 
