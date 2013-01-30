@@ -29,6 +29,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.SnapshotResult;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -38,6 +39,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -46,6 +48,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Window;
 import javafx.util.Callback;
@@ -298,7 +301,7 @@ public class MmtController implements Initializable {
     private final boolean empEvalInSeparateRecord = true; // holds true if evaluaiton result is stored in separate record/file
     private FieldPlacementManager fieldPlacementManager = new FieldPlacementManager(); // keeps the employeeId-employerId map for placed employees
     private ObservableList<EmployerIdName> employerIdNameList = FXCollections.observableArrayList();
-
+    private boolean showingSplashScreen = false;    // flag to show that Help page is visible as splash screen
     /*
      * Class to represent score table for concise report
      */
@@ -402,6 +405,9 @@ public class MmtController implements Initializable {
             datatableview.getSelectionModel().clearSelection();
             //datatableview.getSelectionModel().select(0);
             datatableview.getSelectionModel().selectFirst();//selectIndices(1, new int[]{0});
+            
+            // Set the column width 
+            setColumnsMinWidth();
 
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
@@ -439,7 +445,10 @@ public class MmtController implements Initializable {
             datatableview.getSelectionModel().clearSelection();
             //datatableview.getSelectionModel().select(0);
             datatableview.getSelectionModel().selectFirst();
-
+            
+            // Set the column width 
+            setColumnsMinWidth();
+            
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -476,6 +485,9 @@ public class MmtController implements Initializable {
             datatableview.getSelectionModel().clearSelection();
             //datatableview.getSelectionModel().select(0);
             datatableview.getSelectionModel().selectFirst();
+            
+            // Set the column width 
+            setColumnsMinWidth();
 
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
@@ -744,6 +756,14 @@ public class MmtController implements Initializable {
 
     @FXML
     private void placeButtonHanlder(ActionEvent e) {
+        // Check if user has selected a record to perform action
+        // Return after displaying message, if no record is selected
+        if ( !isRecordSelected() ) {
+            MessageBox mb = new MessageBox("Please select a record(s) before proceeding.", MessageBoxType.OK_ONLY);
+            mb.showAndWait();
+            return;
+        }
+        
         //Get the user's choice
         EmployerIdName selIdName = (EmployerIdName) employerChoiceBox.getSelectionModel().getSelectedItem();
         final String newEmployerId = selIdName.getId();
@@ -865,6 +885,13 @@ public class MmtController implements Initializable {
 
     @FXML
     private void removeButtonHanlder(ActionEvent e) {
+        // Check if user has selected a record to perform action
+        // Return after displaying message, if no record is selected
+        if ( !isRecordSelected() ) {
+            MessageBox mb = new MessageBox("Please select a record(s) before proceeding.", MessageBoxType.OK_ONLY);
+            mb.showAndWait();
+            return;
+        }
         MessageBox mb = new MessageBox("Do you want to delete?", MessageBoxType.YES_NO);
         mb.showAndWait();
         if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
@@ -1246,6 +1273,21 @@ public class MmtController implements Initializable {
         return status;
     }
 
+    /*
+     * Method to set minimum colum width
+     */
+    private void setColumnsMinWidth(){
+        try {
+            ObservableList<TableColumn<String[], ?>> tc = datatableview.getColumns();
+            int columnCount = tc.size();
+            for (int i = 1; i < columnCount; i ++) {
+                tc.get(i).setMinWidth(100);
+                tc.get(i).setPrefWidth(100);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     @FXML
     private void setMaxCharsInCommentTextArea() {
         //qualityCommentTextArea.;
@@ -1285,12 +1327,27 @@ public class MmtController implements Initializable {
 
     @FXML
     private void evaluateButtonHanlder(ActionEvent e) {
+        // Check if user has selected a record to perform action
+        // Return after displaying message, if no record is selected
+        if ( !isRecordSelected() ) {
+            MessageBox mb = new MessageBox("Please select a record before proceeding.", MessageBoxType.OK_ONLY);
+            mb.showAndWait();
+            return;
+        }
         boolean bOnSeparatePage = false;
         reportButtonHanlder(bOnSeparatePage);
     }
 
     @FXML
     private void reportButtonHanlder(ActionEvent e) {
+        // Check if user has selected a record to perform action
+        // Return after displaying message, if no record is selected
+        if ( !isRecordSelected() ) {
+            MessageBox mb = new MessageBox("Please select a record before proceeding.", MessageBoxType.OK_ONLY);
+            mb.showAndWait();
+            return;
+        }
+        
         boolean bOnSeparatePage = true;
         reportButtonHanlder(bOnSeparatePage);
     }
@@ -1827,10 +1884,7 @@ public class MmtController implements Initializable {
 
         // if we are in EMPLOYEE page, row(s) is selected and
         // selected row employee is employed then enable the evaluate button
-//        if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
-//            evaluateButton.setVisible(true);
-//        }
-        if (!evaluateButton.isVisible()) {
+        if (fieldPlacementManager.isEmployed(employeeId) && !evaluateButton.isVisible()) {
             evaluateButton.setVisible(true);
         }
 
@@ -2435,7 +2489,8 @@ public class MmtController implements Initializable {
                 new EvalScore("Habit", rowData[scoreStartIndex + 2]),
                 new EvalScore("Knowledge", rowData[scoreStartIndex + 4]),
                 new EvalScore("Behavior", rowData[scoreStartIndex + 6]),
-                new EvalScore("Overall", rowData[scoreStartIndex + 9])
+                new EvalScore("Overall", rowData[scoreStartIndex + 9]),
+                new EvalScore("Average", rowData[scoreStartIndex + 8])
                 );
 
         return data;
@@ -2446,21 +2501,27 @@ public class MmtController implements Initializable {
      */
     private void updateConciseReportDetailsScoreTable(String[] rowData, int scoreStartIndex) {
 
-        TableColumn firstCol = new TableColumn("Performance Category");
-        firstCol.setMinWidth(100);
-        firstCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("category"));
+        try {
+            TableColumn firstCol = new TableColumn("Performance Category");
+            firstCol.setMinWidth(100);
+            firstCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("category"));
 
-        TableColumn secondCol = new TableColumn("Score");
-        secondCol.setMinWidth(100);
-        secondCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("score"));
-        
-        // Get rid of extra columm from table
-        reportDetails_scoreTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
-        // get data
-        ObservableList<EvalScore> data = getScoreTable(rowData, scoreStartIndex);
-        reportDetails_scoreTable.setItems(data);
-        reportDetails_scoreTable.getColumns().setAll(firstCol, secondCol);
+            TableColumn secondCol = new TableColumn("Score");
+            secondCol.setMinWidth(100);
+            secondCol.setCellValueFactory(new PropertyValueFactory<EvalScore, String>("score"));
+
+            // get data
+            ObservableList<EvalScore> data = getScoreTable(rowData, scoreStartIndex);
+            reportDetails_scoreTable.setItems(data);
+            reportDetails_scoreTable.getColumns().setAll(firstCol, secondCol);
+
+            // Get rid of extra columm from table
+            reportDetails_scoreTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+            // need to fire resize so that "CONSTRAINED_RESIZE_POLICY" is applied and extra column is removed
+            reportDetails_scoreTable.resizeColumn(firstCol, 100);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**
@@ -2468,58 +2529,61 @@ public class MmtController implements Initializable {
      * only when data is restored very first time on launch.
      */
     private void updateIdGenerator(ViewMode mode) {
+        try {
+            int nextEmployeeId = Integer.parseInt(idGenerator.getNextId(ViewMode.EMPLOYEE));
+            int nextEmployerId = Integer.parseInt(idGenerator.getNextId(ViewMode.EMPLOYER));
+            int nextReportId = Integer.parseInt(idGenerator.getNextId(ViewMode.REPORT_CONCISE));
+            boolean updateEmployeeId = false;
+            boolean updateEmployerId = false;
+            boolean updateReportId = false;
+            switch (mode) {
+                case NONE: // wrong type but did not want to add another one.. to update all in one call
+                    updateEmployeeId = true;
+                    updateEmployerId = true;
+                    updateReportId = true;
+                    break;
+                case EMPLOYEE:
+                    updateEmployeeId = true;
+                    break;
+                case EMPLOYER:
+                    updateEmployerId = true;
+                    break;
+                case REPORT_CONCISE:
+                case REPORT_FULL:
+                    updateReportId = true;
+                    break;
+            } // switch
 
-        int nextEmployeeId = Integer.parseInt(idGenerator.getNextId(ViewMode.EMPLOYEE));
-        int nextEmployerId = Integer.parseInt(idGenerator.getNextId(ViewMode.EMPLOYER));
-        int nextReportId = Integer.parseInt(idGenerator.getNextId(ViewMode.REPORT_CONCISE));
-        boolean updateEmployeeId = false;
-        boolean updateEmployerId = false;
-        boolean updateReportId = false;
-        switch (mode) {
-            case NONE: // wrong type but did not want to add another one.. to update all in one call
-                updateEmployeeId = true;
-                updateEmployerId = true;
-                updateReportId = true;
-                break;
-            case EMPLOYEE:
-                updateEmployeeId = true;
-                break;
-            case EMPLOYER:
-                updateEmployerId = true;
-                break;
-            case REPORT_CONCISE:
-            case REPORT_FULL:
-                updateReportId = true;
-                break;
-        } // switch
-
-        if (updateEmployeeId) {
-            // datatableview is sorted on id, so get the last row and corresponding column
-            // from this row to fetch id
-            ObservableList<String[]> obsEmployeeList = datatableview.getItems();
-            if (obsEmployeeList != null && !obsEmployeeList.isEmpty()) {
-                nextEmployeeId = Integer.parseInt(obsEmployeeList.get(obsEmployeeList.size() - 1)[0]);
+            if (updateEmployeeId) {
+                // datatableview is sorted on id, so get the last row and corresponding column
+                // from this row to fetch id
+                ObservableList<String[]> obsEmployeeList = datatableview.getItems();
+                if (obsEmployeeList != null && !obsEmployeeList.isEmpty()) {
+                    nextEmployeeId = Integer.parseInt(obsEmployeeList.get(obsEmployeeList.size() - 1)[0]);
+                }
             }
-        }
-        if (updateEmployerId) {
-            // datatableview is sorted on id, so get the last row and corresponding column
-            // from this row to fetch id
-            ObservableList<String[]> obsEmployerList = datatableview.getItems();
-            if (obsEmployerList != null && !obsEmployerList.isEmpty()) {
-                nextEmployerId = Integer.parseInt(obsEmployerList.get(obsEmployerList.size() - 1)[0]);
+            if (updateEmployerId) {
+                // datatableview is sorted on id, so get the last row and corresponding column
+                // from this row to fetch id
+                ObservableList<String[]> obsEmployerList = datatableview.getItems();
+                if (obsEmployerList != null && !obsEmployerList.isEmpty()) {
+                    nextEmployerId = Integer.parseInt(obsEmployerList.get(obsEmployerList.size() - 1)[0]);
+                }
+
+            }
+            if (updateReportId) {
+                ObservableList<String[]> obsReportList = datatableview.getItems();
+                if (obsReportList != null && !obsReportList.isEmpty()) {
+                    nextReportId = Integer.parseInt(obsReportList.get(obsReportList.size() - 1)[0]);
+                }
             }
 
+            // Got the updated info from tableview
+            // update the generator
+            idGenerator.reset(nextEmployeeId, nextEmployerId, nextReportId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-        if (updateReportId) {
-            ObservableList<String[]> obsReportList = datatableview.getItems();
-            if (obsReportList != null && !obsReportList.isEmpty()) {
-                nextReportId = Integer.parseInt(obsReportList.get(obsReportList.size() - 1)[0]);
-            }
-        }
-
-        // Got the updated info from tableview
-        // update the generator
-        idGenerator.reset(nextEmployeeId, nextEmployerId, nextReportId);
     }
 
     /**
@@ -2641,7 +2705,53 @@ public class MmtController implements Initializable {
 
         return false; // Does not match
     }
+    
+    /*
+     * 
+     protected void resizeToFit(TableColumn col, int maxRows) {
+        List<?> items = tblView.getItems();
+        if (items == null || items.isEmpty()) return;
 
+        Callback cellFactory = col.getCellFactory();
+        if (cellFactory == null) return;
+
+        TableCell cell = (TableCell) cellFactory.call(col);
+        if (cell == null) return;
+
+        // set this property to tell the TableCell we want to know its actual
+        // preferred width, not the width of the associated TableColumn
+        cell.getProperties().put("deferToParentPrefWidth", Boolean.TRUE);//the change is here, only the first parameter, since the original constant is not accessible outside package
+
+        // determine cell padding
+        double padding = 10;
+        Node n = cell.getSkin() == null ? null : cell.getSkin().getNode();
+        if (n instanceof Region) {
+            Region r = (Region) n;
+            padding = r.getInsets().getLeft() + r.getInsets().getRight();
+        } 
+
+        int rows = maxRows == -1 ? items.size() : Math.min(items.size(), maxRows);
+        double maxWidth = 0;
+        for (int row = 0; row < rows; row++) {
+            cell.updateTableColumn(col);
+            cell.updateTableView(tblView);
+            cell.updateIndex(row);
+
+            if ((cell.getText() != null && !cell.getText().isEmpty()) || cell.getGraphic() != null) {
+                getChildren().add(cell);
+                cell.impl_processCSS(false);
+                maxWidth = Math.max(maxWidth, cell.prefWidth(-1));
+                getChildren().remove(cell);
+            }
+        }
+
+        col.impl_setWidth(maxWidth + padding);
+    }
+
+    for (TableColumn clm : tblView.getColumns()) {
+        resizeToFit(clm, -1);
+    }
+     */
     private void reapplyTableSortOrder() {
         ArrayList<TableColumn<String[], ?>> sortOrder = new ArrayList<>(datatableview.getSortOrder());
         datatableview.getSortOrder().clear();
@@ -3036,6 +3146,24 @@ public class MmtController implements Initializable {
             @Override
             public void changed(ObservableValue<? extends String> observable,
                     String oldValue, String newValue) {
+                // If user is on help page after launching app 
+                // then hide the help page, show the main page before
+                // continung
+                if (showingSplashScreen && appMode == ViewMode.HELP)
+                {
+                    showingSplashScreen = false;
+                    // Hide the help page
+                    helpPageAnchor.setVisible(false);
+
+                    // show the employee page
+                    firstPage.setVisible(true);
+                    
+                    // Create action event for employee button
+                    employeeHyperlink.fire();
+                    //onClickEmployeeButton();
+                    
+                    return;
+                }
                 updateFilteredData(null);
             }
         });
@@ -3077,8 +3205,9 @@ public class MmtController implements Initializable {
             imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
             beforeSwitchingToNewSelectedPage(ViewMode.HELP);
 
-            // Set the view mode to employee
+            // Set the view mode to HELP
             appMode = ViewMode.HELP;
+            showingSplashScreen = true;    // splash screen mode
 
             // Show help page
             helpPageAnchor.setVisible(true);
