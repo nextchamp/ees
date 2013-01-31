@@ -32,7 +32,7 @@ import javafx.event.EventHandler;
 import javafx.scene.SnapshotResult;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -92,7 +92,7 @@ public class MmtController implements Initializable {
     @FXML 
     private AnchorPane filterPane;
     @FXML
-    private ChoiceBox filterChoiceBox;
+    private ComboBox filterChoiceBox;
     @FXML
     private TextField filterTextField;
     
@@ -133,7 +133,7 @@ public class MmtController implements Initializable {
     @FXML
     private AnchorPane placeEmployeePane;
     @FXML
-    private ChoiceBox employerChoiceBox;
+    private ComboBox employerChoiceBox;
     @FXML
     private Button placeButton;
 
@@ -289,6 +289,8 @@ public class MmtController implements Initializable {
      */
     @FXML
     private AnchorPane helpPageAnchor;
+    @FXML 
+    private Label helpPageLabel;
     /*
      * Print related stuff
      */
@@ -395,7 +397,7 @@ public class MmtController implements Initializable {
         // If it is first time then initialize the filter data from master data
         if (employeeDataManager.filteredData == null) {
             //initEmployeeFilteredData();
-            initFilteredData();
+            initFilteredData(false);
         }
 
         // Do the clean up of view/resource/hide etc
@@ -435,7 +437,7 @@ public class MmtController implements Initializable {
         // If it is first time then initialize the filter data from master data
         if (employerDataManager.filteredData == null) {
             //initEmployerFilteredData();
-            initFilteredData();
+            initFilteredData(false);
         }
 
         // Do the clean up of view/resource/hide etc
@@ -475,7 +477,7 @@ public class MmtController implements Initializable {
         // If it is first time then initialize the filter data from master data
         if (reportDataManager.filteredData == null) {
             //initEvalResultsFilteredData();
-            initFilteredData();
+            initFilteredData(false);
         }
 
         // Do the clean up of view/resource/hide etc
@@ -535,11 +537,27 @@ public class MmtController implements Initializable {
         // before showing selcted menu-items's views
         //beforeSwitchingToNewSelectedPage(ViewMode.HELP_ABOUT); 
 
+        /*
         // Display message box with credits
         String str = HelpAboutString.getString();
         MessageBox mb = new MessageBox(str, MessageBoxType.OK_ONLY);
         mb.setHeight(500);
         mb.showAndWait();
+        */
+        
+        // Do the clean up of view/resource/hide etc
+        // before showing selcted menu-items's views
+        beforeSwitchingToNewSelectedPage(ViewMode.HELP_ABOUT);
+
+        // Set the view mode to employee
+        appMode = ViewMode.HELP_ABOUT;
+
+        // Show help page
+        helpPageAnchor.setVisible(true);
+        
+        // Put the text of help about
+        String str = HelpAboutString.getString();
+        helpPageLabel.setText(str);
     }
 
     /*
@@ -1012,11 +1030,17 @@ public class MmtController implements Initializable {
             } // check each selected item
 
             // Update the field-placement-data
-            fieldPlacementManager.placeEmployee(newEmployerId, employeeIdsForUpdate);
+            boolean status = fieldPlacementManager.placeEmployee(newEmployerId, employeeIdsForUpdate);
+            // If placed successfully then update the tite of the detail panel.
+            if (status) {
+                String[] selEmployee = (String[]) datatableview.getSelectionModel().getSelectedItem();
+                String title = getTitleForEmployeeDetail(selEmployee, selIdName.getName());
+                employeeDetailsPaneTitle.setText(title);
+            }
             // Update the employee's report data with new employer id
             final int colIndexForEmployeeIdInReport = 1;
             final int colIndexForEmployerIdInReport = 2;
-            boolean status = updateReportData(colIndexForEmployeeIdInReport, colIndexForEmployerIdInReport, employeeIdsForUpdate, newEmployerIds);
+            status = updateReportData(colIndexForEmployeeIdInReport, colIndexForEmployerIdInReport, employeeIdsForUpdate, newEmployerIds);
             String statusMsg;
             if (status == false) {
                 statusMsg = "Fatal Error in updating employer to : " + selIdName.toString();
@@ -1193,11 +1217,17 @@ public class MmtController implements Initializable {
         employeeDataStrings[8] = employeeDetails_state.getText();
         employeeDataStrings[9] = employeeDetails_zipCode.getText();
 
-        boolean bValidData1 = DataValidator.isEmailValid(employeeDataStrings[3]);
-        boolean bValidData2 = DataValidator.isPhoneNumberValid(employeeDataStrings[4]);
-        boolean bValidData3 = DataValidator.isPhoneNumberValid(employeeDataStrings[5]);
-        boolean bValidData4 = DataValidator.isZipCodeValid(employeeDataStrings[9]);
-        if (!bValidData1 || !bValidData2 || !bValidData3 || !bValidData4) {
+        boolean bValidData1 = true;
+        bValidData1 &= DataValidator.isNameValid(employeeDataStrings[1]);
+        bValidData1 &= DataValidator.isNameValid(employeeDataStrings[2]);
+        bValidData1 &= DataValidator.isEmailValid(employeeDataStrings[3]);
+        bValidData1 &= DataValidator.isPhoneNumberValid(employeeDataStrings[4]);
+        bValidData1 &= DataValidator.isPhoneNumberValid(employeeDataStrings[5]);
+        bValidData1 &= DataValidator.isStreetValid(employeeDataStrings[6]);
+        bValidData1 &= DataValidator.isCityValid(employeeDataStrings[7]);
+        bValidData1 &= DataValidator.isStateValid(employeeDataStrings[8]);
+        bValidData1 &= DataValidator.isZipCodeValid(employeeDataStrings[9]);
+        if (!bValidData1) {
             MessageBox mb = new MessageBox("Error in data. Do you want to discard changes : changes will be lost?", MessageBoxType.YES_NO);
             mb.showAndWait();
             if (mb.getMessageBoxResult() == MessageBoxResult.YES) {
@@ -1229,6 +1259,11 @@ public class MmtController implements Initializable {
             status = AppUtils.BackupData(ViewMode.EMPLOYEE, AppUtils.dataHeaderEmployee, employeeDataManager, null);
             // Mark the data dirty
             dataStateManager.setClean(ViewMode.EMPLOYEE);
+        }
+        // Updated master-data for Employee is saved. Save the field placement
+        // data also to reflect any updates on placement
+        if (status) {
+            boolean status4 = fieldPlacementManager.exportData(null, AppSettings.fieldPlacementDataFileName);
         }
 
         // Update the state
@@ -1544,6 +1579,7 @@ public class MmtController implements Initializable {
         boolean bFullReport = isFullReportMode();
         if (bFullReport == false) {
             // TODO pagination of jobs : multi-doc
+            printPane(empFullReportPane);
         } else {
             printPane(empFullReportPane);
         }
@@ -1893,6 +1929,7 @@ public class MmtController implements Initializable {
         addIsInProgress = true;
         // Mark the data dirty
         dataStateManager.setDirty(ViewMode.EMPLOYEE);
+        employeeDetailsPaneTitle.setText("");
 
         // Clear out the input fields
         employeeDetails_empNumber.clear();
@@ -1941,6 +1978,7 @@ public class MmtController implements Initializable {
     private void clearDetailPanelForFullReport() {
         // Mark the data dirty
         dataStateManager.setDirty(ViewMode.REPORT_FULL);
+        reportDetailsPaneTitle.setText("");
 
         // Clear everything in "evalResultPane"
         evalNumber.clear();
@@ -2105,6 +2143,29 @@ public class MmtController implements Initializable {
     }
     
     /*
+     * Returns title for employee detail panel
+     */
+    private String getTitleForEmployeeDetail(String[] employeeRowStrings, String employerName) {
+        StringBuilder sb = new StringBuilder();
+            try {
+            sb.append("Employee Name: ");
+            sb.append(employeeRowStrings[1]);
+            sb.append(" ");
+            sb.append(employeeRowStrings[2]);
+            // add employer if available
+            if ( !employerName.isEmpty() ) {
+                sb.append(", ");
+                sb.append("Employer Name: ");
+                sb.append(employerName);
+            }
+        } catch (Exception ex) {
+                ex.printStackTrace();
+        }
+            
+        return sb.toString();
+    }
+    
+    /*
      * Method to get title for the report page
      */
     private String getTitleForReportPage(Evaluation empEval, boolean sepPage)
@@ -2199,18 +2260,8 @@ public class MmtController implements Initializable {
             } // valid state
             
             // Update the title
-            StringBuilder sb = new StringBuilder();
-            sb.append("Employee Name: ");
-            sb.append(obj[1]);
-            sb.append(" ");
-            sb.append(obj[2]);
-            // add employer if available
-            if ( !employerName.isEmpty() ) {
-                sb.append(", ");
-                sb.append("Employer Name: ");
-                sb.append(employerName);
-            }
-            employeeDetailsPaneTitle.setText(sb.toString());
+            String title = getTitleForEmployeeDetail(obj, employerName);
+            employeeDetailsPaneTitle.setText(title);
 
             // Updates the details panel for employee
             System.out.println(obj);
@@ -2911,10 +2962,13 @@ public class MmtController implements Initializable {
 
     /**
      * Updates the filteredData to contain all data from the masterData that
-     * matches the current filter.
+     * matches the current filter. Returns true,  if match is found. Otherwise it returns
+     * false
      */
     private boolean updateFilteredData(ViewMode mode) {
-        DataManager dataManager = null;
+        boolean matchFound = false;
+        DataManager dataManager = null; // will be assigned value based on page (appMode)
+        AnchorPane detailsPane = null; // will be assigned value based on page (appMode)
 
         // Check if caller has overriden the app-mode to be used
         // for updating the filtered data. Use if if so.
@@ -2927,12 +2981,15 @@ public class MmtController implements Initializable {
         switch (curAppMode) {
             case EMPLOYEE:
                 dataManager = employeeDataManager;
+                detailsPane = employeeDetailsPane;
                 break;
             case EMPLOYER:
                 dataManager = employerDataManager;
+                detailsPane = employerDetailsPane;
                 break;
             case REPORT_CONCISE:
                 dataManager = reportDataManager;
+                detailsPane = reportDetailsPane;
                 break;
             case REPORT_FULL:
                 //dataManager = evalResultDataManager;
@@ -2943,6 +3000,7 @@ public class MmtController implements Initializable {
             return false;
         }
 
+        try {
         // If it is first time then filtered-data must be null.
         // Check it if it is null and insitlaize the filter data from master data
         //if (dataManager.filteredData == null) {
@@ -2982,7 +3040,13 @@ public class MmtController implements Initializable {
         reapplyTableSortOrder();
 
         // Check if match has been found
-        boolean matchFound = !dataManager.filteredData.isEmpty();
+        matchFound = !dataManager.filteredData.isEmpty();
+        
+        // Show/Hide details panel, based on match is found/not
+        detailsPane.setVisible(matchFound);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
 
         return matchFound;
     }
@@ -3161,7 +3225,7 @@ public class MmtController implements Initializable {
         searchField.clear();
 
         // If we are switching to HELP page hide main page
-        if (newAppMode == ViewMode.HELP) {
+        if (newAppMode == ViewMode.HELP || newAppMode == ViewMode.HELP_ABOUT) {
             firstPage.setVisible(false);
         } else {
             // if we are switching from help-page to first page
@@ -3176,31 +3240,35 @@ public class MmtController implements Initializable {
      */
 
     @FXML
-    private void initFilteredData() {
+    private void initFilteredData(boolean forceUpdate) {
         // If it is first time then initialize the filter data from master data
-        if (employeeDataManager.filteredData == null) {
-            initEmployeeFilteredData();
+        if (forceUpdate || employeeDataManager.filteredData == null) {
+            initEmployeeFilteredData(forceUpdate);
         }
         // If it is first time then initialize the filter data from master data
-        if (employerDataManager.filteredData == null) {
-            initEmployerFilteredData();
+        if (forceUpdate || employerDataManager.filteredData == null) {
+            initEmployerFilteredData(forceUpdate);
         }
         // If it is first time then initialize the filter data from master data
-        if (reportDataManager.filteredData == null) {
-            initEvalResultsFilteredData();
+        if (forceUpdate || reportDataManager.filteredData == null) {
+            initEvalResultsFilteredData(forceUpdate);
         }
     }
 
     @FXML
-    private void initEmployeeFilteredData() {
+    private void initEmployeeFilteredData(boolean forceUpdate) {
         try {
             // If it is first time then insitlaize the filter data from master data
             // And bind list-change event of master-data to update filtered-data
-            if (employeeDataManager.filteredData == null) {
-                employeeDataManager.filteredData = FXCollections.observableArrayList();
+            if (forceUpdate || employeeDataManager.filteredData == null) {
+                if (employeeDataManager.filteredData == null) {
+                    employeeDataManager.filteredData = FXCollections.observableArrayList();
+                } else {
+                    employeeDataManager.filteredData.clear();
+                }
                 employeeDataManager.filteredData.addAll(employeeDataManager.masterData);
                 System.out.println("1st time init of filter, size is : " + employeeDataManager.filteredData.size());
-
+            }
                 // Listen for changes in master data.
                 // Whenever the master data changes we must also update the filtered data.
                 employeeDataManager.masterData.addListener(new ListChangeListener<String[]>() {
@@ -3209,20 +3277,26 @@ public class MmtController implements Initializable {
                         updateFilteredData(ViewMode.EMPLOYEE); // TODO
                     }
                 });
-            }
+            //}
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @FXML
-    private void initEmployerFilteredData() {
+    private void initEmployerFilteredData(boolean forceUpdate) {
         try {
             // If it is first time then insitlaize the filter data from master data
             // And bind list-change event of master-data to update filtered-data
-            if (employerDataManager.filteredData == null) {
-                employerDataManager.filteredData = FXCollections.observableArrayList();
+            if (forceUpdate || employerDataManager.filteredData == null) {
+                if (employerDataManager.filteredData == null) {
+                    employerDataManager.filteredData = FXCollections.observableArrayList();
+                } else {
+                    employerDataManager.filteredData.clear();
+                }
                 employerDataManager.filteredData.addAll(employerDataManager.masterData);
+            }
+                
                 System.out.println("1st time init of employer filter, size is : " + employerDataManager.filteredData.size());
 
                 // Listen for changes in master data.
@@ -3233,21 +3307,25 @@ public class MmtController implements Initializable {
                         updateFilteredData(ViewMode.EMPLOYER); // TODO
                     }
                 });
-            }
+            //}
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
     @FXML
-    private void initEvalResultsFilteredData() {
+    private void initEvalResultsFilteredData(boolean forceUpdate) {
         try {
             // If it is first time then insitlaize the filter data from master data
-            if (reportDataManager.filteredData == null) {
+            if (forceUpdate || reportDataManager.filteredData == null) {
+                if (reportDataManager.filteredData == null) {
                 reportDataManager.filteredData = FXCollections.observableArrayList();
+                } else {
+                    reportDataManager.filteredData.clear();
+                }
                 reportDataManager.filteredData.addAll(reportDataManager.masterData);
                 System.out.println("1st time init of report-filter, size is : " + reportDataManager.filteredData.size());
-
+            }
                 // Listen for changes in master data.
                 // Whenever the master data changes we must also update the filtered data.
                 reportDataManager.masterData.addListener(new ListChangeListener<String[]>() {
@@ -3256,7 +3334,7 @@ public class MmtController implements Initializable {
                         updateFilteredData(ViewMode.REPORT_CONCISE); // TODO
                     }
                 });
-            } 
+            //} 
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -3317,7 +3395,7 @@ public class MmtController implements Initializable {
 //        } else 
         {
             // old-format, not to be used but works fine: all evaluation files are in single file.
-            status3 = AppUtils.RestoreData(ViewMode.REPORT_FULL, AppUtils.dataHeaderFullEvalReport, reportDataManager, dataPath);
+            status3 = AppUtils.RestoreData(ViewMode.REPORT_FULL, AppUtils.dataHeaderEvalReport, reportDataManager, dataPath);
         }
         if (status3 == false) {
             // Show error message box
@@ -3365,7 +3443,7 @@ public class MmtController implements Initializable {
      */
     private boolean backupData(String dataPath) {
         // Make sure that filtered data are poopulated for each category/pages
-        initFilteredData();
+        initFilteredData(true);
 
         // Write employee's data: Write it to disk
         boolean status1 = AppUtils.BackupData(ViewMode.EMPLOYEE, AppUtils.dataHeaderEmployee, employeeDataManager, dataPath);
@@ -3409,7 +3487,7 @@ public class MmtController implements Initializable {
         }
         dataStateManager.setClean(ViewMode.REPORT_FULL);
 
-        // restore field placement data
+        // backup field placement data
         boolean status4 = fieldPlacementManager.exportData(dataPath, AppSettings.fieldPlacementDataFileName);
         if (status4 == false) {
             // Show error message box
@@ -3484,7 +3562,7 @@ public class MmtController implements Initializable {
                 // If user is on help page after launching app 
                 // then hide the help page, show the main page before
                 // continung
-                if (showingSplashScreen && appMode == ViewMode.HELP)
+                if (showingSplashScreen && appMode == ViewMode.HELP_ABOUT)
                 {
                     showingSplashScreen = false;
                     // Hide the help page
@@ -3546,20 +3624,21 @@ public class MmtController implements Initializable {
         // Set the maximum chars in comment
         setMaxCharsInCommentTextArea();
         try {
-            imageLoader = new ImageLoader(helpImagePane);
-            Thread t = new Thread(imageLoader);
-            t.setDaemon(true);
-            t.start();
-
-            imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
-            beforeSwitchingToNewSelectedPage(ViewMode.HELP);
+//            imageLoader = new ImageLoader(helpImagePane);
+//            Thread t = new Thread(imageLoader);
+//            t.setDaemon(true);
+//            t.start();
+//
+//            imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
+            //beforeSwitchingToNewSelectedPage(ViewMode.HELP);
 
             // Set the view mode to HELP
-            appMode = ViewMode.HELP;
+            //appMode = ViewMode.HELP;
             showingSplashScreen = true;    // splash screen mode
 
             // Show help page
-            helpPageAnchor.setVisible(true);
+            //helpPageAnchor.setVisible(true);
+            onClickHelpAboutButton(null);
         } catch (Exception ex) {
             Logger.getLogger(MmtController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -3597,10 +3676,12 @@ public class MmtController implements Initializable {
 
     @FXML
     private void onImageClicked(MouseEvent event) {
-        imageLoader.togglePause();
-        System.out.println("paused is " + imageLoader.paused);
-        if (!imageLoader.paused) {
-            imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
+        if (imageLoader != null) {
+            imageLoader.togglePause();
+            System.out.println("paused is " + imageLoader.paused);
+            if (!imageLoader.paused) {
+                imageLoader.setNextImage(helpImagePane, imageLoader.getNextImage());
+            }
         }
     }
 }

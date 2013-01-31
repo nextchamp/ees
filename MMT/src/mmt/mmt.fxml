@@ -68,11 +68,13 @@
         </Hyperlink>
       </children>
     </AnchorPane>
-    <AnchorPane fx:id="helpPageAnchor" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0">
+    <AnchorPane fx:id="helpPageAnchor" prefHeight="619.0" prefWidth="1047.0" visible="false" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="76.0" >
       <children>
-        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="276.0" layoutY="310.0" prefWidth="440.0" text="Help me to fill here.." />
+        <Label fx:id="helpPageLabel" layoutX="4.0" layoutY="10.0" prefWidth="600.0" prefHeight="600.0" text="Help me to fill here.." />
+        <!--
         <Button fx:id="leftSlideBtn" layoutX="4.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSlideButtonClickedAction" text="&lt;" />
         <Button fx:id="rightSlideBtn" layoutX="1015.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSlideButtonClickedAction" text="&gt;" />
+        -->
         <AnchorPane id="imagePane" fx:id="helpImagePane" layoutX="33.0" layoutY="32.0" maxHeight="-Infinity" maxWidth="-Infinity" onMouseClicked="#onImageClicked" prefHeight="595.0" prefWidth="982.0" />
       </children>
     </AnchorPane>
@@ -87,7 +89,7 @@
                   <children>
                     <AnchorPane id="AnchorPane" fx:id="filterPane" layoutX="7.0" layoutY="2.0">
                       <children>
-                        <ChoiceBox fx:id="filterChoiceBox" layoutX="7.0" layoutY="0.0">
+                        <ComboBox fx:id="filterChoiceBox" layoutX="7.0" layoutY="0.0">
                           <items>
                            <FXCollections fx:factory="observableArrayList">
                              <String fx:value="Employee" />
@@ -97,7 +99,7 @@
                            <stylesheets>
                              <URL value="@Resources/MainApp.css" />
                            </stylesheets>
-                        </ChoiceBox>
+                        </ComboBox>
                         <TextField fx:id="filterTextField" layoutX="115.0" layoutY="1.0" prefWidth="174.0" promptText="Enter employer name here" />
                         <Button fx:id="filterButton" contentDisplay="GRAPHIC_ONLY" layoutX="290.0" layoutY="2.0" mnemonicParsing="false" />
                       </children>
@@ -114,7 +116,7 @@
                     </AnchorPane>
                     <AnchorPane id="AnchorPane" fx:id="placeEmployeePane" layoutX="756.0" layoutY="-1.0" prefHeight="31.0" prefWidth="180.0">
                       <children>
-                        <ChoiceBox fx:id="employerChoiceBox" layoutX="28.0" layoutY="1.0" prefWidth="187.0">
+                        <ComboBox fx:id="employerChoiceBox" layoutX="28.0" layoutY="1.0" prefWidth="187.0">
                           <items>
                             <FXCollections fx:factory="observableArrayList">
                               <String fx:value="Select Employer" />
@@ -125,7 +127,7 @@
                           <stylesheets>
                             <URL value="@Resources/MainApp.css" />
                           </stylesheets>
-                        </ChoiceBox>
+                        </ComboBox>
                         <Button fx:id="placeButton" contentDisplay="GRAPHIC_ONLY" layoutX="221.0" layoutY="4.0" mnemonicParsing="false" />
                       </children>
                     </AnchorPane>
@@ -274,19 +276,19 @@
               </tabs>
             </TabPane>
             <Label layoutX="20.0" layoutY="14.0" text="Evaluation Number" />
-            <TextField fx:id="evalNumber" editable="false" layoutX="152.0" layoutY="11.0" prefWidth="200.0" />
+            <TextField fx:id="evalNumber" editable="false" layoutX="170.0" layoutY="11.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="44.0" text="Employee Number" />
-            <TextField id="evalNumber" fx:id="employeeNumber" editable="false" layoutX="152.0" layoutY="43.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="employeeNumber" editable="false" layoutX="170.0" layoutY="43.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="72.0" text="Employer Number" />
-            <TextField id="evalNumber" fx:id="employerNumber" editable="false" layoutX="152.0" layoutY="71.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="employerNumber" editable="false" layoutX="170.0" layoutY="71.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="102.0" text="Evaluation Date" />
-            <TextField id="evalNumber" fx:id="evalDate" layoutX="152.0" layoutY="101.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="evalDate" layoutX="170.0" layoutY="101.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="130.0" text="Next Evaluation Date" />
-            <TextField id="evalNumber" fx:id="nextEvalDate" layoutX="152.0" layoutY="129.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="nextEvalDate" layoutX="170.0" layoutY="129.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="160.0" text="Average Score" />
-            <TextField id="evalNumber" fx:id="averageScore" editable="false" layoutX="152.0" layoutY="159.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="averageScore" editable="false" layoutX="170.0" layoutY="159.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="190.0" text="Recommended" />
-            <CheckBox fx:id="evalRecommendation" layoutX="152.0" layoutY="190.0" mnemonicParsing="false" />
+            <CheckBox fx:id="evalRecommendation" layoutX="170.0" layoutY="190.0" mnemonicParsing="false" />
           </children>
               </AnchorPane>
           </children>
@@ -348,19 +350,19 @@
          <AnchorPane layoutX="7.0" layoutY="37.0" prefHeight="270.0" prefWidth="1047.0">
           <children>
             <Label layoutX="20.0" layoutY="14.0" text="Evaluation Number" />
-            <TextField id="report" fx:id="report_evalNumber" layoutX="152.0" layoutY="13.0" prefWidth="200.0" />
+            <TextField id="report" fx:id="report_evalNumber" layoutX="170.0" layoutY="13.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="44.0" text="Employee Number" />
-            <TextField id="evalNumber" fx:id="report_employeeNumber" editable="false" layoutX="152.0" layoutY="43.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="report_employeeNumber" editable="false" layoutX="170.0" layoutY="43.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="72.0" text="Employer Number" />
-            <TextField id="evalNumber" fx:id="report_employerNumber" editable="false" layoutX="152.0" layoutY="71.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="report_employerNumber" editable="false" layoutX="170.0" layoutY="71.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="102.0" text="Evaluation Date" />
-            <TextField id="evalNumber" fx:id="report_evalDate" editable="false" layoutX="152.0" layoutY="101.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="report_evalDate" editable="false" layoutX="170.0" layoutY="101.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="130.0" text="Next Evaluation Date" />
-            <TextField id="evalNumber" fx:id="report_nextEvalDate" editable="false" layoutX="152.0" layoutY="129.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="report_nextEvalDate" editable="false" layoutX="170.0" layoutY="129.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="160.0" text="Average Score" />
-            <TextField id="evalNumber" fx:id="report_averageScore" editable="false" layoutX="152.0" layoutY="159.0" prefWidth="200.0" />
+            <TextField id="evalNumber" fx:id="report_averageScore" editable="false" layoutX="170.0" layoutY="159.0" prefWidth="200.0" />
             <Label layoutX="20.0" layoutY="190.0" text="Recommended" />
-            <CheckBox fx:id="report_recommended" disable="true" layoutX="152.0" layoutY="190.0" mnemonicParsing="false" />
+            <CheckBox fx:id="report_recommended" disable="true" layoutX="170.0" layoutY="190.0" mnemonicParsing="false" />
             <TableView fx:id="reportDetails_scoreTable" layoutX="684.0" layoutY="14.0" prefHeight="172.0" prefWidth="350.0">
               <stylesheets>
                 <URL value="@Resources/MainApp.css" />
