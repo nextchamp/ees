@@ -29,12 +29,14 @@ public class HelpAboutString {
         sb.append("\n ");
         sb.append("\n Software and Tools Used");
         sb.append("\n -  NetBeans (Java IDE)");
-        sb.append("\n -  MS Word (Documentation)");
-        sb.append("\n -  UML (UML Design)");
-        sb.append("\n -  JavaFX 2.2, DataFX, SceneBuilder 1.0");
+        sb.append("\n -  MS Office (Documentation)");
+        sb.append("\n -  UML (Argo UML)");
+        sb.append("\n -  Paint.NET");
+        sb.append("\n -  JavaFX 2.2, DataFX, SceneBuilder 1.0, FxMessageBox");
         sb.append("\n ");
         sb.append("\n Resources");
         sb.append("\n -  Images ");
+        sb.append("\n -  CSS ");
         sb.append("\n -  Initial Data  ");
         sb.append("\n  ");
         sb.append("\n All images used are taken from public domain");
