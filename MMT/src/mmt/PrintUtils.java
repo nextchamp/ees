@@ -35,10 +35,6 @@ import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 import javax.print.attribute.standard.Copies;
 
-/**
- *
- * @author Rakesh Menon
- */
 public class PrintUtils {
 
     public static void print(RenderedImage image)
