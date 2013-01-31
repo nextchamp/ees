@@ -59,8 +59,8 @@ root {
    -fx-text-fill: white;
    -fx-font-family: "Arial Narrow";
    -fx-font-weight: normal;
-   -fx-background-color: linear-gradient(#FFFFFF, #8F0313);
-   -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+   -fx-background-color: #870413; /*linear-gradient(#FFFFFF, #8F0313);*/
+   /*-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );*/
    -fx-border-radius: 5px;
    -fx-background-radius: 7px;
    -fx-opacity: 0.8;
@@ -70,7 +70,7 @@ root {
 }
 .options-text-selected {
    -fx-underline: true;
-   -fx-text-fill: white;
+   -fx-text-fill: yellow;
    -fx-font-weight: bold;
    -fx-opacity: 1.0;
 }
@@ -301,10 +301,15 @@ root {
 }
 
 #helpPageAnchor {
+    /*
     -fx-border-color: #61a2b1;
     -fx-border-width: 2px;
     -fx-border-style: solid;
     -fx-border-radius: 5px;
+    */
+    -fx-background-image: url("splashScreen.png");
+    -fx-background-size: 100%;
+    -fx-opacity: 1.0;
 }
 
 #empScoreTabs {
@@ -319,4 +324,12 @@ root {
     -fx-underline: true;
     /*-fx-font-style: italic;*/
     -fx-font-weight: normal;
+}
+
+#helpPageLabel {
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: lighter;
+    -fx-text-fill: white;
+    -fx-font-size: 14;
+    -fx-opacity: 0.8;
 }
